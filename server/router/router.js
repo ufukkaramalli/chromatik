@@ -1,12 +1,12 @@
 import express from 'express'
 import mongoose from 'mongoose'
-import trackModel from '../model/track.js'
+import Track from '../model/track.js'
 
 const router = express.Router()
 
 router.get("/", async (req,res) => {
     try {
-        const allTracks = await trackModel.find()
+        const allTracks = await Track.find()
         res.json(allTracks)
     } catch (error) {
         console.log(error)
@@ -16,7 +16,7 @@ router.get("/", async (req,res) => {
 router.get("/:id", async (req,res) => {
     try {
         const { id } = req.params
-        const track = await trackModel.findById(id)
+        const track = await Track.findById(id)
         if(!track) return
         res.status(200).json(track)
     } catch (error) {
@@ -27,7 +27,7 @@ router.get("/:id", async (req,res) => {
 router.post("/", async (req,res) => {
     try {
         const post = req.body
-        const createdTrack = await trackModel.create(post)
+        const createdTrack = await Track.create(post)
         res.status(201).json(createdTrack)
     } catch (error) {
        console.log(error) 
@@ -35,11 +35,27 @@ router.post("/", async (req,res) => {
 })
 
 router.put("/:id", async (req,res) => {
-    res.json({message:"BU BIR PUT ISTEGI"})
+    try {
+        const { id } = req.params
+        const { user_id, name } = req.body
+        if(!mongoose.Types.ObjectId.isValid(id))
+            return res.status(404).send("Not Found")
+        const updatedTrack = { user_id, name, _id:id}
+        await Track.findByIdAndUpdate(id, updatedTrack)
+        res.json(updatedTrack)
+    } catch (error) {
+        console.log(error)
+    }
 })
 
 router.delete("/:id", async (req,res) => {
-    res.json({message:"BU BIR DELETE ISTEGI"})
+    try {
+        const { id } = req.params
+        await Track.findByIdAndDelete(id)
+        res.json({message:"Deleted"})
+    } catch (error) {
+        
+    }
 })
 
 export default router
