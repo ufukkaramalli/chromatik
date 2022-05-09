@@ -1,6 +1,6 @@
 import express from 'express'
 import mongoose from 'mongoose'
-import Track from '../model/track.js'
+import Track from '../model/Track.js'
 
 const router = express.Router()
 
