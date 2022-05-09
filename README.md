@@ -2,10 +2,10 @@
 1. [x] Server & Client Folders Organized
 2. [x] Vue.js Frontend Created
 3. [x] Node.js API
-    - [ ] Schemes & Models Created
-      - [ ] User Scheme & Model
-      - [x] Track Scheme & Model
-      - [ ] Soundkit Scheme & Model
+    - [ ] Schemes & Models & Controllers Created
+      - [ ] [ ] [ ] User Scheme & Model & Controller
+      - [x] [x] [x] Track Scheme & Model & Controller
+      - [ ] [ ] [ ] Soundkit Scheme & Model & Controller
     - [ ] Endpoints
       - [ ] User Endpoint
       - [x] Track Endpoint
