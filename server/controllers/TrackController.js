@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import Track from '../model/Track.js'
+import Track from '../models/Track.js'
 module.exports = {
     index: async (req,res) => {
         try {
