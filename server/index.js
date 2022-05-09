@@ -10,7 +10,9 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 dotenv.config()
+
 app.use('/tracks', tracks)
+
 app.listen(parseInt(process.env.MONGO_URI_PORT),() => {
     mongoose.connect(process.env.MONGO_URI, {
         useNewUrlParser: true,
