@@ -3,6 +3,9 @@
 2. [x] Vue.js Frontend Created
 3. [x] Node.js API
     - [ ] Schemes & Models Created
+      - [ ] User Scheme & Model
+      - [ ] Track Scheme & Model
+      - [ ] Soundkit Scheme & Model
     - [ ] Endpoints
       - [ ] User Endpoint
       - [x] Track Endpoint
