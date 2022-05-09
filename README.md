@@ -7,4 +7,8 @@
       - [ ] User Endpoint
       - [x] Track Endpoint
       - [ ] Soundkit Endpoint
+      - [ ] Various queries Endpoint
+           - [ ] Most Liked
+           - [ ] Recent
+           - [ ] Top 10
     - [ ] Authentication
