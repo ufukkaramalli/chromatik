@@ -1,9 +1,9 @@
 import mongoose from 'mongoose'
 import Track from '../models/Track.js'
-module.exports = {
+export default {
     index: async (req,res) => {
         try {
-            const allTracks = await Track.find()
+            const allTracks = await Track.find().populate({ path: 'userId', select: 'name photoUrl' })
             res.json(allTracks)
         } catch (error) {
             console.log(error)
@@ -21,8 +21,8 @@ module.exports = {
     },
     createTrack: async (req,res) => {
         try {
-            const post = req.body
-            const createdTrack = await Track.create(post)
+            const {user,title,description,url} = req.body
+            const createdTrack = await Track.create({ userId: user._id,title:title,description:description,url:url })
             res.status(201).json(createdTrack)
         } catch (error) {
             console.log(error) 
