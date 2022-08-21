@@ -5,6 +5,7 @@ const router = express.Router()
 
 router.get("/",TrackController.index)
 router.get("/:id", TrackController.getById)
+router.get("/:user/:track", TrackController.getByUserAndTrack)
 router.post("/", TrackController.createTrack)
 router.put("/:id", TrackController.updateTrack)
 router.delete("/:id", TrackController.deleteTrack)
