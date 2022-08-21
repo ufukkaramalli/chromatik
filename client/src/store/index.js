@@ -70,13 +70,13 @@ export default new Vuex.Store({
   },
   actions: {
     async RECENT_TRACKS ({ commit }) {
-      var response = await axios.get('track/recent', {
+      var response = await axios.get('tracks/', {
         headers: {
           Authorization: 'Bearer ' + process.env.VUE_APP_JWT_KEY
         }
       })
       if (response) {
-        commit('SET_RECENT_TRACKS', response.data.tracks)
+        commit('SET_RECENT_TRACKS', response.data)
       } else {
         console.log('NOT COMMITTED')
       }
@@ -106,7 +106,7 @@ export default new Vuex.Store({
       }
     },
     async GET_TRACK_PAGE ({ commit }, payload) {
-      var response = await axios.post('track/find-track', { data: payload }, {
+      var response = await axios.get('tracks/' + payload.userSlug + '/' + payload.trackSlug, {
         headers: {
           Authorization: 'Bearer ' + process.env.VUE_APP_JWT_KEY
         }
