@@ -2,7 +2,7 @@
   <v-main v-cloak>
     <v-container>
       <v-row align="center" justify="center">
-        <v-col cols="12" class="secondary darken-2 rounded-lg mb-2">
+        <v-col v-show="GetRecentTracks !== null" cols="12" class="secondary darken-2 rounded-lg mb-2">
           <Playlist :tracks="GetRecentTracks" v-on="$listeners">
             <template #title>
               <h5>{{$t('players.Recent')}}</h5>
@@ -12,7 +12,7 @@
             </template>
           </Playlist>
         </v-col>
-        <v-col cols="12" class="secondary darken-2 rounded-lg mb-2">
+        <v-col v-show="GetMostLikedTracks !== null" cols="12" class="secondary darken-2 rounded-lg mb-2">
           <Playlist :tracks="GetMostLikedTracks" v-on="$listeners">
             <template #title>
               <h5>{{$t('players.MostLiked')}}</h5>
@@ -22,7 +22,7 @@
             </template>
           </Playlist>
         </v-col>
-        <v-col cols="12" class="secondary darken-2 rounded-lg mb-2">
+        <v-col v-show="GetMostStreamedTracks !== null" cols="12" class="secondary darken-2 rounded-lg mb-2">
           <Playlist :tracks="GetMostStreamedTracks" v-on="$listeners">
             <template #title>
               <h5>{{$t('players.MostStreamed')}}</h5>
@@ -47,12 +47,7 @@ export default {
   data () {
     return {
       Recent: false,
-      MostLike: false,
-      items: ['Volkswagen', 'Fiat', 'Ford'],
-      volkswagenitems: ['Polo', 'Golf'],
-      fiatitems: ['500', 'Doblo'],
-      brand: '',
-      brandmodel: ''
+      MostLike: false
     }
   },
   created () {

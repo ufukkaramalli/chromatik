@@ -32,10 +32,10 @@
             </template>
           </v-img>
           <div ref="title" class="text-truncate text-wrap text-left py-1 pb-0 pt-0 px-2 mt-1 text-uppercase font-weight-black body-1">
-            <router-link :title="getTrack.name" class="routerLink" :to="{name: 'TrackPage', params: { userSlug: getTrack.user.slug, trackSlug: getTrack.slug, track: getTrack }}">{{getTrack.name | uppercase}}</router-link>
+            <router-link :title="getTrack.name" class="routerLink" :to="{name: 'TrackPage', params: { userSlug: getTrack.userId.slug, trackSlug: getTrack.slug }}">{{getTrack.name | uppercase}}</router-link>
           </div>
           <v-card-text ref="artist" class="text-truncate text-wrap text-left py-1 pt-0 px-2 text-uppercase mt-n2">
-            <router-link :title="getTrack.user.name" class="routerLink" :to="getTrack.user.slug">{{getTrack.user.name | uppercase}}</router-link>
+            <router-link :title="getTrack.userId.slug" class="routerLink" :to="getTrack.userId.slug">{{getTrack.userId.name | uppercase}}</router-link>
           </v-card-text>
         </v-card>
       </template>

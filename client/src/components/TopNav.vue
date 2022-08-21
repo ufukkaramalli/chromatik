@@ -8,7 +8,7 @@
       >
         <v-app-bar-nav-icon @click="setNavigation(themeOpts.navigation)"></v-app-bar-nav-icon>
         <v-toolbar-title class="ml-0 pl-4">
-          <span class="hidden-sm-and-down"><h2 class="xxix-regular font-weight-regular">{{appName}}</h2>
+          <span class="hidden-sm-and-down"><h2 class="xxix-regular font-weight-regular" ><router-link to="/" style="color: white;text-decoration: none;">{{appName}}</router-link></h2>
           </span>
         </v-toolbar-title>
         <v-divider inset vertical class="mx-3"></v-divider>

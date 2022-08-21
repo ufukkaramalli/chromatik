@@ -3,7 +3,7 @@
     <LoginForm>
       <template #app-name>
         <h1 class="font-weight-regular text-center xxix-regular login text-shadow">
-          {{appName}}
+          <router-link to="/" style="color: white;text-decoration: none;">{{appName}}</router-link>
         </h1>
       </template>
       <template #default>

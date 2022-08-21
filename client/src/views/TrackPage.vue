@@ -4,7 +4,7 @@
         <template v-if="success">
           <v-row>
             <v-col cols="12" md="3" class="pa-8">
-               <v-img aspect-ratio="1" :width="'100%'" :height="'100%'" :src="track.art" class="elevation-4" />
+               <v-img aspect-ratio="1" :width="'100%'" :height="'100%'" :src="track.tracks[0].art" class="elevation-4" />
             </v-col>
             <v-col cols="12" md="6">
               BURASI
@@ -53,8 +53,8 @@ export default {
       loading: true
     }
   },
-  created () {
-    this.FIND_TRACK()
+  async created () {
+    await this.FIND_TRACK()
   },
   methods: {
     ...mapActions({
@@ -63,13 +63,13 @@ export default {
     async FIND_TRACK () {
       await this.GET_TRACK_PAGE(this.$route.params).then(response => {
         this.track = response.data
-        document.title = response.data.name + ' by ' + response.data.user.name + ' | Chromatique'
+        document.title = `${response.data.tracks[0].name}  by  ${response.data.name} | ${process.env.VUE_APP_APPLICATION_NAME}`
         setTimeout(() => {
           this.success = true
           this.loading = false
         }, 1000)
       }).catch(error => {
-        document.title = 'Track ' + error.response.statusText + ' | Chromatique'
+        document.title = `${error.response.data} ${error.response.statusText} in Database | ${process.env.VUE_APP_APPLICATION_NAME}`
         setTimeout(() => {
           this.success = false
           this.loading = false
