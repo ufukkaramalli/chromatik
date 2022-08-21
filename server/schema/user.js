@@ -1,7 +1,11 @@
 import mongoose from 'mongoose'
 import bcrypt from 'bcryptjs'
 import uniqueValidator from 'mongoose-unique-validator'
+import slug from 'mongoose-slug-generator'
+
 const Schema = mongoose.Schema
+mongoose.plugin(slug);
+
 const UserSchema = new Schema(
     {
         name:{
@@ -30,6 +34,11 @@ const UserSchema = new Schema(
             required: [true, 'Please add a password'],
             minlength: [6, 'Must be six characters long'],
             select: false
+        },
+        slug: {
+            type: String, 
+            slug: "name",
+            unique: true
         }
     },
     { toJSON: { virtuals: true }, toObject: { virtuals: true }, timestamps: true }
