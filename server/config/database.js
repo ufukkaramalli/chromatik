@@ -8,8 +8,6 @@ const DBconnection = async () => {
         })
         .then(console.log("Bağlantı Başarılı"))
         .catch(err => console.log(err))
-  
-    console.log(`MongoDB Connected: ${conn.connection.host}`)
 }
 
 export default DBconnection
