@@ -70,7 +70,7 @@ const routes = [
       BottomPlayer: StaticComponents.BottomPlayer
     },
     meta: {
-      title: 'Welcome | Chromatique'
+      title: `Welcome | ${process.env.VUE_APP_APPLICATION_NAME}`
     }
   },
   {
@@ -78,7 +78,7 @@ const routes = [
     name: 'Login',
     component: Login,
     meta: {
-      title: 'Login | Chromatique'
+      title: `Login | ${process.env.VUE_APP_APPLICATION_NAME}`
     },
     beforeEnter: (to, from, next) => {
       if (store.getters['auth/authenticated']) {
@@ -94,7 +94,7 @@ const routes = [
     name: 'Register',
     component: Register,
     meta: {
-      title: 'Register | Chromatique'
+      title: `Register | ${process.env.VUE_APP_APPLICATION_NAME}`
     },
     beforeEnter: (to, from, next) => {
       if (store.getters['auth/authenticated']) {
@@ -138,7 +138,7 @@ const routes = [
       BottomPlayer: StaticComponents.BottomPlayer
     },
     meta: {
-      title: 'Settings | Chromatique'
+      title: `Settings | ${process.env.VUE_APP_APPLICATION_NAME}`
     },
     beforeEnter: (to, from, next) => {
       if (!store.getters['auth/authenticated']) {
@@ -160,7 +160,7 @@ const routes = [
       BottomPlayer: StaticComponents.BottomPlayer
     },
     meta: {
-      title: 'Tracks | Chromatique'
+      title: `Tracks | ${process.env.VUE_APP_APPLICATION_NAME}`
     },
     beforeEnter: (to, from, next) => {
       if (!store.getters['auth/authenticated']) {
@@ -182,7 +182,7 @@ const routes = [
       BottomPlayer: StaticComponents.BottomPlayer
     },
     meta: {
-      title: 'Soundkits | Chromatique'
+      title: `Soundkits | ${process.env.VUE_APP_APPLICATION_NAME}`
     },
     beforeEnter: (to, from, next) => {
       if (!store.getters['auth/authenticated']) {
@@ -195,14 +195,18 @@ const routes = [
   },
   // Track Page
   {
-    path: '/:userSlug/:trackSlug',
+    path: '/:userSlug/:trackSlug/',
     name: 'TrackPage',
+    props: true,
     components: {
       default: TrackPage,
       Navigation: StaticComponents.Navigation,
       TopNav: StaticComponents.TopNav,
       SystemBar: StaticComponents.SystemBar,
       BottomPlayer: StaticComponents.BottomPlayer
+    },
+    meta: {
+      title: `Loading... | ${process.env.VUE_APP_APPLICATION_NAME}`
     }
   }
 ]

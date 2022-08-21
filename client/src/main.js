@@ -6,14 +6,9 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 import JsonViewer from 'vue-json-viewer'
-// import VueSocketIO from 'vue-socket.io'
 import VueResizeText from 'vue-resize-text'
 // import VueWindowSize from 'vue-window-size'
 
-// Vue.use(VueWindowSize)
-// Vue.use(new VueSocketIO({
-//   connection: process.env.VUE_APP_SOCKET_INSTANCE
-// }))
 Vue.use(JsonViewer)
 Vue.use(VueResizeText)
 
