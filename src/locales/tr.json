@@ -1,0 +1,58 @@
+{
+  "players" : {
+    "Recent": "Son Parçalar",
+    "Last24": "Son 24 Saat",
+    "MostLiked": "En Çok Beğenilen",
+    "MostStreamed": "En Çok Dinlenilen",
+    "Alltimes": "Tüm Zamanlar"
+  },
+  "user" : {
+    "headers" : {
+      "MyTracks" : "Benim Parçalarım"
+    }
+  },
+  "Login" : {
+    "headers" : {
+      "SignIn" : "Devam etmek için giriş yapın",
+      "Or": "Veya"
+    },
+    "buttons" : {
+      "Login": "Giriş Yap"
+    },
+    "placeholders" : {
+      "Password": "Şifre",
+      "Email": "E-posta"
+    }
+  },
+  "Form": {
+    "required": "Gerekli",
+    "min": "Minimum",
+    "max": "Maximum",
+    "character": "Karakter",
+    "invalidemail": "Geçersiz E-posta",
+    "NoSpaces": "Boşluklara izin verilmez"
+  },
+  "Register" : {
+    "headers" : {
+      "SignIn" : "Kaydı Tamamlayın"
+    },
+    "buttons" : {
+      "Register": "Kayıt Ol"
+    },
+    "placeholders" : {
+      "Password": "Şifre",
+      "ConfirmPassword": "Şifreyi Tekrarla",
+      "Email": "E-mail",
+      "Username": "Kullanıcı Adı"
+    },
+    "errors": {
+      "mailnotvalid": "Geçerli Bir E-posta Girin",
+      "mailrequired": "E-mail Boş Bırakılamaz",
+      "passwordrequired": "Parola Alanı Boş Bırakılamaz",
+      "cpasswordrequired": "Parola Doğrulama Alanı Boş Bırakılamaz",
+      "cpasswordnotmatch": "Parola eşleşmiyor",
+      "alphanumeric": "Sadece Alphanumeric Karakterler",
+      "acceptterms": "Devam etmek için kutuyu işaretleyin"
+    }  
+  }
+}

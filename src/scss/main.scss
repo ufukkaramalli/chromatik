@@ -1,0 +1,29 @@
+@import '@/scss/_variables.scss';
+@import '@/scss/_slides.scss';
+
+@font-face {
+    font-family: 'xxixregular';
+    src: url('./assets/fonts/xxix-webfont.woff2') format('woff2'),
+         url('./assets/fonts/xxix-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+.xxix-regular{
+    font-family: $header-logo-font-family;
+    &.login{
+      font-size: 50px;
+    }
+    &.text-shadow{
+      text-shadow: 4px -3px 1px var(--v-primary-base);
+    }
+}
+
+.routerLink{
+    color: whitesmoke !important;
+    text-decoration: none;
+  }
+  .routerLink:hover{
+    text-decoration: underline;
+  }

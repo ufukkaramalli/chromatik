@@ -1,0 +1,59 @@
+{
+  "players" : {
+    "Recent": "Recent Tracks",
+    "Last24": "Last 24 Hours",
+    "MostLiked": "Most Liked",
+    "MostStreamed": "Most Streamed",
+    "Alltimes": "All Times"
+  },
+  "user" : {
+    "headers" : {
+      "MyTracks" : "My Tracks"
+    }
+  },
+  "Login" : {
+    "headers" : {
+      "SignIn" : "Sign in to continue",
+      "Or": "OR"
+    },
+    "buttons" : {
+      "Login": "Login"
+    },
+    "placeholders" : {
+      "Password": "Password",
+      "Email": "E-mail"
+    } 
+  },
+  "Form": {
+    "required": "Required",
+    "min": "Minimum",
+    "max": "Maximum",
+    "character": "Character",
+    "invalidemail": "Invalid E-mail",
+    "NoSpaces": "No Spaces are Allowed"
+  },
+  "Register" : {
+    "headers" : {
+      "SignIn" : "Complete sign up"
+    },
+    "buttons" : {
+      "Register": "Sign Up"
+    },
+    "placeholders" : {
+      "Password": "Password",
+      "ConfirmPassword": "Confirm password",
+      "Email": "E-mail",
+      "Username": "Username"
+    },
+    "errors": {
+      "mailnotvalid": "Must be valid e-mail",
+      "mailrequired": "E-mail is required",
+      "passwordrequired": "Password is Required",
+      "cpasswordrequired": "Confirm Password is Required",
+      "cpasswordnotmatch": "Confirm Password is not match",
+      "alphanumeric": "Only Alphanumeric Characters",
+      "acceptterms": "Please check the box continue"
+    } 
+  }
+  
+}
