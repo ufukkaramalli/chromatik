@@ -3,6 +3,10 @@ FROM node:16-bullseye
 
 WORKDIR /app
 
+# Build tools ekle (bcrypt gibi native addon'lar için)
+RUN apt-get update && apt-get install -y python3 make g++ \
+    && rm -rf /var/lib/apt/lists/*
+
 # Paketleri yükle
 COPY package*.json ./
 RUN npm install
