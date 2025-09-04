@@ -18,8 +18,8 @@ services:
     ports:
       - "3000:80"
     environment:
-      VUE_APP_API_ADDRESS: http://backend:5000
-      VUE_APP_LOCAL_API_ADDRESS: http://backend:5000
+      VUE_APP_API_ADDRESS: /api
+      VUE_APP_LOCAL_API_ADDRESS: http://backend:5000/api
       VUE_APP_I18N_LOCALE: tr
       VUE_APP_I18N_FALLBACK_LOCALE: en
       VUE_APP_APPLICATION_NAME: CHROMATIK
