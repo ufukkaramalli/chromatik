@@ -10,10 +10,7 @@
   </v-app>
 </template>
 <style lang="scss">
-  @import '@/scss/main.scss';
-  .custom-class {
-    border-radius: $border-radius-root;
-  }
+  @use '@/scss/main.scss' as *;
 </style>
 <script>
 import { mapGetters } from 'vuex'

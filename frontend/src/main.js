@@ -1,41 +1,36 @@
-import Vue from 'vue'
+// src/main.js
+import { createApp } from 'vue'
 import App from './App.vue'
 import vuetify from './plugins/vuetify'
-import i18n from './i18n'
+import { i18n } from './i18n'
 import router from './router'
 import store from './store'
 import axios from 'axios'
 import JsonViewer from 'vue-json-viewer'
-// import VueSocketIO from 'vue-socket.io'
 import VueResizeText from 'vue-resize-text'
-// import VueWindowSize from 'vue-window-size'
 
-// Vue.use(VueWindowSize)
-// Vue.use(new VueSocketIO({
-//   connection: process.env.VUE_APP_SOCKET_INSTANCE
-// }))
-Vue.use(JsonViewer)
-Vue.use(VueResizeText)
-
+// Subscriber
 require('@/store/subscriber')
 
+// Axios baseURL ayarları
 if (process.env.NODE_ENV === 'production') {
   axios.defaults.baseURL = process.env.VUE_APP_API_ADDRESS
-  // console.log('Axios Production Base Url: ', axios.defaults.baseURL)
 } else if (process.env.NODE_ENV === 'development') {
   axios.defaults.baseURL = process.env.VUE_APP_LOCAL_API_ADDRESS
-  // console.log('Axios Development Base Url: ', axios.defaults.baseURL)
-  // console.log(process.env)
 }
 
-Vue.config.productionTip = false
+// Vue 3 createApp
+const app = createApp(App)
 
+// Pluginleri ekle
+app.use(vuetify)
+app.use(i18n)
+app.use(router)
+app.use(store)
+app.use(JsonViewer)
+app.use(VueResizeText)
+
+// Auth kontrolü
 store.dispatch('auth/attempt', localStorage.getItem('token')).then(() => {
-  new Vue({
-    vuetify,
-    i18n,
-    router,
-    store,
-    render: h => h(App)
-  }).$mount('#app')
+  app.mount('#app')
 })

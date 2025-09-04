@@ -1,5 +1,6 @@
-@import '@/scss/_variables.scss';
-@import '@/scss/_slides.scss';
+@use '@/scss/_variables.scss' as *;
+@use '@/scss/_slides.scss' as *;
+
 
 @font-face {
     font-family: 'xxixregular';
@@ -26,4 +27,8 @@
   }
   .routerLink:hover{
     text-decoration: underline;
+  }
+
+  .custom-class {
+    border-radius: $border-radius-root;
   }
