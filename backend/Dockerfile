@@ -1,22 +1,14 @@
-FROM node:18
+# Node 16 tabanlı backend
+FROM node:16-bullseye
 
-# Konteyner içinde çalışma dizinini ayarla
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# Sadece package.json ve package-lock.json kopyala
 COPY package*.json ./
+RUN npm install
 
-# Bağımlılıkları yükle, ama postinstall scriptlerini atla
-RUN npm install --ignore-scripts
-
-# Projenin geri kalanını kopyala
 COPY . .
 
-# Artık build edebiliriz
 RUN npm run build
 
-# Servis hangi portu dinleyecekse
 EXPOSE 5000
-
-# Konteyner çalıştığında başlatılacak komut
 CMD ["npm", "start"]
