@@ -5,7 +5,10 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - MONGO_URL=mongodb://mongo:27017/chromatik
+      PORT: 5000
+      NODE_ENV: production
+      JWT_SECRET: your_jwt_secret
+      MONGO_URI: mongodb://mongo:27017/chromatik
     depends_on:
       - mongo
 
@@ -14,6 +17,13 @@ services:
     container_name: frontend
     ports:
       - "3000:80"
+    environment:
+      VUE_APP_API_ADDRESS: http://backend:5000
+      VUE_APP_LOCAL_API_ADDRESS: http://backend:5000
+      VUE_APP_I18N_LOCALE: tr
+      VUE_APP_I18N_FALLBACK_LOCALE: en
+      VUE_APP_APPLICATION_NAME: CHROMATIK
+      VUE_APP_JWT_KEY: your_jwt_secret
     depends_on:
       - backend
 
