@@ -1,2 +1,2 @@
-# typescript-api
+# chromatik-api
  
