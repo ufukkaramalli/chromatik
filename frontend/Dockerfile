@@ -16,14 +16,9 @@ COPY . .
 # Vue projesini build et
 RUN npm run build
 
-# 2) Production aşaması (sadece statik dosyalar)
-FROM nginx:stable-alpine as production-stage
-
-# Build dosyalarını Nginx'e kopyala
+# 2) Serve with Nginx
+FROM nginx:stable-alpine AS production-stage
 COPY --from=build-stage /app/dist /usr/share/nginx/html
-
-# Port ayarı
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
-
-# Nginx başlat
 CMD ["nginx", "-g", "daemon off;"]
