@@ -10,7 +10,7 @@
   </v-app>
 </template>
 <style lang="scss">
-  @use '@/scss/main.scss' as *;
+  @use '@/scss/main.scss' as * ;
 </style>
 <script>
 import { mapGetters } from 'vuex'
