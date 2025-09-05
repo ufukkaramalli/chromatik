@@ -1,33 +1,43 @@
 services:
   backend:
-    build: ./backend
-    container_name: backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    container_name: chromatik-backend
     ports:
       - "5000:5000"
     environment:
+      JWT_SECRET: "your_jwt_secret"
+      NODE_ENV: "development"
+      MONGO_URI: "mongodb://mongo:27017/chromatik"
       PORT: 5000
-      NODE_ENV: production
-      JWT_SECRET: your_jwt_secret
-      MONGO_URI: mongodb://mongo:27017/chromatik
+    volumes:
+      - ./backend:/app
+    command: ["npx", "tsc-watch", "--onSuccess", "node ./dist/index.js"]
     depends_on:
       - mongo
 
   frontend:
-    build: ./frontend
-    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: chromatik-frontend
     ports:
-      - "3000:80"
+      - "8080:8080"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    command: ["npm", "run", "serve"]
     depends_on:
       - backend
 
   mongo:
     image: mongo:6
-    container_name: mongo
-    restart: always
+    container_name: chromatik-mongo
     ports:
       - "27017:27017"
     volumes:
-      - mongo_data:/data/db
+      - mongo-data:/data/db
 
 volumes:
-  mongo_data:
+  mongo-data:

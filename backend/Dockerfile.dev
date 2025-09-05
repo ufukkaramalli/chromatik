@@ -1,24 +1,18 @@
-# 1️⃣ Node LTS image
-FROM node:20
+FROM node:18
 
-# 2️⃣ Çalışma dizini
 WORKDIR /app
 
-# 3️⃣ package.json ve package-lock.json kopyala
-COPY package*.json ./
+# package.json ve package-lock.json’u ayrı ayrı kopyala
+COPY package.json package-lock.json ./
 
-# 4️⃣ Bağımlılıkları yükle
-RUN npm install
+# Dependencies’i yükle (postinstall tetiklenmez)
+RUN npm install --legacy-peer-deps --ignore-scripts
 
-# 5️⃣ Tüm src dosyalarını kopyala
+# TypeScript, ts-node, nodemon global
+RUN npm install -g typescript ts-node nodemon
+
+# Tüm kaynak dosyaları kopyala
 COPY . .
 
-# 6️⃣ Gerekli global paketler
-RUN npm install -g tsc-watch typescript
-
-# 7️⃣ Port
-EXPOSE 3000
-
-# 8️⃣ Development: tsc-watch ile hot-reload
-#    index.ts çalışacak
-CMD ["npx", "tsc-watch", "--onSuccess", "node ./dist/index.js"]
+# Hot-reload
+CMD ["nodemon", "--watch", "src", "--ext", "ts,js,json", "--exec", "ts-node", "src/index.ts"]

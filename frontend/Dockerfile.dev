@@ -1,0 +1,20 @@
+# 1️⃣ Node image
+FROM node:16 as build-stage
+
+# 2️⃣ Çalışma dizini
+WORKDIR /app
+
+# package.json ve package-lock.json kopyala
+COPY package.json package-lock.json ./
+
+# 4️⃣ Bağımlılıkları yükle
+RUN npm install
+
+# 5️⃣ Tüm frontend dosyalarını kopyala
+COPY . .
+
+# 6️⃣ Port
+EXPOSE 8080
+
+# 7️⃣ Development: Vue CLI hot-reload
+CMD ["npm", "run", "serve"]
