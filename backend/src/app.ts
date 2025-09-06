@@ -1,4 +1,4 @@
-import express, { Application, Express } from 'express';
+import express, { Application } from 'express';
 import mongoose from 'mongoose';
 import compression from 'compression';
 import cors from 'cors';
@@ -7,75 +7,80 @@ import IController from './interfaces/controller.interface';
 import ErrorMiddleware from './middleware/error.middleware';
 import helmet from 'helmet';
 import swaggerDocs from './utils/swagger';
+import logger, { requestLogger, errorLogger } from './utils/logger'; // logger import
+
 class App {
-    public express: Application;
-    public port: number;
-    public swagger: any; 
-    constructor(controllers: IController[], port: number){
-        this.express = express();
-        this.port = port
-        this.initializeSwagger(this.express, this.port);
-        this.initialiseDatabaseConnection();
-        this.initialiseMiddleware();
-        this.initialiseControllers(controllers);
-        this.initialiseErrorHandling();
+  public express: Application;
+  public port: number;
 
-    }
+  constructor(controllers: IController[], port: number) {
+    this.express = express();
+    this.port = port;
 
-    private initialiseMiddleware(): void {
-        console.log("Setting up Middleware...");
-        this.express.use(helmet());
-        this.express.use(cors());
-        this.express.use(morgan('dev'));
-        this.express.use(express.json());
-        this.express.use(express.urlencoded({ extended: false }));
-        this.express.use(compression());
-        console.log("Middleware setup complete.");
-    }
+    // Logger initialization (request + error logger)
+    this.initializeLogger();
 
-    private initialiseControllers(controllers: IController[]): void {
-        console.log("Setting up Controllers...");
-        /**
-         * @openapi
-         * /api:
-         *   get:
-         *     tags:
-         *      - "API Root"
-         *     description: "API Root Endpoint"
-         * 
-         */
-        controllers.forEach((controller: IController) =>{   
-            this.express.use('/api', controller.router);
-            console.log(`Controller ${controller.constructor.name} initialized.`);
-        })
-        console.log("All controllers have been set up.");
-    }
+    this.initializeSwagger(this.express, this.port);
+    this.initialiseDatabaseConnection();
+    this.initialiseMiddleware();
+    this.initialiseControllers(controllers);
+    this.initialiseErrorHandling();
+  }
 
-    private initialiseErrorHandling(): void {
-        console.log("Setting up Error Handling...");
-        this.express.use(ErrorMiddleware);
-        console.log("Error Handling setup complete.");
-    }
+  private initializeLogger(): void {
+    logger.info(`Logger initialized in ${process.env.NODE_ENV || 'development'} mode.`);
 
-    private initialiseDatabaseConnection(): void {
-        console.log("Connecting to MongoDB...");  
-        const { MONGO_URI } = process.env;
-        mongoose.set('strictQuery', true);
-        mongoose.connect(`${MONGO_URI}`)
-    }
+    // Request logging middleware
+    this.express.use(requestLogger);
 
-    private initializeSwagger(app: Application, port: number): void {
-        console.log("Setting up Swagger...");
-        swaggerDocs(app, port);
-        console.log("Swagger setup complete.");
-    }
+    // Error logging middleware
+    this.express.use(errorLogger);
+  }
 
-    public listen(): void {
-        this.express.listen(this.port, () => {
-            console.log(`App listening on port http://localhost:${this.port}`);
-        })
-    }
+  private initialiseMiddleware(): void {
+    logger.info("Setting up Middleware...");
+    this.express.use(helmet());
+    this.express.use(cors());
+    this.express.use(morgan('dev'));
+    this.express.use(express.json());
+    this.express.use(express.urlencoded({ extended: false }));
+    this.express.use(compression());
+    logger.info("Middleware setup complete.");
+  }
+
+  private initialiseControllers(controllers: IController[]): void {
+    logger.info("Setting up Controllers...");
+    controllers.forEach((controller: IController) => {
+      this.express.use('/api', controller.router);
+      logger.info(`Controller ${controller.constructor.name} initialized.`);
+    });
+    logger.info("All controllers have been set up.");
+  }
+
+  private initialiseErrorHandling(): void {
+    logger.info("Setting up Error Handling...");
+    this.express.use(ErrorMiddleware);
+    logger.info("Error Handling setup complete.");
+  }
+
+  private initialiseDatabaseConnection(): void {
+    logger.info("Connecting to MongoDB...");
+    const { MONGO_URI } = process.env;
+    mongoose.set('strictQuery', true);
+    mongoose.connect(`${MONGO_URI}`);
+  }
+
+  private initializeSwagger(app: Application, port: number): void {
+    logger.info("Setting up Swagger...");
+    swaggerDocs(app, port);
+    logger.info("Swagger setup complete.");
+  }
+
+  public listen(): void {
+    this.express.listen(this.port, () => {
+      logger.info(`App listening on port http://localhost:${this.port}`);
+    });
+  }
 }
 
-
-export default App
+export default App;
