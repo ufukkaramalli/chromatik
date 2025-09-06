@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node dist/index.js",
-    "dev": "tsc-watch --onSuccess \"node ./dist/index.js\"",
+    "dev": "tsc-watch --onSuccess \"node ./dist/src/index.js\"",
     "build": "tsc",
     "postinstall": "npm run build"
   },
@@ -30,6 +30,8 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.8",
     "bcrypt": "^5.0.1",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
@@ -42,14 +44,16 @@
     "module-alias": "^2.2.2",
     "mongoose": "^6.0.12",
     "mongoose-slug-generator": "^1.0.4",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   },
   "_moduleAliases": {
-    "@/controller": "dist/controller",
-    "@/utils": "dist/utils",
-    "@/middleware": "dist/middleware",
-    "@/service": "dist/service",
-    "@/model": "dist/model",
-    "@/interfaces": "dist/interfaces"
+    "@/controller": "dist/src/controller",
+    "@/utils": "dist/src/utils",
+    "@/middleware": "dist/src/middleware",
+    "@/service": "dist/src/service",
+    "@/model": "dist/src/model/",
+    "@/interfaces": "dist/src/interfaces"
   }
 }
