@@ -1,20 +1,25 @@
-import jwt from 'jsonwebtoken';
-import User from  '.././interfaces/user.interface';
-import Token from '.././interfaces/token.interface';
+import jwt, { SignOptions, VerifyErrors, VerifyOptions } from 'jsonwebtoken';
+import User from '../interfaces/user.interface';
+import Token from '../interfaces/token.interface';
 
 export const createToken = (user: User): string => {
-    return jwt.sign({id: user._id}, process.env.JWT_SECRET as jwt.Secret, {expiresIn: '1d'})
-}
+  const payload = { id: user._id };
+  const secret = process.env.JWT_SECRET as string;
+  const options: SignOptions = { algorithm: 'HS256', expiresIn: '1d' };
 
-export const verifyToken = async (
-    token: string
-) : Promise<jwt.VerifyErrors | Token> => {
-    return new Promise((resolve, reject) => {
-        jwt.verify(token, process.env.JWT_SECRET as jwt.Secret, (err, payload) => {
-            if(err) return reject(err);
-            resolve(payload as Token)
-        })
-    })
-}
+  return jwt.sign(payload, secret, options);
+};
 
-export default { createToken, verifyToken }
+export const verifyToken = async (token: string): Promise<Token> => {
+  const secret = process.env.JWT_SECRET as string;
+  const options: VerifyOptions = { algorithms: ['HS256'] };
+
+  return new Promise((resolve, reject) => {
+    jwt.verify(token, secret, options, (err: VerifyErrors | null, payload) => {
+      if (err) return reject(err);
+      resolve(payload as Token);
+    });
+  });
+};
+
+export default { createToken, verifyToken };
