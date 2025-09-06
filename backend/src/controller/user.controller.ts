@@ -8,6 +8,7 @@ import authenticated from '@/middleware/authenticated.middleware';
 import IUser from '@/interfaces/user.interface';
 
 class UserController implements IController {
+    
     public path = '/user';
     public router = Router();
     private UserService = new UserService();
@@ -31,6 +32,43 @@ class UserController implements IController {
         this.router.use(`${this.path}`,authenticated)
         this.router.get(`${this.path}`,this.getUser)
     }
+/**
+ * @openapi
+ * /api/user/register:
+ *   post:
+ *     tags:
+ *       - User
+ *     summary: Register a new user
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/createUserInput'
+ *     responses:
+ *       '201':
+ *         description: Successfully registered
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/createUserResponse'
+ *       '409':
+ *         description: Conflict
+ *       '400':
+ *         description: Bad Request
+ */
+
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     createUserResponse:
+ *       type: object
+ *       properties:
+ *         token:
+ *           type: string
+ *           example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+ */
 
     private register = async (
         req: Request<{},{},IUser>,
@@ -49,7 +87,20 @@ class UserController implements IController {
             next(new HttpException(400, error.message))
         }
     }
-
+    /**
+     * @openapi
+     * /api/user/login:
+     *   post:
+     *     tags:
+     *      - "User"
+     *     description: 
+     *     responses:
+     *          200:
+     *              description: Returns the current logged in user
+     *          401:
+     *             description: Unauthorized
+     * 
+     */
     private login = async (
         req: Request,
         res: Response,
@@ -63,7 +114,25 @@ class UserController implements IController {
             next(new HttpException(400, error.message))
         }
     }
-
+    /**
+ * @openapi
+ * /api/user:
+ *   get:
+ *     tags:
+ *       - User
+ *     summary: Get currently logged in user
+ *     security:
+ *       - bearerAuth: []    # JWT veya token auth
+ *     responses:
+ *       '200':
+ *         description: Returns the current logged in user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       '401':
+ *         description: Unauthorized
+ */
     private getUser = (
         req: Request,
         res: Response,

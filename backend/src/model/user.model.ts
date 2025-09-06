@@ -5,6 +5,77 @@ import IUser from '@/interfaces/user.interface';
 import slug from 'mongoose-slug-generator'
 
 mongoose.plugin(slug)
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     createUserInput:
+ *       type: object
+ *       required:
+ *         - name
+ *         - email
+ *         - password
+ *       properties:
+ *         name:
+ *           type: string
+ *           default: John Doe
+ *         email:
+ *           type: string
+ *           default: default@chromatik.com
+ *         password:
+ *           type: string
+ *           default: password123
+ *         isValidPassword:
+ *           type: string
+ *           default: password123
+ *     
+ *     User:
+ *       type: object
+ *       properties:
+ *         _id:
+ *           type: string
+ *           example: "68bc256a54c0705e8e2d0c26"
+ *         name:
+ *           type: string
+ *           example: "Ufuk Karamalli"
+ *         email:
+ *           type: string
+ *           example: "default@chromatik.com"
+ *         role:
+ *           type: string
+ *           example: "producer"
+ *         photoUrl:
+ *           type: string
+ *           example: "no-photo-user.jpg"
+ *         language:
+ *           type: string
+ *           example: "en"
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *           example: "2025-09-06T12:13:30.973Z"
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ *           example: "2025-09-06T12:13:30.973Z"
+ *         slug:
+ *           type: string
+ *           example: "ufuk-karamalli"
+ *         tracks:
+ *           type: array
+ *           items:
+ *             type: string
+ *           example: []
+ *         soundkits:
+ *           type: array
+ *           items:
+ *             type: string
+ *           example: []
+ *         id:
+ *           type: string
+ *           example: "68bc256a54c0705e8e2d0c26"
+ */
+
 
 const UserSchema = new Schema(
     {
