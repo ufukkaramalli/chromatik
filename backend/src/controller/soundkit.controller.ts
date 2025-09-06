@@ -1,13 +1,13 @@
 import { NextFunction, Request, Response, Router } from "express";
-import IController from "@/interfaces/controller.interface";
-import HttpException from "@/utils/exceptions/http.exception";
-import validationMiddleware from "@/middleware/validation.middleware";
-import validate from '@/utils/validation/soundkit.validation'
-import SoundkitService from '@/service/soundkit.service';
-import authenticated from '@/middleware/authenticated.middleware';
-import roleMiddleware from "@/middleware/role.middleware";
+import IController from '../interfaces/controller.interface';
+import HttpException from '../utils/exceptions/http.exception';
+import validationMiddleware from '../middleware/validation.middleware';
+import validate from '../utils/validation/soundkit.validation'
+import SoundkitService from '.././service/soundkit.service';
+import authenticated from '.././middleware/authenticated.middleware';
+import roleMiddleware from '../middleware/role.middleware';
 import { Types } from "mongoose";
-import ISoundkit from "@/interfaces/soundkit.interface";
+import ISoundkit from '../interfaces/soundkit.interface';
 
 class SoundkitController implements IController {
     public path = '/soundkit';

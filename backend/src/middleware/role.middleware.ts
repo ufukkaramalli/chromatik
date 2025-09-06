@@ -1,5 +1,5 @@
-import IUser from "@/interfaces/user.interface";
-import HttpException from "@/utils/exceptions/http.exception";
+import IUser from '.././interfaces/user.interface';
+import HttpException from '.././utils/exceptions/http.exception';
 import { Request, Response, NextFunction } from "express";
 
 async function roleMiddleware(

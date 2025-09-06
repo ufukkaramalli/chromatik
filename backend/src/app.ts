@@ -3,10 +3,10 @@ import mongoose from 'mongoose';
 import compression from 'compression';
 import cors from 'cors';
 import morgan from 'morgan';
-import IController from '@/interfaces/controller.interface';
-import ErrorMiddleware from '@/middleware/error.middleware';
+import IController from './interfaces/controller.interface';
+import ErrorMiddleware from './middleware/error.middleware';
 import helmet from 'helmet';
-import swaggerDocs from '@/utils/swagger';
+import swaggerDocs from './utils/swagger';
 class App {
     public express: Application;
     public port: number;

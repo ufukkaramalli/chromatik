@@ -1,5 +1,5 @@
 import {Schema, model} from 'mongoose'
-import ISoundkit from '@/interfaces/soundkit.interface';
+import ISoundkit from '.././interfaces/soundkit.interface';
 
 const soundkitSchema = new Schema(
     {

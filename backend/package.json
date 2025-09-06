@@ -4,11 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-  "test": "echo \"Error: no test specified\" && exit 1",
-  "start": "node dist/src/index.js",
-  "dev": "ts-node-dev --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
-  "build": "tsc",
-  "postinstall": "npm run build"
+    "dev": "ts-node-dev --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
+    "build": "tsc",
+    "start": "node dist/src/index.js"
   },
   "keywords": [],
   "author": "",
@@ -49,13 +47,5 @@
     "morgan": "^1.10.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
-  },
-  "_moduleAliases": {
-    "@/controller": "dist/src/controller",
-    "@/utils": "dist/src/utils",
-    "@/middleware": "dist/src/middleware",
-    "@/service": "dist/src/service",
-    "@/model": "dist/src/model/",
-    "@/interfaces": "dist/src/interfaces"
   }
 }

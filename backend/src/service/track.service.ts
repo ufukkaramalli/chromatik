@@ -1,5 +1,5 @@
-import TrackModel from '@/model/track.model';
-import ITrack from '@/interfaces/track.interface'
+import TrackModel from '.././model/track.model';
+import ITrack from '.././interfaces/track.interface'
 
 class TrackService {
     private track = TrackModel;

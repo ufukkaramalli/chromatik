@@ -1,11 +1,11 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import IController from '@/interfaces/controller.interface';
-import HttpException from '@/utils/exceptions/http.exception';
-import validationMiddleware from '@/middleware/validation.middleware';
-import validate from '@/utils/validation/user.validation';
-import UserService from '@/service/user.service';
-import authenticated from '@/middleware/authenticated.middleware';
-import IUser from '@/interfaces/user.interface';
+import IController from '.././interfaces/controller.interface';
+import HttpException from '.././utils/exceptions/http.exception';
+import validationMiddleware from '.././middleware/validation.middleware';
+import validate from '.././utils/validation/user.validation';
+import UserService from '.././service/user.service';
+import authenticated from '.././middleware/authenticated.middleware';
+import IUser from '.././interfaces/user.interface';
 
 class UserController implements IController {
     

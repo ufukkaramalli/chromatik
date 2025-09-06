@@ -1,7 +1,7 @@
-import SoundkitModel from "@/model/soundkit.model";
-import ISoundkit from "@/interfaces/soundkit.interface";
+import SoundkitModel from '.././model/soundkit.model';
+import ISoundkit from '.././interfaces/soundkit.interface';
 import { Types } from "mongoose";
-import { IUpdateOne } from "@/interfaces/mongoose.interface";
+import { IUpdateOne } from '.././interfaces/mongoose.interface';
 
 
 

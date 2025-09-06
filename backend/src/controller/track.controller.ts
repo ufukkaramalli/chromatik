@@ -1,11 +1,11 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import IController from '@/interfaces/controller.interface';
-import HttpException from '@/utils/exceptions/http.exception';
-import validationMiddleware from '@/middleware/validation.middleware';
-import validate from '@/utils/validation/track.validation';
-import TrackService from '@/service/track.service';
-import authenticated from '@/middleware/authenticated.middleware';
-import roleMiddleware from '@/middleware/role.middleware';
+import IController from '.././interfaces/controller.interface';
+import HttpException from '.././utils/exceptions/http.exception';
+import validationMiddleware from '.././middleware/validation.middleware';
+import validate from '.././utils/validation/track.validation';
+import TrackService from '.././service/track.service';
+import authenticated from '.././middleware/authenticated.middleware';
+import roleMiddleware from '.././middleware/role.middleware';
 
 class TrackController implements IController {
     public path = '/track';
