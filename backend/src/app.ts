@@ -7,7 +7,7 @@ import IController from './interfaces/controller.interface';
 import ErrorMiddleware from './middleware/error.middleware';
 import helmet from 'helmet';
 import swaggerDocs from './utils/swagger';
-import logger, { requestLogger, errorLogger } from './utils/logger'; // logger import
+import logger, { requestResponseLogger, errorLogger } from './utils/logger';
 
 class App {
   public express: Application;
@@ -17,7 +17,7 @@ class App {
     this.express = express();
     this.port = port;
 
-    // Logger initialization (request + error logger)
+    // Logger initialization
     this.initializeLogger();
 
     this.initializeSwagger(this.express, this.port);
@@ -30,8 +30,8 @@ class App {
   private initializeLogger(): void {
     logger.info(`Logger initialized in ${process.env.NODE_ENV || 'development'} mode.`);
 
-    // Request logging middleware
-    this.express.use(requestLogger);
+    // Request + Response logging middleware
+    this.express.use(requestResponseLogger);
 
     // Error logging middleware
     this.express.use(errorLogger);
@@ -41,7 +41,7 @@ class App {
     logger.info("Setting up Middleware...");
     this.express.use(helmet());
     this.express.use(cors());
-    this.express.use(morgan('dev'));
+    this.express.use(morgan('dev')); // mevcut bırakıldı
     this.express.use(express.json());
     this.express.use(express.urlencoded({ extended: false }));
     this.express.use(compression());

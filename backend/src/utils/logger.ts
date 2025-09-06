@@ -1,3 +1,4 @@
+// src/utils/logger.ts
 import { Request, Response, NextFunction } from 'express';
 import { createLogger, format, transports } from 'winston';
 import chalk from 'chalk';
@@ -55,7 +56,7 @@ const requestRotateTransport = new DailyRotateFile({
 
 // Logger instance
 const logger = createLogger({
-  level: 'info',
+  level: process.env.NODE_ENV === 'production' ? 'info' : 'debug',
   format:
     process.env.NODE_ENV === 'production'
       ? prodFormat
@@ -68,15 +69,49 @@ const logger = createLogger({
   ],
 });
 
-// Request logging middleware
-export const requestLogger = (req: Request, res: Response, next: NextFunction) => {
-  logger.info(`HTTP ${req.method} ${req.url}`);
+// ----- Request/Response Logger Middleware -----
+export const requestResponseLogger = (req: Request, res: Response, next: NextFunction) => {
+  const start = Date.now();
+
+  // Orijinal res.send metodunu kaydet
+  const originalSend = res.send;
+
+  // Override res.send
+  res.send = function (body?: any): Response {
+    const duration = Date.now() - start;
+    const messageParts = [
+      `${req.method} ${req.originalUrl}`,
+      `Status: ${res.statusCode}`,
+      `Duration: ${duration}ms`,
+    ];
+
+    if (process.env.NODE_ENV !== 'production') {
+      // Dev ortamında response body loglanır
+      messageParts.push(`Response: ${JSON.stringify(body)}`);
+    }
+
+    logger.info(messageParts.join(' | '));
+
+    return originalSend.call(this, body);
+  };
+
   next();
 };
 
-// Error logging middleware
+// ----- Error Logger Middleware -----
 export const errorLogger = (err: any, req: Request, res: Response, next: NextFunction) => {
-  logger.error(`${err.message}`);
+  const messageParts = [
+    `${req.method} ${req.originalUrl}`,
+    `Status: ${res.statusCode}`,
+    `Message: ${err.message}`,
+  ];
+
+  if (err.stack) {
+    messageParts.push(`Stack: ${err.stack}`);
+  }
+
+  logger.error(messageParts.join(' | '));
+
   next(err);
 };
 
