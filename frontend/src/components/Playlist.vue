@@ -1,13 +1,13 @@
 <template>
   <!-- START: MINI PLAYER COMPONENT -->
   <v-row>
-    <template v-if="tracks">
+    <template v-if="tracks && tracks.length">
       <v-col
         cols="12"
-        class="display-2 font-weight-black text-uppercase py-0 mt-1 d-flex align-center"
+        class="text-h5 font-weight-bold text-uppercase py-0 mt-1 d-flex align-center"
       >
         <slot name="title"></slot>
-        <v-divider class="mx-2" vertical inset></v-divider>
+        <v-divider class="mx-2" vertical></v-divider>
         <slot name="subtitle"></slot>
       </v-col>
 
@@ -25,7 +25,7 @@
         lg="2"
       >
         <transition name="slide-fade" appear>
-          <box-player
+          <BoxPlayer
             :track-index="index"
             btn-color="primary"
             :get-track="track"
@@ -41,7 +41,7 @@
     <template v-else>
       <v-col
         cols="12"
-        class="d-flex align-center justify-center display-2 text-uppercase py-0 mt-1"
+        class="d-flex align-center justify-center text-h5 text-uppercase py-0 mt-1"
       >
         <v-progress-circular
           :size="60"
@@ -55,40 +55,26 @@
   <!-- END: MINI PLAYER COMPONENT -->
 </template>
 
-<script>
+<script setup>
 import { computed } from 'vue'
 import { useStore } from 'vuex'
 import BoxPlayer from './Audio/BoxPlayer.vue'
 
-export default {
-  name: 'Playlist',
-  components: {
-    BoxPlayer
-  },
-  props: {
-    tracks: {
-      type: Array,
-      required: true
-    }
-  },
-  setup(props) {
-    const store = useStore()
-
-    const getCurrentTrack = computed(() => store.getters['track/GET_CURRENT_TRACK'])
-    const getPlaying = computed(() => store.getters['track/GET_PLAYING'])
-    const getIsLoading = computed(() => store.getters['track/GET_IS_LOADING'])
-
-    const eventFromBoxPlayer = () => {
-      store.commit('track/SET_CURRENT_PLAYLIST', props.tracks)
-    }
-
-    return {
-      getCurrentTrack,
-      getPlaying,
-      getIsLoading,
-      eventFromBoxPlayer
-    }
+const props = defineProps({
+  tracks: {
+    type: Array,
+    required: true
   }
+})
+
+const store = useStore()
+
+const getCurrentTrack = computed(() => store.getters['track/GET_CURRENT_TRACK'])
+const getPlaying = computed(() => store.getters['track/GET_PLAYING'])
+const getIsLoading = computed(() => store.getters['track/GET_IS_LOADING'])
+
+const eventFromBoxPlayer = () => {
+  store.commit('track/SET_CURRENT_PLAYLIST', props.tracks)
 }
 </script>
 

@@ -1,28 +1,27 @@
 <template>
-    <v-main>
-        <RegisterForm>
-            <template #app-name>
-                <h1 class="font-weight-regular text-center xxix-regular login text-shadow">
-                {{appName}}
-                </h1>
-            </template>
-            <template #default>
-                {{$t('Register.headers.SignIn')}}
-            </template>
-        </RegisterForm>
-    </v-main>
+  <v-main>
+    <RegisterForm>
+      <!-- App name -->
+      <template #app-name>
+        <h1 class="font-weight-regular text-center xxix-regular login text-shadow">
+          {{ appName }}
+        </h1>
+      </template>
+
+      <!-- Default header -->
+      <template #default>
+        {{ $t('Register.headers.SignUp') }}
+      </template>
+    </RegisterForm>
+  </v-main>
 </template>
-<script>
-import { mapGetters } from 'vuex'
+
+<script setup>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
 import RegisterForm from '@/components/Forms/RegisterForm.vue'
-export default {
-  components: {
-    RegisterForm
-  },
-  computed: {
-    ...mapGetters({
-      appName: 'getAppName'
-    })
-  }
-}
+
+const store = useStore()
+
+const appName = computed(() => store.getters['getAppName'])
 </script>

@@ -1,69 +1,66 @@
 <template>
-<v-main>
+  <v-main>
     <LoginForm>
+      <!-- App name -->
       <template #app-name>
         <h1 class="font-weight-regular text-center xxix-regular login text-shadow">
-          {{appName}}
+          {{ appName }}
         </h1>
       </template>
+
+      <!-- Default header -->
       <template #default>
-        {{$t('Login.headers.SignIn')}}
+        {{ $t('Login.headers.SignIn') }}
       </template>
+
+      <!-- Social buttons -->
       <template #social>
-        <v-btn large icon tile>
-          <v-icon>mdi-twitter</v-icon>
-        </v-btn>
-        <v-btn large icon tile>
-          <v-icon>mdi-facebook</v-icon>
-        </v-btn>
-        <v-btn large icon tile>
-          <v-icon>mdi-soundcloud</v-icon>
-        </v-btn>
-        <v-btn large icon tile>
-          <v-icon>mdi-apple</v-icon>
-        </v-btn>
+        <v-btn large icon tile><v-icon>mdi-twitter</v-icon></v-btn>
+        <v-btn large icon tile><v-icon>mdi-facebook</v-icon></v-btn>
+        <v-btn large icon tile><v-icon>mdi-soundcloud</v-icon></v-btn>
+        <v-btn large icon tile><v-icon>mdi-apple</v-icon></v-btn>
       </template>
+
+      <!-- Sign up section -->
       <template #another>
         <v-col cols="11" md="5" lg="4" class="d-flex align-center justify-space-between pa-0 mt-9">
-          <v-divider></v-divider>
+          <v-divider />
         </v-col>
         <v-col cols="11" md="5" lg="4" class="d-flex align-center justify-center pa-0 mt-8">
-          Don't have an account?
+          {{ $t('Login.headers.NoAccount') || "Don't have an account?" }}
         </v-col>
         <v-col cols="11" md="5" lg="4" class="d-flex align-center justify-center pa-0 mt-8">
-          <v-btn block color="primary" @click="RegisterButton">Sign Up</v-btn>
+          <v-btn block color="primary" @click="goRegister">
+            {{ $t('Login.buttons.SignUp') || "Sign Up" }}
+          </v-btn>
         </v-col>
       </template>
     </LoginForm>
   </v-main>
 </template>
-<script>
-import { mapGetters } from 'vuex'
+
+<script setup>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 import LoginForm from '@/components/LogInForm.vue'
-export default {
-  components: {
-    LoginForm
-  },
-  computed: {
-    ...mapGetters({
-      appName: 'getAppName'
-    })
-  },
-  methods: {
-    RegisterButton () {
-      this.$router.replace({
-        name: 'Register'
-      })
-    }
-  }
+
+const store = useStore()
+const router = useRouter()
+
+const appName = computed(() => store.getters['getAppName'])
+
+const goRegister = () => {
+  router.replace({ name: 'Register' })
 }
 </script>
-<style lang="scss" scoped>
+
+<style scoped lang="scss">
 .button {
-  &:hover{
+  &:hover {
     text-decoration: underline !important;
   }
-  &:focus{
+  &:focus {
     outline: none !important;
   }
 }

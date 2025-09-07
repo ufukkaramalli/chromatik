@@ -21,14 +21,15 @@ export default {
   },
   actions: {
     async logIn({ dispatch }, credentials) {
-      const response = await axios.post('auth/signin', credentials)
+      const response = await axios.post('user/login', credentials)
+      console.log(response.data)
       return dispatch('attempt', response.data.token)
     },
     async attempt({ commit, state }, token) {
       if (token) commit('SET_TOKEN', token)
       if (!state.token) return
       try {
-        const response = await axios.get('auth/me')
+        const response = await axios.get('user')
         commit('SET_USER', response.data)
       } catch (e) {
         commit('SET_TOKEN', null)

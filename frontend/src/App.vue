@@ -9,12 +9,15 @@
     <router-view name="BottomPlayer"></router-view>
   </v-app>
 </template>
+
 <style lang="scss">
-  @use '@/scss/main.scss' as * ;
+@use '@/scss/main.scss' as *;
 </style>
+
 <script>
 import { mapGetters } from 'vuex'
 import store from '@/store'
+
 export default {
   name: 'App',
   data: () => ({
@@ -28,36 +31,56 @@ export default {
     })
   },
   watch: {
-    '$route' (to, from) {
-      document.title = to.meta.title
-      if (this.transitionName === 'slide-left') {
-        this.transitionName = 'slide-right'
-      } else {
-        this.transitionName = 'slide-left'
-      }
+    $route(to, from) {
+      document.title = to.meta?.title || 'Chromatique'
+      this.transitionName =
+        this.transitionName === 'slide-left' ? 'slide-right' : 'slide-left'
     },
-    'getAudioElement' (to, from) {
-      this.getAudioElement.addEventListener('play', function (event) {
-        store.commit('track/SET_IS_PLAYING', true)
-      })
-      this.getAudioElement.addEventListener('pause', function (event) {
-        store.commit('track/SET_IS_PLAYING', false)
-      })
-      this.getAudioElement.addEventListener('waiting', (event) => {
-        // console.log('waiting')
-      })
-      this.getAudioElement.addEventListener('timeupdate', (event) => {
-        function sToTime (t) {
-          return padZero(parseInt((t / (60)) % 60)) + ':' + padZero(parseInt((t) % 60))
+    getAudioElement: {
+      immediate: true,
+      handler(newEl, oldEl) {
+        if (!newEl) return
+
+        // Öncekileri temizle
+        if (oldEl) {
+          oldEl.replaceWith(oldEl.cloneNode(true))
         }
-        function padZero (v) {
-          return (v < 10) ? '0' + v : v
-        }
-        store.commit('track/SET_CURRENT_TIME', sToTime(this.getAudioElement.currentTime))
-      })
-      this.getAudioElement.addEventListener('ended', (event) => {
-        store.dispatch('track/SET_NEXT_TRACK')
-      })
+
+        newEl.addEventListener('play', () => {
+          store.commit('track/SET_IS_PLAYING', true)
+        })
+
+        newEl.addEventListener('pause', () => {
+          store.commit('track/SET_IS_PLAYING', false)
+        })
+
+        newEl.addEventListener('waiting', () => {
+          // buffer loading
+        })
+
+        newEl.addEventListener('timeupdate', () => {
+          store.commit(
+            'track/SET_CURRENT_TIME',
+            this.sToTime(newEl.currentTime)
+          )
+        })
+
+        newEl.addEventListener('ended', () => {
+          store.dispatch('track/SET_NEXT_TRACK')
+        })
+      }
+    }
+  },
+  methods: {
+    padZero(v) {
+      return v < 10 ? '0' + v : v
+    },
+    sToTime(t) {
+      return (
+        this.padZero(parseInt((t / 60) % 60)) +
+        ':' +
+        this.padZero(parseInt(t % 60))
+      )
     }
   }
 }
