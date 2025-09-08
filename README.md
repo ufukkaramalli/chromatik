@@ -1,50 +1,61 @@
 # Chromatik
 
-A modern **beat marketplace** inspired by the *Chromatic Scale* — flexible, expressive, creator‑first.
+A modern **beat marketplace** inspired by the *Chromatic Scale* — flexible, expressive, creator-first.
 
-> ⚠️ **Docker note:** The previous Docker config wasn’t correct. Below is a **minimal, working dev setup** (monorepo) for **frontend @ 8080** and **backend @ 5000**. If you hit an edge‑case, use the Local Quickstart and open an issue with logs.
+---
 
-**Monorepo layout**
+## Monorepo Layout
 ```
 chromatik/
-  apps/
-    frontend/   # Vue 3 + Vite + Pinia
-    backend/    # Node.js + Express + MongoDB
-  docker-compose.yml
+  frontend/    # Vue 3 + Vite + Vuetify + Pinia
+  backend/     # Node.js + Express + MongoDB
+  docker-compose.dev.yml
 ```
 
-## Quickstart — Docker (dev) ✅
-1) Make sure ports **8080** and **5000** are free.  
-2) Files included in this repo (download from links below if needed):
-   - `docker-compose.yml`
-   - `apps/frontend/Dockerfile` (Vite dev on 8080, HMR ready)
-   - `apps/backend/Dockerfile`  (Express dev on 5000)
-   - `apps/frontend/vite.config.ts` (locks 8080 + host)
-3) Run:
-```bash
-docker compose up --build
-```
-Open **http://localhost:8080** (frontend) and **http://localhost:5000/api** (backend base path).
+---
 
-> If your frontend can’t reach the API, confirm: `VITE_API_BASE_URL=http://localhost:5000/api` and CORS `CLIENT_ORIGIN=http://localhost:8080` on backend.
+## 🚀 Quickstart — Docker (dev)
+1. Make sure ports **8080** (frontend) and **5000** (backend) are free.  
+2. Required files already exist in this repo:  
+   - `docker-compose.dev.yml`  
+   - `frontend/Dockerfile.dev` (Vite dev server with HMR)  
+   - `backend/Dockerfile.dev`  (Express dev server with hot-reload)  
+   - `frontend/vite.config.js` (fixed port/proxy to backend)  
+3. Run:
+   ```bash
+   docker compose -f docker-compose.dev.yml up --build
+   ```
+4. Open:  
+   - **Frontend:** http://localhost:8080  
+   - **Backend:** http://localhost:5000/api  
 
-## Quickstart — Local
+> If the frontend cannot reach the API, confirm:  
+> - `VITE_API_ADDRESS=/api` in `frontend/.env.development`  
+> - `PORT=5000` and `CORS` config in `backend/.env.development`
+
+---
+
+## 💻 Quickstart — Local (without Docker)
 ```bash
 # Backend (terminal A)
-cd apps/backend
-npm i
+cd backend
+npm install
 npm run dev
 
 # Frontend (terminal B)
-cd apps/frontend
-npm i
+cd frontend
+npm install
 npm run dev -- --host --port 8080
 ```
 Then open **http://localhost:8080**.
 
-## Tech
-**Frontend:** Vue 3 · Vite · Pinia  
-**Backend:** Node.js · Express · MongoDB · JWT
+---
 
-## Why “Chromatik”?
-The chromatic scale moves in half‑steps across all tones — a simple metaphor for **freedom and nuance** in creation and licensing.
+## 🛠️ Tech Stack
+- **Frontend:** Vue 3 · Vite · Vuetify · Pinia · Vuex  
+- **Backend:** Node.js · Express · MongoDB · JWT · ts-node-dev  
+
+---
+
+## 🎶 Why “Chromatik”?
+The chromatic scale moves in half-steps across all tones — a metaphor for **freedom and nuance** in creation and licensing.

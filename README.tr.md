@@ -1,50 +1,61 @@
 # Chromatik
 
-*Kromatik Dizi*’den ilham alan modern bir **beat pazaryeri** — esnek, ifade gücü yüksek, üretici odaklı.
+*Chromatic Scale*’den esinlenilmiş modern bir **beat pazaryeri** — esnek, ifade özgürlüğü yüksek, üreticiyi öne çıkaran bir platform.
 
-> ⚠️ **Docker notu:** Önceki Docker yapılandırması doğru değildi. Aşağıda **çalışan, minimal bir geliştirme kurulumu** (monorepo) yer alıyor: **frontend 8080**, **backend 5000**. Sorun yaşarsanız Lokal Başlangıç’ı kullanın ve loglarla issue açın.
+---
 
-**Monorepo yapısı**
+## Monorepo Yapısı
 ```
 chromatik/
-  apps/
-    frontend/   # Vue 3 + Vite + Pinia
-    backend/    # Node.js + Express + MongoDB
-  docker-compose.yml
+  frontend/    # Vue 3 + Vite + Vuetify + Pinia
+  backend/     # Node.js + Express + MongoDB
+  docker-compose.dev.yml
 ```
 
-## Hızlı Başlangıç — Docker (geliştirme) ✅
-1) **8080** ve **5000** portlarının boş olduğundan emin olun.  
-2) Bu depoda bulunan dosyalar (gerekirse aşağıdaki linklerden indirin):
-   - `docker-compose.yml`
-   - `apps/frontend/Dockerfile` (Vite dev 8080, HMR hazır)
-   - `apps/backend/Dockerfile`  (Express dev 5000)
-   - `apps/frontend/vite.config.ts` (8080 ve host sabit)
-3) Çalıştırın:
-```bash
-docker compose up --build
-```
-**http://localhost:8080** (frontend) ve **http://localhost:5000/api** (backend temel path) adreslerine gidin.
+---
 
-> Frontend API’ye bağlanamıyorsa şunları doğrulayın: `VITE_API_BASE_URL=http://localhost:5000/api` ve backend’te CORS `CLIENT_ORIGIN=http://localhost:8080`.
+## 🚀 Hızlı Başlangıç — Docker (geliştirme)
+1. **8080** (frontend) ve **5000** (backend) portlarının boş olduğundan emin ol.  
+2. Bu repoda gereken dosyalar hazır:  
+   - `docker-compose.dev.yml`  
+   - `frontend/Dockerfile.dev` (Vite dev server, HMR destekli)  
+   - `backend/Dockerfile.dev`  (Express dev server, hot-reload destekli)  
+   - `frontend/vite.config.js` (proxy ayarı 5000’e yönlendirilmiş)  
+3. Çalıştır:  
+   ```bash
+   docker compose -f docker-compose.dev.yml up --build
+   ```
+4. Aç:  
+   - **Frontend:** http://localhost:8080  
+   - **Backend:** http://localhost:5000/api  
 
-## Hızlı Başlangıç — Lokal
+> Eğer frontend API’ye ulaşamazsa şu ayarları kontrol et:  
+> - `frontend/.env.development` içinde `VITE_API_ADDRESS=/api`  
+> - `backend/.env.development` içinde `PORT=5000` ve CORS ayarları
+
+---
+
+## 💻 Hızlı Başlangıç — Yerel (Docker olmadan)
 ```bash
 # Backend (terminal A)
-cd apps/backend
-npm i
+cd backend
+npm install
 npm run dev
 
 # Frontend (terminal B)
-cd apps/frontend
-npm i
+cd frontend
+npm install
 npm run dev -- --host --port 8080
 ```
-Ardından **http://localhost:8080** adresini açın.
+Sonra **http://localhost:8080** adresini aç.
 
-## Teknoloji
-**Frontend:** Vue 3 · Vite · Pinia  
-**Backend:** Node.js · Express · MongoDB · JWT
+---
 
-## Neden “Chromatik”?
-Kromatik dizi, yarım seslerle tüm tonlara geçer; üretimde **özgürlük ve nüans** için basit bir metafor.
+## 🛠️ Teknoloji Yığını
+- **Frontend:** Vue 3 · Vite · Vuetify · Pinia · Vuex  
+- **Backend:** Node.js · Express · MongoDB · JWT · ts-node-dev  
+
+---
+
+## 🎶 Neden “Chromatik”?
+Chromatic scale tüm sesler arasında yarım tonlarla ilerler — bu da üretim ve lisanslamada **özgürlük ve ince nüansları** temsil eder.
