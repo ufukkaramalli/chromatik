@@ -2,7 +2,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import store from '@/store'
 
-// STATIC COMPONENTS
+// STATIC COMPONENTS (aynı klasörden alıyoruz)
 import * as StaticComponents from './staticLazyLoad'
 
 // VIEWS (Lazy load)
@@ -34,9 +34,8 @@ const routes = [
     component: Login,
     meta: { title: 'Login | Chromatique' },
     beforeEnter: (to, from, next) => {
-      if (store.getters['auth/authenticated']) {
-        next({ name: 'Dashboard' })
-      } else next()
+      if (store.getters['auth/authenticated']) next({ name: 'Dashboard' })
+      else next()
     }
   },
   {
@@ -45,9 +44,8 @@ const routes = [
     component: Register,
     meta: { title: 'Register | Chromatique' },
     beforeEnter: (to, from, next) => {
-      if (store.getters['auth/authenticated']) {
-        next({ name: 'Dashboard' })
-      } else next()
+      if (store.getters['auth/authenticated']) next({ name: 'Dashboard' })
+      else next()
     }
   },
   {
@@ -62,9 +60,8 @@ const routes = [
     },
     meta: { title: 'Dashboard | Chromatique' },
     beforeEnter: (to, from, next) => {
-      if (!store.getters['auth/authenticated']) {
-        next({ name: 'Home' })
-      } else next()
+      if (!store.getters['auth/authenticated']) next({ name: 'Home' })
+      else next()
     }
   },
   {
@@ -79,9 +76,8 @@ const routes = [
     },
     meta: { title: 'Settings | Chromatique' },
     beforeEnter: (to, from, next) => {
-      if (!store.getters['auth/authenticated']) {
-        next({ name: 'Home' })
-      } else next()
+      if (!store.getters['auth/authenticated']) next({ name: 'Home' })
+      else next()
     }
   },
   {
@@ -96,9 +92,8 @@ const routes = [
     },
     meta: { title: 'Tracks | Chromatique' },
     beforeEnter: (to, from, next) => {
-      if (!store.getters['auth/authenticated']) {
-        next({ name: 'Home' })
-      } else next()
+      if (!store.getters['auth/authenticated']) next({ name: 'Home' })
+      else next()
     }
   },
   {
@@ -113,12 +108,10 @@ const routes = [
     },
     meta: { title: 'Soundkits | Chromatique' },
     beforeEnter: (to, from, next) => {
-      if (!store.getters['auth/authenticated']) {
-        next({ name: 'Home' })
-      } else next()
+      if (!store.getters['auth/authenticated']) next({ name: 'Home' })
+      else next()
     }
   },
-  // Track Page
   {
     path: '/:userSlug/:trackSlug',
     name: 'TrackPage',
@@ -135,6 +128,11 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes
+})
+
+// (opsiyonel) sayfa başlığını meta.title'a göre güncelle
+router.afterEach((to) => {
+  if (to.meta?.title) document.title = to.meta.title
 })
 
 export default router
