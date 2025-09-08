@@ -11,5 +11,19 @@ export default defineConfig({
     })
   ],
   resolve: { alias: { '@': path.resolve(__dirname, 'src') } },
-  server: { port: 8080, open: true }
+  server: {
+    host: true,
+    port: 8080,
+    open: true,
+    strictPort: true,
+    proxy: {
+      '/api': {
+        target: 'http://backend:5000', // compose içi backend servisi
+        changeOrigin: true
+      }
+    }
+    // Mac/WSL'de HMR sorunu yaşarsan:
+    // ,hmr: { host: 'localhost', clientPort: 8080 }
+    // ,watch: { usePolling: true }
+  }
 })
