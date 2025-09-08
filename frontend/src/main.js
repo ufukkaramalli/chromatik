@@ -5,26 +5,30 @@ import vuetify from './plugins/vuetify'
 import { i18n } from './i18n'
 import router from './router'
 import store from './store'
-import axios from 'axios'
 import JsonViewer from 'vue-json-viewer'
 import VueResizeText from 'vue-resize-text'
 import '@/scss/main.scss'
-
-// Use font-based Material Design Icons
 import '@mdi/font/css/materialdesignicons.css'
-
-// Vuex subscriber: side-effect import
 import '@/store/subscriber'
 
-// Vite env: VUE_APP_* -> VITE_*
-axios.defaults.baseURL = import.meta.env.DEV
-  ? (import.meta.env.VITE_LOCAL_API_ADDRESS || 'http://localhost:5000/')
-  : (import.meta.env.VITE_API_ADDRESS || 'https://api.example.com/')
+// ✅ Yeni: tek yerde axios instance kullanacağız
+import { api } from '@/lib/axios'
+
+// NOT: axios.defaults.baseURL kullanmıyoruz artık.
+// baseURL mantığı lib/axios içinde yönetiliyor.
 
 const app = createApp(App)
-app.use(vuetify).use(i18n).use(router).use(store).use(JsonViewer).use(VueResizeText)
+app.config.globalProperties.$api = api // (opsiyonel) this.$api ile kullanmak istersen
 
-// Always mount (auth attempt may fail gracefully)
+app
+  .use(vuetify)
+  .use(i18n)
+  .use(router)
+  .use(store)
+  .use(JsonViewer)
+  .use(VueResizeText)
+
+// auth attempt aynı kalabilir
 store.dispatch('auth/attempt', localStorage.getItem('token'))
   .catch(() => {})
   .finally(() => app.mount('#app'))

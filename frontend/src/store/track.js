@@ -1,4 +1,4 @@
-import axios from 'axios'
+import { api } from '@/lib/axios'
 
 const getAudioContext = () => {
   try {
@@ -76,7 +76,6 @@ export default {
 
         const StreamSource = await dispatch('GET_STREAM_SOURCE', payload.track.id)
 
-        // Context / Nodes setup
         if (!getters.GET_AUDIO_CONTEXT) {
           commit('SET_AUDIO_CONTEXT', getAudioContext())
           commit('SET_AUDIO_CONTEXT_DESTINATION', getters.GET_AUDIO_CONTEXT.destination)
@@ -91,17 +90,14 @@ export default {
             commit('SET_ANALYSER_NODE', analyser)
           }
         } else {
-          // Disconnect eski node'lar varsa
           if (getters.GET_SOURCE) getters.GET_SOURCE.disconnect()
           if (getters.GET_ANALYSER_NODE) getters.GET_ANALYSER_NODE.disconnect()
           if (getters.GET_GAIN_NODE) getters.GET_GAIN_NODE.disconnect()
         }
 
-        // Yeni audio element
         const audio = new Audio(StreamSource)
         commit('SET_AUDIO_ELEMENT', audio)
 
-        // Source chain
         const source = getters.GET_AUDIO_CONTEXT.createMediaElementSource(audio)
         commit('SET_SOURCE', source)
 
@@ -109,7 +105,6 @@ export default {
         getters.GET_ANALYSER_NODE.connect(getters.GET_GAIN_NODE)
         getters.GET_GAIN_NODE.connect(getters.GET_AUDIO_CONTEXT_DESTINATION)
 
-        // Ses açılış animasyonu
         getters.GET_GAIN_NODE.gain.setValueAtTime(0, getters.GET_AUDIO_CONTEXT.currentTime)
         getters.GET_GAIN_NODE.gain.linearRampToValueAtTime(1, getters.GET_AUDIO_CONTEXT.currentTime + 0.4)
 
@@ -121,9 +116,9 @@ export default {
         commit('SET_IS_LOADING', false)
         commit('SET_IS_PLAYING', true)
 
-        axios.post('track/play-increase', { id: payload.track.id })
+        // 🔁 sayaç artır
+        api.post('/track/play-increase', { id: payload.track.id })
       } else {
-        // Aynı track → sadece devam ettir
         commit('SET_IS_LOADING', false)
         commit('SET_IS_PLAYING', true)
         getters.GET_AUDIO_ELEMENT?.play()
@@ -131,25 +126,24 @@ export default {
     },
 
     async clickedLike(_, payload) {
-      await axios.post('track/like', { id: payload })
+      await api.post('/track/like', { id: payload })
     },
 
     async clickedUnlike(_, payload) {
-      await axios.post('track/unlike', { id: payload })
+      await api.post('/track/unlike', { id: payload })
     },
 
     async GET_STREAM_SOURCE(_, payload) {
-      const response = await axios.post('track/stream', { id: payload })
-      return atob(response.data) // ✅ direkt atob
+      const res = await api.post('/track/stream', { id: payload })
+      return atob(res.data)
     },
 
     async SET_NEXT_TRACK({ getters, dispatch }) {
       if (getters.GET_SOURCE) getters.GET_SOURCE.disconnect()
 
       let index = getters.GET_CURRENT_TRACK_INDEX + 1
-      if (index >= getters.GET_CURRENT_PLAYLIST.length) {
-        index = 0
-      }
+      if (index >= getters.GET_CURRENT_PLAYLIST.length) index = 0
+
       const nextTrack = getters.GET_CURRENT_PLAYLIST[index]
       dispatch('clickedPlay', { trackIndex: index, track: nextTrack })
     },
@@ -158,9 +152,8 @@ export default {
       if (getters.GET_SOURCE) getters.GET_SOURCE.disconnect()
 
       let index = getters.GET_CURRENT_TRACK_INDEX - 1
-      if (index < 0) {
-        index = getters.GET_CURRENT_PLAYLIST.length - 1
-      }
+      if (index < 0) index = getters.GET_CURRENT_PLAYLIST.length - 1
+
       const prevTrack = getters.GET_CURRENT_PLAYLIST[index]
       dispatch('clickedPlay', { trackIndex: index, track: prevTrack })
     }

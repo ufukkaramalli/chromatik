@@ -1,8 +1,7 @@
-// src/store/index.js
 import { createStore } from 'vuex'
 import auth from './auth'
 import track from './track'
-import axios from 'axios'
+import { api } from '@/lib/axios'   // ⬅️ axios yerine instance
 
 export default createStore({
   state: {
@@ -12,7 +11,6 @@ export default createStore({
       systemBar: true
     },
     loginOverlay: false,
-    // ⛔️ process.env.VUE_APP_APPLICATION_NAME yerine:
     appName: import.meta.env.VITE_APPLICATION_NAME || 'Chromatique',
     RecentTracks: null,
     MostLiked: null,
@@ -39,37 +37,21 @@ export default createStore({
   },
   actions: {
     async RECENT_TRACKS ({ commit }) {
-      const response = await axios.get('track/recent', {
-        headers: {
-          // ⛔️ process.env.VUE_APP_JWT_KEY yerine:
-          Authorization: 'Bearer ' + (import.meta.env.VITE_JWT_KEY || '')
-        }
-      })
-      if (response) commit('SET_RECENT_TRACKS', response.data.tracks)
+      // baseURL = /api olduğundan URL'ler MUTLAKA / ile başlamalı
+      const res = await api.get('/track/recent')
+      if (res) commit('SET_RECENT_TRACKS', res.data.tracks)
     },
     async MOST_LIKED ({ commit }) {
-      const response = await axios.get('track/mostlike', {
-        headers: {
-          Authorization: 'Bearer ' + (import.meta.env.VITE_JWT_KEY || '')
-        }
-      })
-      if (response) commit('SET_MOST_LIKED_TRACKS', response.data.MostLiked)
+      const res = await api.get('/track/mostlike')
+      if (res) commit('SET_MOST_LIKED_TRACKS', res.data.MostLiked)
     },
     async MOST_STREAMED ({ commit }) {
-      const response = await axios.get('track/moststreamed', {
-        headers: {
-          Authorization: 'Bearer ' + (import.meta.env.VITE_JWT_KEY || '')
-        }
-      })
-      if (response) commit('SET_MOST_STREAMED_TRACKS', response.data.MostStreamed)
+      const res = await api.get('/track/moststreamed')
+      if (res) commit('SET_MOST_STREAMED_TRACKS', res.data.MostStreamed)
     },
-    async GET_TRACK_PAGE ({ commit }, payload) {
-      const response = await axios.post('track/find-track', { data: payload }, {
-        headers: {
-          Authorization: 'Bearer ' + (import.meta.env.VITE_JWT_KEY || '')
-        }
-      })
-      return response
+    async GET_TRACK_PAGE (_ctx, payload) {
+      const res = await api.post('/track/find-track', { data: payload })
+      return res
     }
   },
   modules: { auth, track }

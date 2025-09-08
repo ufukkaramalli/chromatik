@@ -1,32 +1,30 @@
-// src/store/subscriber.js
 import store from '@/store'
 import { i18n } from '@/i18n'
-import axios from 'axios'
+import { api } from '@/lib/axios'   // ⬅️ axios yerine instance
 
-store.subscribe((mutation, state) => {
+store.subscribe((mutation) => {
   switch (mutation.type) {
     // Token değiştiğinde
     case 'auth/SET_TOKEN':
       if (mutation.payload) {
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + mutation.payload
+        api.defaults.headers.common.Authorization = 'Bearer ' + mutation.payload
         localStorage.setItem('token', mutation.payload)
       } else {
-        delete axios.defaults.headers.common['Authorization']
+        delete api.defaults.headers.common.Authorization
         localStorage.removeItem('token')
       }
       break
 
-    // Track play durumu
     case 'track/SET_IS_PLAYING':
-      if (mutation.payload === true && store.getters.GET_BOTTOM_PLAYER !== true) {
+      // not: burada store'a erişmeyelim; mutation payload'ını kullanmak daha güvenli
+      // track modülündeki getter'a erişmek için store.getters kullanımı kalabilir.
+      if (mutation.payload === true && store.getters['track/GET_BOTTOM_PLAYER'] !== true) {
         store.commit('track/SET_BOTTOM_PLAYER', true)
       }
       break
 
-    // Kullanıcı bilgisi değiştiğinde dil ayarla
     case 'auth/SET_USER':
       if (mutation.payload && mutation.payload.language) {
-        // Vue I18n v9 (legacy:false) → global.locale kullanıyoruz
         i18n.global.locale = mutation.payload.language
       }
       break

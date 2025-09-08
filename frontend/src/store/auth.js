@@ -1,5 +1,4 @@
-// src/store/auth.js
-import axios from 'axios'
+import { api } from '@/lib/axios'
 
 export default {
   namespaced: true,
@@ -21,30 +20,28 @@ export default {
   },
   actions: {
     async logIn({ dispatch }, credentials) {
-      const response = await axios.post('user/login', credentials)
-      console.log(response.data)
-      return dispatch('attempt', response.data.token)
+      const res = await api.post('/user/login', credentials)
+      return dispatch('attempt', res.data.token)
     },
     async attempt({ commit, state }, token) {
       if (token) commit('SET_TOKEN', token)
       if (!state.token) return
       try {
-        const response = await axios.get('user')
-        commit('SET_USER', response.data)
+        const res = await api.get('/user')
+        commit('SET_USER', res.data)
       } catch (e) {
         commit('SET_TOKEN', null)
         commit('SET_USER', null)
       }
     },
     async initUser({ commit }) {
-      const response = await axios.get('auth/me')
-      commit('SET_USER', response.data)
+      const res = await api.get('/auth/me')
+      commit('SET_USER', res.data)
     },
-    logOut({ commit }) {
-      return axios.post('auth/signout').then(() => {
-        commit('SET_TOKEN', null)
-        commit('SET_USER', null)
-      })
+    async logOut({ commit }) {
+      await api.post('/auth/signout')
+      commit('SET_TOKEN', null)
+      commit('SET_USER', null)
     }
   }
 }
