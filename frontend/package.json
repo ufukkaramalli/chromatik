@@ -3,18 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
+    "@mdi/font": "^7.4.47",
+    "@mdi/js": "^7.4.47",
     "@vuelidate/core": "^2.0.3",
     "@vuelidate/validators": "^2.0.4",
     "axios": "^1.11.0",
     "core-js": "^3.45.1",
+    "pinia": "^3.0.3",
     "vue": "^3.5.21",
-    "vue-i18n": "^9.14.5",
+    "vue-i18n": "^11.1.12",
     "vue-json-viewer": "^3.0.4",
     "vue-resize-text": "^0.1.1",
     "vue-router": "^4.5.1",
@@ -24,14 +26,10 @@
     "vuex": "^4.1.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^5.0.9",
-    "@vue/cli-plugin-eslint": "^5.0.9",
-    "@vue/cli-plugin-router": "^5.0.9",
-    "@vue/cli-plugin-vuex": "^5.0.9",
-    "@vue/cli-service": "^5.0.9",
+    "@intlify/unplugin-vue-i18n": "^11.0.0",
+    "@vitejs/plugin-vue": "^6.0.1",
     "@vue/compiler-sfc": "^3.5.21",
     "@vue/eslint-config-standard": "^9.0.1",
-    "babel-eslint": "^10.1.0",
     "deepmerge": "^4.2.2",
     "eslint": "^9.34.0",
     "eslint-plugin-import": "^2.32.0",
@@ -39,13 +37,9 @@
     "eslint-plugin-promise": "^4.3.1",
     "eslint-plugin-standard": "^4.1.0",
     "eslint-plugin-vue": "^10.4.0",
-    "eslint-webpack-plugin": "^5.0.2",
-    "sass": "^1.79.0",
+    "sass": "^1.92.1",
     "sass-loader": "^13.3.3",
-    "vue-cli-plugin-i18n": "^0.3.1",
-    "vue-loader": "^17.4.2",
-    "webpack": "^5.101.3",
-    "webpack-plugin-vuetify": "^3.1.2"
+    "vite": "^7.1.4"
   },
   "eslintConfig": {
     "root": true,
