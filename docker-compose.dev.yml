@@ -1,0 +1,30 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    command: npm run dev -- --host 0.0.0.0 --port 8080
+    ports: ["8080:8080"]
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    env_file:
+      - ./frontend/.env.development   # VITE_* değişkenlerini içeri al
+    environment:
+      # İstersen burada override da edebilirsin:
+      # - VITE_API_ADDRESS=/api
+    depends_on: [backend]
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    command: npm run dev
+    ports: ["5000:5000"]              # 5000'e çevrildi
+    working_dir: /app
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    env_file:
+      - ./backend/.env.development

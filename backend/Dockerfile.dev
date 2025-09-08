@@ -1,18 +1,6 @@
-FROM node:18
-
+FROM node:22-bookworm-slim
 WORKDIR /app
-
-# package.json ve package-lock.json’u ayrı ayrı kopyala
-COPY package.json package-lock.json ./
-
-# Dependencies’i yükle (postinstall tetiklenmez)
-RUN npm install --legacy-peer-deps --ignore-scripts
-
-# TypeScript, ts-node, nodemon global
-RUN npm install -g typescript ts-node nodemon
-
-# Tüm kaynak dosyaları kopyala
-COPY . .
-
-# Hot-reload
-CMD ["nodemon", "--watch", "src", "--ext", "ts,js,json", "--exec", "ts-node", "src/index.ts"]
+COPY package*.json ./
+ENV npm_config_fund=false npm_config_audit=false
+RUN npm ci
+# kaynak kod bind-mount ile gelecek
