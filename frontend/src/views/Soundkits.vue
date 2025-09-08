@@ -2,14 +2,14 @@
   <v-main>
     <v-container>
       <v-row v-if="authenticated">
-        <!-- Eğer Soundkit varsa -->
+        <!-- Soundkits varsa -->
         <template v-if="Soundkits && Soundkits.length > 0">
           <v-col cols="12" class="secondary darken-2 rounded-lg">
             SOUNDKITS
           </v-col>
         </template>
 
-        <!-- Eğer hiç Soundkit yoksa -->
+        <!-- Hiç Soundkit yoksa -->
         <template v-else>
           <v-col
             cols="12"
@@ -29,8 +29,7 @@
               NO SOUNDKITS ADDED
             </h1>
             <v-divider class="my-3"></v-divider>
-            <v-btn>
-              <v-icon left dark>mdi-plus</v-icon>
+            <v-btn prepend-icon="mdi-plus">
               Add New Soundkit
             </v-btn>
           </v-col>

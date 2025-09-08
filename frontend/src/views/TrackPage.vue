@@ -12,6 +12,7 @@
               height="100%"
               :src="track.art"
               class="elevation-4"
+              cover
             />
           </v-col>
           <v-col cols="12" md="6">
@@ -80,8 +81,6 @@ export default {
         const response = await this.GET_TRACK_PAGE(this.$route.params)
         this.track = response.data
         document.title = `${response.data.name} by ${response.data.user.name} | Chromatique`
-
-        // Loading animasyonu için küçük delay
         setTimeout(() => {
           this.success = true
           this.loading = false
@@ -89,7 +88,6 @@ export default {
       } catch (error) {
         const statusText = error?.response?.statusText || 'Not Found'
         document.title = `Track ${statusText} | Chromatique`
-
         setTimeout(() => {
           this.success = false
           this.loading = false

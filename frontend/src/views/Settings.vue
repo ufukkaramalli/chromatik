@@ -4,12 +4,11 @@
       <v-row>
         <v-col>
           <v-expansion-panels v-model="panel" multiple hover>
-            <!-- Panel 1 -->
             <v-expansion-panel>
               <v-expansion-panel-header ripple>
                 Panel 1
                 <template #actions>
-                  <v-icon color="primary">$expand</v-icon>
+                  <v-icon icon="$expand" color="primary" />
                 </template>
               </v-expansion-panel-header>
 
@@ -36,12 +35,11 @@
               </v-expansion-panel-content>
             </v-expansion-panel>
 
-            <!-- Panel 2 -->
             <v-expansion-panel>
               <v-expansion-panel-header ripple>
                 Panel 2
                 <template #actions>
-                  <v-icon color="primary">$expand</v-icon>
+                  <v-icon icon="$expand" color="primary" />
                 </template>
               </v-expansion-panel-header>
               <v-expansion-panel-content>
@@ -51,12 +49,11 @@
               </v-expansion-panel-content>
             </v-expansion-panel>
 
-            <!-- Panel 3 -->
             <v-expansion-panel>
               <v-expansion-panel-header ripple>
                 Panel 3
                 <template #actions>
-                  <v-icon color="primary">$expand</v-icon>
+                  <v-icon icon="$expand" color="primary" />
                 </template>
               </v-expansion-panel-header>
               <v-expansion-panel-content>
@@ -83,11 +80,10 @@ export default {
       username: '',
       rules: {
         required: v => !!v || this.$t('Form.required'),
-        counterMin: v => v.length >= 8 || this.$t('Form.min') + ' 8 ' + this.$t('Form.character'),
-        counterMax: v => v.length <= 20 || this.$t('Form.max') + ' 20 ' + this.$t('Form.character'),
+        counterMin: v => (v || '').length >= 8 || this.$t('Form.min') + ' 8 ' + this.$t('Form.character'),
+        counterMax: v => (v || '').length <= 20 || this.$t('Form.max') + ' 20 ' + this.$t('Form.character'),
         email: v => {
-          const pattern =
-            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
           return pattern.test(v) || this.$t('Form.invalidemail')
         },
         noSpace: v => (v || '').indexOf(' ') < 0 || 'No spaces are allowed'

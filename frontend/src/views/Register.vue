@@ -10,7 +10,7 @@
 
       <!-- Default header -->
       <template #default>
-        {{ $t('Register.headers.SignUp') }}
+        {{ $t('Register.headers.SignIn') }}
       </template>
     </RegisterForm>
   </v-main>
@@ -22,6 +22,5 @@ import { useStore } from 'vuex'
 import RegisterForm from '@/components/Forms/RegisterForm.vue'
 
 const store = useStore()
-
 const appName = computed(() => store.getters['getAppName'])
 </script>

@@ -14,7 +14,6 @@
 import { computed } from 'vue'
 import { useStore } from 'vuex'
 
-// Vuex store
 const store = useStore()
 
 const authenticated = computed(() => store.getters['auth/authenticated'])

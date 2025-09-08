@@ -9,9 +9,7 @@
               <h5>{{ $t('players.Recent') }}</h5>
             </template>
             <template #subtitle>
-              <h5>
-                <small class="caption">{{ $t('players.Last24') }}</small>
-              </h5>
+              <h5><small class="caption">{{ $t('players.Last24') }}</small></h5>
             </template>
           </Playlist>
         </v-col>
@@ -23,9 +21,7 @@
               <h5>{{ $t('players.MostLiked') }}</h5>
             </template>
             <template #subtitle>
-              <h5>
-                <small class="caption">{{ $t('players.Alltimes') }}</small>
-              </h5>
+              <h5><small class="caption">{{ $t('players.Alltimes') }}</small></h5>
             </template>
           </Playlist>
         </v-col>
@@ -37,9 +33,7 @@
               <h5>{{ $t('players.MostStreamed') }}</h5>
             </template>
             <template #subtitle>
-              <h5>
-                <small class="caption">{{ $t('players.Alltimes') }}</small>
-              </h5>
+              <h5><small class="caption">{{ $t('players.Alltimes') }}</small></h5>
             </template>
           </Playlist>
         </v-col>
@@ -55,17 +49,16 @@ import Playlist from '@/components/Playlist.vue'
 
 const store = useStore()
 
-// Vuex actions
+// Actions
 const fetchRecent = () => store.dispatch('RECENT_TRACKS')
 const fetchMostLiked = () => store.dispatch('MOST_LIKED')
 const fetchMostStreamed = () => store.dispatch('MOST_STREAMED')
 
-// Vuex getters
+// Getters
 const GetRecentTracks = computed(() => store.getters['GET_RECENT_TRACKS'])
 const GetMostLikedTracks = computed(() => store.getters['GET_MOST_LIKED_TRACKS'])
 const GetMostStreamedTracks = computed(() => store.getters['GET_MOST_STREAMED_TRACKS'])
 
-// Lifecycle
 onMounted(() => {
   fetchRecent()
   fetchMostLiked()

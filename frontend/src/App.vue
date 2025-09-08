@@ -1,12 +1,17 @@
 <template>
   <v-app>
-    <router-view name="Navigation"></router-view>
-    <router-view name="SystemBar"></router-view>
-    <router-view name="TopNav"></router-view>
-    <transition :name="transitionName" mode="out-in">
-      <router-view></router-view>
-    </transition>
-    <router-view name="BottomPlayer"></router-view>
+    <router-view name="Navigation" />
+    <router-view name="SystemBar" />
+    <router-view name="TopNav" />
+
+    <!-- Sadece burası değişti -->
+    <router-view v-slot="{ Component }">
+      <transition :name="transitionName" mode="out-in">
+        <component :is="Component" />
+      </transition>
+    </router-view>
+
+    <router-view name="BottomPlayer" />
   </v-app>
 </template>
 
