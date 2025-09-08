@@ -4,8 +4,8 @@
 
 @font-face {
     font-family: 'xxixregular';
-    src: url('./assets/fonts/xxix-webfont.woff2') format('woff2'),
-         url('./assets/fonts/xxix-webfont.woff') format('woff');
+    src: url('@/assets/fonts/xxix-webfont.woff2') format('woff2'),
+         url('@/assets/fonts/xxix-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 
