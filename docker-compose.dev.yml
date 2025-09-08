@@ -11,9 +11,6 @@ services:
       - /app/node_modules
     env_file:
       - ./frontend/.env.development   # VITE_* değişkenlerini içeri al
-    environment:
-      # İstersen burada override da edebilirsin:
-      # - VITE_API_ADDRESS=/api
     depends_on: [backend]
 
   backend:
