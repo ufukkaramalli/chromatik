@@ -15,10 +15,10 @@ const vuetify = createVuetify({
     themes: {
       light: {
         colors: {
-          primary: '#D32F2F',   // colors.red.darken3
-          secondary: '#424242', // colors.grey.darken1
-          accent: '#000000',    // colors.shades.black
-          error: '#FF5252',     // colors.red.accent3
+          primary: '#D32F2F',
+          secondary: '#424242',
+          accent: '#000000',
+          error: '#FF5252',
         },
       },
       dark: {
@@ -28,11 +28,23 @@ const vuetify = createVuetify({
       },
     },
   },
+  // IMPORTANT: Use font-based Material Design Icons (mdi-*)
   icons: {
     defaultSet: 'mdi',
     aliases,
     sets: { mdi },
   },
 })
+
+// Simple init log to verify icon set
+if (typeof window !== 'undefined') {
+  // eslint-disable-next-line no-console
+  console.log('[Vuetify:init]', {
+    defaultSet: 'mdi',
+    iconSets: ['mdi'],
+    hasMdiFont: !!document?.fonts,
+    theme: 'dark',
+  })
+}
 
 export default vuetify
