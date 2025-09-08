@@ -1,5 +1,6 @@
 services:
   frontend:
+    image: ufukkaramalli/chromatik-frontend:latest   # Hub’daki isim
     build:
       context: ./frontend
       dockerfile: Dockerfile.dev
@@ -10,15 +11,16 @@ services:
       - ./frontend:/app
       - /app/node_modules
     env_file:
-      - ./frontend/.env.development   # VITE_* değişkenlerini içeri al
+      - ./frontend/.env.development
     depends_on: [backend]
 
   backend:
+    image: ufukkaramalli/chromatik-backend:latest    # Hub’daki isim
     build:
       context: ./backend
       dockerfile: Dockerfile.dev
     command: npm run dev
-    ports: ["5000:5000"]              # 5000'e çevrildi
+    ports: ["5000:5000"]
     working_dir: /app
     volumes:
       - ./backend:/app
