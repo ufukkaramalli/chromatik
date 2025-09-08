@@ -1,51 +1,64 @@
 <template>
   <v-navigation-drawer
     class="primary darken-3"
-    v-model="themeOpts.navigation"
-    :clipped="clipped"
     app
+    v-model="drawer"
   >
-    <v-list dense>
-      <template v-for="item in items" :key="item.text">
-        <v-list-item
-          v-if="!item.auth || (item.auth && authenticated)"
-          :to="item.route"
-          link
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>{{ item.text }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </template>
+    <v-list density="compact" nav>
+      <v-list-item
+        v-for="(it, i) in items"
+        :key="i"
+        :to="it.to"
+        :title="it.title"
+        :prepend-icon="it.icon"
+        :exact="true"
+        link
+      />
     </v-list>
+
+    <template #append>
+      <div class="pa-2">
+        <v-divider class="mb-2" />
+        <v-btn
+          v-if="authenticated"
+          block
+          variant="text"
+          :to="{ name: 'Settings' }"
+          prepend-icon="mdi-cog"
+        >
+          Settings
+        </v-btn>
+      </div>
+    </template>
   </v-navigation-drawer>
 </template>
 
 <script setup>
 import { computed } from 'vue'
 import { useStore } from 'vuex'
-import { useDisplay } from 'vuetify'
 
 const store = useStore()
-const display = useDisplay()
 
-const themeOpts = computed(() => store.state.themeOpts)
 const authenticated = computed(() => store.getters['auth/authenticated'])
-const user = computed(() => store.getters['auth/user'])
 
-// Vuetify 3 uyumlu clipped
-const clipped = computed(() => display.lgAndUp)
+const drawer = computed({
+  get: () => (store.state?.themeOpts?.navigation ?? false),
+  set: (v) => store.commit('setNavigation', v),
+})
 
-const items = [
-  { icon: 'mdi-view-dashboard', text: 'Dashboard', auth: true, route: { name: 'Dashboard' } },
-  { icon: 'mdi-file-music', text: 'Tracks', auth: true, route: { name: 'Tracks' } },
-  { icon: 'mdi-square-wave', text: 'Soundkits', auth: true, route: { name: 'Soundkits' } },
-  { icon: 'mdi-message', text: 'Send feedback', auth: false },
-  { icon: 'mdi-help-circle', text: 'FAQ', auth: false },
-  { icon: 'mdi-cellphone-link', text: 'App downloads', auth: false },
-  { icon: 'mdi-cog', text: 'Settings', auth: true, route: { name: 'Settings' } }
-]
+const items = computed(() => {
+  const auth = authenticated.value
+  return auth
+    ? [
+        { title: 'Home', icon: 'mdi-home', to: { name: 'Home' } },
+        { title: 'Dashboard', icon: 'mdi-view-dashboard', to: { name: 'Dashboard' } },
+        { title: 'Tracks', icon: 'mdi-music', to: { name: 'Tracks' } },
+        { title: 'Soundkits', icon: 'mdi-folder-music', to: { name: 'Soundkits' } },
+      ]
+    : [
+        { title: 'Home', icon: 'mdi-home', to: { name: 'Home' } },
+        { title: 'Login', icon: 'mdi-login', to: { name: 'Login' } },
+        { title: 'Register', icon: 'mdi-account-plus', to: { name: 'Register' } },
+      ]
+})
 </script>

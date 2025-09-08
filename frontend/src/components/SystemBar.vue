@@ -25,12 +25,7 @@
 <script setup>
 import { useI18n } from 'vue-i18n'
 import { computed } from 'vue'
-
 const { locale } = useI18n()
-
 const currentLocale = computed(() => locale.value)
-
-const setLocale = (lang) => {
-  locale.value = lang
-}
+const setLocale = (lang) => { locale.value = lang }
 </script>

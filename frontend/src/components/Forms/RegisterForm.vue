@@ -1,207 +1,258 @@
 <template>
   <v-container fluid class="fill-height">
     <v-row align="center" justify="center" class="d-flex flex-column">
+      <!-- App name -->
       <v-col cols="11" md="5" lg="4">
         <slot name="app-name"></slot>
       </v-col>
+
+      <!-- Divider -->
       <v-col cols="11" md="5" lg="4" class="pa-0 mb-4">
         <v-divider></v-divider>
       </v-col>
+
+      <!-- Card -->
       <v-col cols="11" md="5" lg="4" class="grey darken-3 pa-0 rounded">
-        <v-toolbar color="primary" dark class="rounded-b-0 rounded-t">
+        <v-toolbar color="primary" class="rounded-t">
           <v-toolbar-title class="mx-auto">
             <slot></slot>
           </v-toolbar-title>
         </v-toolbar>
 
-        <v-form ref="RegisterForm" v-model="valid" @submit.prevent="submit">
+        <v-form ref="registerForm" @submit.prevent="submit" autocomplete="off">
           <v-card-text class="pb-0 pt-8">
+            <!-- Username -->
             <v-text-field
+              v-model="form.username"
               :label="$t('Register.placeholders.Username')"
-              outlined
+              variant="outlined"
               :counter="20"
               :maxlength="20"
-              prepend-icon="mdi-account"
-              v-model="form.username"
+              prepend-inner-icon="mdi:account"
               :error-messages="nameErrors"
-              required
+              name="username"
+              autocomplete="username"
+              autocapitalize="none"
+              spellcheck="false"
               @blur="v$.form.username.$touch()"
+              :disabled="settings.username.loading"
             />
+
+            <!-- Email -->
             <v-text-field
+              v-model="form.email"
               :label="$t('Register.placeholders.Email')"
               :error-messages="emailErrors"
               type="email"
-              outlined
-              prepend-icon="mdi-email"
-              v-model="form.email"
+              variant="outlined"
+              prepend-inner-icon="mdi:email"
+              name="email"
+              autocomplete="email"
+              inputmode="email"
+              autocapitalize="none"
+              spellcheck="false"
               @blur="v$.form.email.$touch()"
             />
+
+            <!-- Password -->
             <v-text-field
+              v-model="form.password"
               :label="$t('Register.placeholders.Password')"
-              outlined
-              prepend-icon="mdi-lock"
-              :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+              variant="outlined"
+              prepend-inner-icon="mdi:lock"
+              :append-inner-icon="show1 ? 'mdi:eye' : 'mdi:eye-off'"
               :type="show1 ? 'text' : 'password'"
               :error-messages="passwordErrors"
-              v-model="form.password"
+              name="password"
+              autocomplete="new-password"
+              autocapitalize="none"
               @blur="v$.form.password.$touch()"
-              @click:append="show1 = !show1"
+              @click:append-inner="show1 = !show1"
             />
+
+            <!-- Confirm Password -->
             <v-text-field
+              v-model="form.confirmpassword"
               :label="$t('Register.placeholders.ConfirmPassword')"
-              outlined
-              prepend-icon="mdi-lock"
-              :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
+              variant="outlined"
+              prepend-inner-icon="mdi:lock"
+              :append-inner-icon="show2 ? 'mdi:eye' : 'mdi:eye-off'"
               :type="show2 ? 'text' : 'password'"
               :error-messages="passwordConfirmErrors"
-              v-model="form.confirmpassword"
+              name="confirm-password"
+              autocomplete="new-password"
+              autocapitalize="none"
               @blur="v$.form.confirmpassword.$touch()"
-              @click:append="show2 = !show2"
+              @click:append-inner="show2 = !show2"
             />
+
+            <!-- Terms -->
             <v-checkbox
-              required
               v-model="form.acceptterms"
               :error-messages="acceptTermErrors"
-              @change="v$.form.acceptterms.$touch()"
               class="mt-0 mb-3"
+              @change="v$.form.acceptterms.$touch()"
             >
-              <template v-slot:label>
-                <v-col class="pa-0" v-resize-text="{ratio:1.3, minFontSize: '7px', maxFontSize: '14.8px', delay: 200}">
+              <template #label>
+                <span>
                   I have read and agree to the
-                  <a target="_blank" href="http://vuetifyjs.com" @click.stop>Terms of service</a>
+                  <a target="_blank" href="https://vuetifyjs.com" @click.stop>Terms of service</a>
                   &
-                  <a target="_blank" href="http://vuetifyjs.com" @click.stop>Privacy policy</a>.
-                </v-col>
+                  <a target="_blank" href="https://vuetifyjs.com" @click.stop>Privacy policy</a>.
+                </span>
               </template>
             </v-checkbox>
           </v-card-text>
+
           <v-card-actions class="px-4 pt-0 pb-4">
-            <v-btn :disabled="v$.form.$invalid" block type="submit" large color="primary">{{$t('Register.buttons.Register')}}</v-btn>
+            <v-btn
+              block
+              type="submit"
+              size="large"
+              color="primary"
+              :disabled="v$.form.$invalid || settings.username.loading"
+            >
+              {{ $t('Register.buttons.Register') }}
+            </v-btn>
           </v-card-actions>
         </v-form>
       </v-col>
+
       <slot name="another"></slot>
     </v-row>
-    <v-overlay :value="overlayProgress" absolute>
-      <v-progress-circular :size="70" :width="7" color="primary" indeterminate></v-progress-circular>
+
+    <!-- Overlay -->
+    <v-overlay :model-value="overlayProgress" absolute>
+      <v-progress-circular :size="70" :width="7" color="primary" indeterminate />
     </v-overlay>
   </v-container>
 </template>
 
-<script>
-import { mapGetters, mapActions } from 'vuex'
-import { useVuelidate } from '@vuelidate/core'
-import { required, maxLength, minLength, email, sameAs, helpers } from '@vuelidate/validators'
+<script setup>
+import { ref, reactive, computed } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import axios from 'axios'
+import { useVuelidate } from '@vuelidate/core'
+import { required, maxLength, minLength, email as emailRule, sameAs, helpers } from '@vuelidate/validators'
 
-export default {
-  setup () {
-    const form = Vue.reactive({
-      username: '',
-      email: '',
-      password: '',
-      confirmpassword: '',
-      acceptterms: false
-    })
+const store = useStore()
+const router = useRouter()
+const { t } = useI18n()
 
-    const rules = {
-      username: {
-        required,
-        maxLength: maxLength(20),
-        minLength: minLength(3),
-        regex: helpers.regex('alpha', /^[a-zA-Z0-9_-]*$/)
-      },
-      email: { required, email },
-      password: { required },
-      confirmpassword: { required, sameAsPassword: sameAs(form.password) },
-      acceptterms: { checked: val => val }
-    }
+// form
+const form = reactive({
+  username: '',
+  email: '',
+  password: '',
+  confirmpassword: '',
+  acceptterms: false,
+})
 
-    const v$ = useVuelidate(rules, form)
+const settings = reactive({
+  username: { success: false, error: false, loading: false, disabled: false },
+})
 
-    return { form, v$ }
+const overlayProgress = ref(false)
+const show1 = ref(false)
+const show2 = ref(false)
+
+// rules
+const rules = computed(() => ({
+  form: {
+    username: {
+      required,
+      maxLength: maxLength(20),
+      minLength: minLength(3),
+      regex: helpers.regex('alpha', /^[a-zA-Z0-9_-]*$/),
+    },
+    email: { required, email: emailRule },
+    password: { required },
+    confirmpassword: { required, sameAsPassword: sameAs(() => form.password) },
+    acceptterms: { checked: (val) => !!val },
   },
-  data () {
-    return {
-      overlayProgress: false,
-      valid: false,
-      show1: false,
-      show2: false,
-      responseError: {
-        email: '',
-        username: ''
-      }
+}))
+
+const v$ = useVuelidate(rules, { form })
+
+// errors
+const emailErrors = computed(() => {
+  const errs = []
+  if (!v$.value.form.email.$dirty) return errs
+  !v$.value.form.email.email && errs.push(t('Register.errors.mailnotvalid'))
+  !v$.value.form.email.required && errs.push(t('Register.errors.mailrequired'))
+  return errs
+})
+
+const nameErrors = computed(() => {
+  const errs = []
+  if (!v$.value.form.username.$dirty) return errs
+  !v$.value.form.username.minLength && errs.push(`${t('Form.min')} 3 ${t('Form.character')}`)
+  !v$.value.form.username.maxLength && errs.push(`${t('Form.max')} 20 ${t('Form.character')}`)
+  !v$.value.form.username.regex && errs.push(t('Register.errors.alphanumeric'))
+  !v$.value.form.username.required && errs.push(t('Form.required'))
+  return errs
+})
+
+const passwordErrors = computed(() => {
+  const errs = []
+  if (!v$.value.form.password.$dirty) return errs
+  !v$.value.form.password.required && errs.push(t('Register.errors.passwordrequired'))
+  return errs
+})
+
+const passwordConfirmErrors = computed(() => {
+  const errs = []
+  if (!v$.value.form.confirmpassword.$dirty) return errs
+  !v$.value.form.confirmpassword.required && errs.push(t('Register.errors.cpasswordrequired'))
+  !v$.value.form.confirmpassword.sameAsPassword && errs.push(t('Register.errors.cpasswordnotmatch'))
+  return errs
+})
+
+const acceptTermErrors = computed(() => {
+  const errs = []
+  if (!v$.value.form.acceptterms.$dirty) return errs
+  !v$.value.form.acceptterms.checked && errs.push(t('Register.errors.acceptterms'))
+  return errs
+})
+
+const registerForm = ref(null)
+
+const SignUp = async (credentials) => {
+  try {
+    return await axios.post('auth/signup', credentials)
+  } catch (error) {
+    return error.response
+  }
+}
+
+const submit = async () => {
+  v$.value.$touch()
+  if (v$.value.$invalid) return
+
+  overlayProgress.value = true
+  settings.username.loading = true
+  try {
+    const response = await SignUp(form)
+    if (response?.data?.errors) {
+      settings.username.success = false
+      settings.username.error = true
+      overlayProgress.value = false
+      settings.username.loading = false
+      return
     }
-  },
-  methods: {
-    ...mapActions({ logIn: 'auth/logIn' }),
-    async submit () {
-      this.v$.$touch()
-      if (!this.v$.$invalid) {
-        this.overlayProgress = true
-        try {
-          const response = await this.SignUp(this.form)
-          if (response.data.errors) {
-            this.responseError = response.data.errors
-            this.overlayProgress = false
-          } else if (response.data.success) {
-            this.logIn(response.data.success).then(() => {
-              this.overlayProgress = false
-              this.$router.replace({ name: 'Dashboard' })
-            })
-          }
-        } catch (error) {
-          console.log(error.response)
-          this.overlayProgress = false
-        }
-      }
-    },
-    async SignUp (credentials) {
-      try {
-        const response = await axios.post('auth/signup', credentials)
-        return response
-      } catch (error) {
-        return error.response
-      }
+    if (response?.data?.success) {
+      await store.dispatch('auth/logIn', response.data.success)
+      overlayProgress.value = false
+      settings.username.loading = false
+      router.replace({ name: 'Dashboard' })
     }
-  },
-  computed: {
-    ...mapGetters({ LoginOverlay: 'getLoginOverlay' }),
-    emailErrors () {
-      const errors = []
-      if (!this.v$.form.email.$dirty) return errors
-      !this.v$.form.email.email && errors.push(this.$t('Register.errors.mailnotvalid'))
-      !this.v$.form.email.required && errors.push(this.$t('Register.errors.mailrequired'))
-      return errors
-    },
-    nameErrors () {
-      const errors = []
-      if (!this.v$.form.username.$dirty) return errors
-      !this.v$.form.username.minLength && errors.push(this.$t('Form.min') + ' ' + 3 + ' ' + this.$t('Form.character'))
-      !this.v$.form.username.maxLength && errors.push(this.$t('Form.max') + ' ' + 20 + ' ' + this.$t('Form.character'))
-      !this.v$.form.username.regex && errors.push(this.$t('Register.errors.alphanumeric'))
-      !this.v$.form.username.required && errors.push(this.$t('Form.required'))
-      return errors
-    },
-    passwordErrors () {
-      const errors = []
-      if (!this.v$.form.password.$dirty) return errors
-      !this.v$.form.password.required && errors.push(this.$t('Register.errors.passwordrequired'))
-      return errors
-    },
-    passwordConfirmErrors () {
-      const errors = []
-      if (!this.v$.form.confirmpassword.$dirty) return errors
-      !this.v$.form.confirmpassword.required && errors.push(this.$t('Register.errors.cpasswordrequired'))
-      !this.v$.form.confirmpassword.sameAsPassword && errors.push(this.$t('Register.errors.cpasswordnotmatch'))
-      return errors
-    },
-    acceptTermErrors () {
-      const errors = []
-      if (!this.v$.form.acceptterms.$dirty) return errors
-      !this.v$.form.acceptterms.checked && errors.push(this.$t('Register.errors.acceptterms'))
-      return errors
-    }
+  } catch (e) {
+    console.error(e)
+  } finally {
+    overlayProgress.value = false
+    settings.username.loading = false
   }
 }
 </script>

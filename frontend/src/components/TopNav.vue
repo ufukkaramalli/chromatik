@@ -5,10 +5,10 @@
     color="primary"
     v-cloak
   >
-    <!-- Sol menü butonu -->
+    <!-- Left nav button -->
     <v-app-bar-nav-icon @click="setNavigation(themeOpts.navigation)" />
 
-    <!-- Başlık -->
+    <!-- Title -->
     <v-toolbar-title class="ml-0 pl-4">
       <span class="hidden-sm-and-down">
         <h2 class="xxix-regular font-weight-regular">{{ appName }}</h2>
@@ -17,7 +17,7 @@
 
     <v-divider vertical class="mx-3" />
 
-    <!-- Arama alanı -->
+    <!-- Search -->
     <v-text-field
       flat
       variant="solo"
@@ -29,19 +29,19 @@
 
     <v-spacer />
 
-    <!-- Sağ menü -->
+    <!-- Right menu -->
     <v-toolbar-items>
       <v-btn variant="text" to="/">Home</v-btn>
       <v-divider vertical class="mx-1" />
 
       <template v-if="authenticated">
-        <!-- Kullanıcı menüsü -->
+        <!-- User menu -->
         <v-menu transition="slide-y-transition">
-          <template v-slot:activator="{ props }">
+          <template #activator="{ props }">
             <v-btn variant="text" v-bind="props">
               {{ user.name }}
               <v-avatar class="ml-2" size="32px">
-                <v-img :src="user.photo" alt="Vuetify" />
+                <v-img :src="user.photo" alt="User" />
               </v-avatar>
             </v-btn>
           </template>
@@ -81,16 +81,13 @@ const display = useDisplay()
 const store = useStore()
 const router = useRouter()
 
-// Vuex getters
 const appName = computed(() => store.getters['getAppName'])
 const authenticated = computed(() => store.getters['auth/authenticated'])
 const user = computed(() => store.getters['auth/user'])
 const themeOpts = computed(() => store.state.themeOpts)
 
-// Vuex mutations
 const setNavigation = (payload) => store.commit('setNavigation', payload)
 
-// Actions
 const logOut = async () => {
   await store.dispatch('auth/logOut')
   router.push({ name: 'Home' }).catch(() => {})
@@ -98,7 +95,5 @@ const logOut = async () => {
 </script>
 
 <style scoped>
-[v-cloak] {
-  display: none;
-}
+[v-cloak] { display: none; }
 </style>
