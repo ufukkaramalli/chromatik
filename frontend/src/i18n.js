@@ -1,22 +1,17 @@
 import { createI18n } from 'vue-i18n'
 
-// Webpack için
-function loadLocaleMessages() {
-  const locales = require.context('./locales', true, /[A-Za-z0-9-_,\s]+\.json$/i)
-  const messages = {}
-  locales.keys().forEach(key => {
-    const matched = key.match(/([A-Za-z0-9-_]+)\./i)
-    if (matched && matched.length > 1) {
-      const locale = matched[1]
-      messages[locale] = locales(key)
-    }
-  })
-  return messages
+// Vite için import.meta.glob kullanıyoruz
+const files = import.meta.glob('./locales/*.json', { eager: true })
+const messages = {}
+
+for (const [path, mod] of Object.entries(files)) {
+  const locale = path.split('/').pop().replace('.json', '')
+  messages[locale] = mod.default
 }
 
 export const i18n = createI18n({
   legacy: false,
-  locale: process.env.VUE_APP_I18N_LOCALE || 'en',
-  fallbackLocale: process.env.VUE_APP_I18N_FALLBACK_LOCALE || 'en',
-  messages: loadLocaleMessages()
+  locale: import.meta.env.VITE_I18N_LOCALE || 'en',
+  fallbackLocale: import.meta.env.VITE_I18N_FALLBACK_LOCALE || 'en',
+  messages
 })

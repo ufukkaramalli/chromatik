@@ -8,29 +8,23 @@ import store from './store'
 import axios from 'axios'
 import JsonViewer from 'vue-json-viewer'
 import VueResizeText from 'vue-resize-text'
+import '@/scss/main.scss'
 
-// Subscriber
-require('@/store/subscriber')
+// Use font-based Material Design Icons
+import '@mdi/font/css/materialdesignicons.css'
 
-// Axios baseURL ayarları
-if (process.env.NODE_ENV === 'production') {
-  axios.defaults.baseURL = process.env.VUE_APP_API_ADDRESS
-} else if (process.env.NODE_ENV === 'development') {
-  axios.defaults.baseURL = process.env.VUE_APP_LOCAL_API_ADDRESS
-}
+// Vuex subscriber: side-effect import
+import '@/store/subscriber'
 
-// Vue 3 createApp
+// Vite env: VUE_APP_* -> VITE_*
+axios.defaults.baseURL = import.meta.env.DEV
+  ? (import.meta.env.VITE_LOCAL_API_ADDRESS || 'http://localhost:5000/')
+  : (import.meta.env.VITE_API_ADDRESS || 'https://api.example.com/')
+
 const app = createApp(App)
+app.use(vuetify).use(i18n).use(router).use(store).use(JsonViewer).use(VueResizeText)
 
-// Pluginleri ekle
-app.use(vuetify)
-app.use(i18n)
-app.use(router)
-app.use(store)
-app.use(JsonViewer)
-app.use(VueResizeText)
-
-// Auth kontrolü
-store.dispatch('auth/attempt', localStorage.getItem('token')).then(() => {
-  app.mount('#app')
-})
+// Always mount (auth attempt may fail gracefully)
+store.dispatch('auth/attempt', localStorage.getItem('token'))
+  .catch(() => {})
+  .finally(() => app.mount('#app'))
