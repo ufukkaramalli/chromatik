@@ -1,11 +1,11 @@
 // src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router'
-import store from '@/store'
-
-// STATIC COMPONENTS (aynı klasörden alıyoruz)
+import { useAuthStore } from '@/stores/auth'
 import * as StaticComponents from './staticLazyLoad'
 
-// VIEWS (Lazy load)
+const APP_NAME = import.meta.env.VITE_APPLICATION_NAME || 'Chromatique'
+
+// VIEWS
 const Home = () => import('@/views/Home.vue')
 const Login = () => import('@/views/Login.vue')
 const Register = () => import('@/views/Register.vue')
@@ -26,26 +26,26 @@ const routes = [
       SystemBar: StaticComponents.SystemBar,
       BottomPlayer: StaticComponents.BottomPlayer
     },
-    meta: { title: 'Welcome | Chromatique' }
+    meta: { title: `Welcome | ${APP_NAME}` }
   },
   {
     path: '/Login',
     name: 'Login',
     component: Login,
-    meta: { title: 'Login | Chromatique' },
-    beforeEnter: (to, from, next) => {
-      if (store.getters['auth/authenticated']) next({ name: 'Dashboard' })
-      else next()
+    meta: { title: `Login | ${APP_NAME}` },
+    beforeEnter: () => {
+      const auth = useAuthStore()
+      if (auth.authenticated) return { name: 'Dashboard' }
     }
   },
   {
     path: '/Register',
     name: 'Register',
     component: Register,
-    meta: { title: 'Register | Chromatique' },
-    beforeEnter: (to, from, next) => {
-      if (store.getters['auth/authenticated']) next({ name: 'Dashboard' })
-      else next()
+    meta: { title: `Register | ${APP_NAME}` },
+    beforeEnter: () => {
+      const auth = useAuthStore()
+      if (auth.authenticated) return { name: 'Dashboard' }
     }
   },
   {
@@ -58,10 +58,10 @@ const routes = [
       SystemBar: StaticComponents.SystemBar,
       BottomPlayer: StaticComponents.BottomPlayer
     },
-    meta: { title: 'Dashboard | Chromatique' },
-    beforeEnter: (to, from, next) => {
-      if (!store.getters['auth/authenticated']) next({ name: 'Home' })
-      else next()
+    meta: { title: `Dashboard | ${APP_NAME}` },
+    beforeEnter: () => {
+      const auth = useAuthStore()
+      if (!auth.authenticated) return { name: 'Home' }
     }
   },
   {
@@ -74,10 +74,10 @@ const routes = [
       SystemBar: StaticComponents.SystemBar,
       BottomPlayer: StaticComponents.BottomPlayer
     },
-    meta: { title: 'Settings | Chromatique' },
-    beforeEnter: (to, from, next) => {
-      if (!store.getters['auth/authenticated']) next({ name: 'Home' })
-      else next()
+    meta: { title: `Settings | ${APP_NAME}` },
+    beforeEnter: () => {
+      const auth = useAuthStore()
+      if (!auth.authenticated) return { name: 'Home' }
     }
   },
   {
@@ -90,10 +90,10 @@ const routes = [
       SystemBar: StaticComponents.SystemBar,
       BottomPlayer: StaticComponents.BottomPlayer
     },
-    meta: { title: 'Tracks | Chromatique' },
-    beforeEnter: (to, from, next) => {
-      if (!store.getters['auth/authenticated']) next({ name: 'Home' })
-      else next()
+    meta: { title: `Tracks | ${APP_NAME}` },
+    beforeEnter: () => {
+      const auth = useAuthStore()
+      if (!auth.authenticated) return { name: 'Home' }
     }
   },
   {
@@ -106,10 +106,10 @@ const routes = [
       SystemBar: StaticComponents.SystemBar,
       BottomPlayer: StaticComponents.BottomPlayer
     },
-    meta: { title: 'Soundkits | Chromatique' },
-    beforeEnter: (to, from, next) => {
-      if (!store.getters['auth/authenticated']) next({ name: 'Home' })
-      else next()
+    meta: { title: `Soundkits | ${APP_NAME}` },
+    beforeEnter: () => {
+      const auth = useAuthStore()
+      if (!auth.authenticated) return { name: 'Home' }
     }
   },
   {
@@ -121,7 +121,8 @@ const routes = [
       TopNav: StaticComponents.TopNav,
       SystemBar: StaticComponents.SystemBar,
       BottomPlayer: StaticComponents.BottomPlayer
-    }
+    },
+    meta: { title: `Track | ${APP_NAME}` }
   }
 ]
 
@@ -130,7 +131,6 @@ const router = createRouter({
   routes
 })
 
-// (opsiyonel) sayfa başlığını meta.title'a göre güncelle
 router.afterEach((to) => {
   if (to.meta?.title) document.title = to.meta.title
 })
