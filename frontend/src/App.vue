@@ -4,7 +4,6 @@
     <router-view name="SystemBar" />
     <router-view name="TopNav" />
 
-    <!-- Sadece burası değişti -->
     <router-view v-slot="{ Component }">
       <transition :name="transitionName" mode="out-in">
         <component :is="Component" />
@@ -19,74 +18,70 @@
 @use '@/scss/main.scss' as *;
 </style>
 
-<script>
-import { mapGetters } from 'vuex'
-import store from '@/store'
+<script setup>
+import { ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
+import { storeToRefs } from 'pinia'
+import { useTrackStore } from '@/stores/track'
 
-export default {
-  name: 'App',
-  data: () => ({
-    transitionName: 'slide-left'
-  }),
-  computed: {
-    ...mapGetters({
-      getCurrentTrack: 'track/GET_CURRENT_TRACK',
-      getAudioContext: 'track/GET_AUDIO_CONTEXT',
-      getAudioElement: 'track/GET_AUDIO_ELEMENT'
+const transitionName = ref('slide-left')
+const route = useRoute()
+
+// 🎵 Track store
+const track = useTrackStore()
+const { GET_CURRENT_TRACK, GET_AUDIO_CONTEXT, GET_AUDIO_ELEMENT } = storeToRefs(track)
+
+// sayfa başlığı ve geçiş animasyonu
+watch(
+  () => route.fullPath,
+  (to, from) => {
+    document.title = route.meta?.title || 'Chromatique'
+    transitionName.value =
+      transitionName.value === 'slide-left' ? 'slide-right' : 'slide-left'
+  }
+)
+
+// audio element eventleri
+watch(
+  GET_AUDIO_ELEMENT,
+  (newEl, oldEl) => {
+    if (!newEl) return
+
+    // Öncekileri temizle
+    if (oldEl) oldEl.replaceWith(oldEl.cloneNode(true))
+
+    newEl.addEventListener('play', () => {
+      track.SET_IS_PLAYING(true)
+    })
+
+    newEl.addEventListener('pause', () => {
+      track.SET_IS_PLAYING(false)
+    })
+
+    newEl.addEventListener('waiting', () => {
+      // buffer loading
+    })
+
+    newEl.addEventListener('timeupdate', () => {
+      track.SET_CURRENT_TIME(sToTime(newEl.currentTime))
+    })
+
+    newEl.addEventListener('ended', () => {
+      track.SET_NEXT_TRACK()
     })
   },
-  watch: {
-    $route(to, from) {
-      document.title = to.meta?.title || 'Chromatique'
-      this.transitionName =
-        this.transitionName === 'slide-left' ? 'slide-right' : 'slide-left'
-    },
-    getAudioElement: {
-      immediate: true,
-      handler(newEl, oldEl) {
-        if (!newEl) return
+  { immediate: true }
+)
 
-        // Öncekileri temizle
-        if (oldEl) {
-          oldEl.replaceWith(oldEl.cloneNode(true))
-        }
-
-        newEl.addEventListener('play', () => {
-          store.commit('track/SET_IS_PLAYING', true)
-        })
-
-        newEl.addEventListener('pause', () => {
-          store.commit('track/SET_IS_PLAYING', false)
-        })
-
-        newEl.addEventListener('waiting', () => {
-          // buffer loading
-        })
-
-        newEl.addEventListener('timeupdate', () => {
-          store.commit(
-            'track/SET_CURRENT_TIME',
-            this.sToTime(newEl.currentTime)
-          )
-        })
-
-        newEl.addEventListener('ended', () => {
-          store.dispatch('track/SET_NEXT_TRACK')
-        })
-      }
-    }
-  },
-  methods: {
-    padZero(v) {
-      return v < 10 ? '0' + v : v
-    },
-    sToTime(t) {
-      return (
-        this.padZero(parseInt((t / 60) % 60)) +
-        ':' +
-        this.padZero(parseInt(t % 60))
-      )
-    }
-  }
+// helpers
+function padZero(v) {
+  return v < 10 ? '0' + v : v
+}
+function sToTime(t) {
+  return (
+    padZero(parseInt((t / 60) % 60)) +
+    ':' +
+    padZero(parseInt(t % 60))
+  )
 }
 </script>

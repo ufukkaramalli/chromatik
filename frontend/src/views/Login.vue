@@ -40,15 +40,16 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { useStore } from 'vuex'
+import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
+import { useAppStore } from '@/stores/app'
 import LoginForm from '@/components/LogInForm.vue'
 
-const store = useStore()
 const router = useRouter()
 
-const appName = computed(() => store.getters['getAppName'])
+// Pinia store
+const app = useAppStore()
+const { appName } = storeToRefs(app)
 
 const goRegister = () => {
   router.replace({ name: 'Register' })

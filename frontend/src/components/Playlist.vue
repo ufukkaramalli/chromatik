@@ -27,7 +27,12 @@
                 <v-icon>mdi-play</v-icon>
               </v-btn>
               <v-spacer />
-              <v-btn size="small" icon :to="{ name: 'TrackPage', params: { user: track.user.slug, track: track.name } }" @click.stop>
+              <v-btn
+                size="small"
+                icon
+                :to="{ name: 'TrackPage', params: { user: track.user.slug, track: track.name } }"
+                @click.stop
+              >
                 <v-icon>mdi-open-in-new</v-icon>
               </v-btn>
             </v-card-actions>
@@ -39,19 +44,19 @@
 </template>
 
 <script setup>
-import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
+import { useTrackStore } from '@/stores/track'
 
 const props = defineProps({
   tracks: { type: Array, default: () => [] }
 })
 
-const store = useStore()
+const trackStore = useTrackStore()
 const router = useRouter()
 
 const play = (track, index) => {
-  // Liste bağlamı dışındaki index anlamlı olmayabilir, trackIndex'i null geçebiliriz
-  store.dispatch('track/clickedPlay', { trackIndex: index, track })
+  // trackIndex optional olabilir, liste bağlamında gönderiyoruz
+  trackStore.clickedPlay({ trackIndex: index, track })
 }
 
 const go = (track) => {

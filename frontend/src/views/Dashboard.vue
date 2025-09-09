@@ -11,11 +11,9 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { useStore } from 'vuex'
+import { storeToRefs } from 'pinia'
+import { useAuthStore } from '@/stores/auth'
 
-const store = useStore()
-
-const authenticated = computed(() => store.getters['auth/authenticated'])
-const user = computed(() => store.getters['auth/user'])
+const auth = useAuthStore()
+const { authenticated, user } = storeToRefs(auth)
 </script>

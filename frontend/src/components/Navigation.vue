@@ -35,20 +35,22 @@
 
 <script setup>
 import { computed } from 'vue'
-import { useStore } from 'vuex'
+import { storeToRefs } from 'pinia'
+import { useAuthStore } from '@/stores/auth'
+import { useAppStore } from '@/stores/app'
 
-const store = useStore()
-
-const authenticated = computed(() => store.getters['auth/authenticated'])
+const auth = useAuthStore()
+const app = useAppStore()
+const { authenticated } = storeToRefs(auth)
+const { themeOpts } = storeToRefs(app)
 
 const drawer = computed({
-  get: () => (store.state?.themeOpts?.navigation ?? false),
-  set: (v) => store.commit('setNavigation', v),
+  get: () => themeOpts.value.navigation,
+  set: (v) => app.setNavigation(v)
 })
 
 const items = computed(() => {
-  const auth = authenticated.value
-  return auth
+  return authenticated.value
     ? [
         { title: 'Home', icon: 'mdi-home', to: { name: 'Home' } },
         { title: 'Dashboard', icon: 'mdi-view-dashboard', to: { name: 'Dashboard' } },

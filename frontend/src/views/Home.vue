@@ -43,25 +43,21 @@
 </template>
 
 <script setup>
-import { onMounted, computed } from 'vue'
-import { useStore } from 'vuex'
+import { onMounted } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useAppStore } from '@/stores/app'
 import Playlist from '@/components/Playlist.vue'
 
-const store = useStore()
-
-// Actions
-const fetchRecent = () => store.dispatch('RECENT_TRACKS')
-const fetchMostLiked = () => store.dispatch('MOST_LIKED')
-const fetchMostStreamed = () => store.dispatch('MOST_STREAMED')
-
-// Getters
-const GetRecentTracks = computed(() => store.getters['GET_RECENT_TRACKS'])
-const GetMostLikedTracks = computed(() => store.getters['GET_MOST_LIKED_TRACKS'])
-const GetMostStreamedTracks = computed(() => store.getters['GET_MOST_STREAMED_TRACKS'])
+const app = useAppStore()
+const {
+  GET_RECENT_TRACKS: GetRecentTracks,
+  GET_MOST_LIKED_TRACKS: GetMostLikedTracks,
+  GET_MOST_STREAMED_TRACKS: GetMostStreamedTracks
+} = storeToRefs(app)
 
 onMounted(() => {
-  fetchRecent()
-  fetchMostLiked()
-  fetchMostStreamed()
+  app.RECENT_TRACKS()
+  app.MOST_LIKED()
+  app.MOST_STREAMED()
 })
 </script>

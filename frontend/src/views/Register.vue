@@ -17,10 +17,10 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { useStore } from 'vuex'
+import { storeToRefs } from 'pinia'
+import { useAppStore } from '@/stores/app'
 import RegisterForm from '@/components/Forms/RegisterForm.vue'
 
-const store = useStore()
-const appName = computed(() => store.getters['getAppName'])
+const app = useAppStore()
+const { appName } = storeToRefs(app)
 </script>

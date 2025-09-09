@@ -73,23 +73,24 @@
 
 <script setup>
 import { useDisplay } from 'vuetify'
-import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
-import { computed } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useAppStore } from '@/stores/app'
+import { useAuthStore } from '@/stores/auth'
 
 const display = useDisplay()
-const store = useStore()
 const router = useRouter()
 
-const appName = computed(() => store.getters['getAppName'])
-const authenticated = computed(() => store.getters['auth/authenticated'])
-const user = computed(() => store.getters['auth/user'])
-const themeOpts = computed(() => store.state.themeOpts)
+const app = useAppStore()
+const auth = useAuthStore()
 
-const setNavigation = (payload) => store.commit('setNavigation', payload)
+const { appName, themeOpts } = storeToRefs(app)
+const { authenticated, user } = storeToRefs(auth)
+
+const setNavigation = (payload) => app.setNavigation(payload)
 
 const logOut = async () => {
-  await store.dispatch('auth/logOut')
+  await auth.logOut()
   router.push({ name: 'Home' }).catch(() => {})
 }
 </script>

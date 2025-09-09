@@ -130,18 +130,18 @@
 
 <script setup>
 import { ref, reactive, computed } from 'vue'
-import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import axios from 'axios'
 import { useVuelidate } from '@vuelidate/core'
 import { required, maxLength, minLength, email as emailRule, sameAs, helpers } from '@vuelidate/validators'
+import { useAuthStore } from '@/stores/auth'
+import { api } from '@/lib/axios'
 
-const store = useStore()
 const router = useRouter()
 const { t } = useI18n()
+const auth = useAuthStore()
 
-// form
+// form state
 const form = reactive({
   username: '',
   email: '',
@@ -158,7 +158,7 @@ const overlayProgress = ref(false)
 const show1 = ref(false)
 const show2 = ref(false)
 
-// rules
+// validation rules
 const rules = computed(() => ({
   form: {
     username: {
@@ -176,7 +176,7 @@ const rules = computed(() => ({
 
 const v$ = useVuelidate(rules, { form })
 
-// errors
+// error helpers
 const emailErrors = computed(() => {
   const errs = []
   if (!v$.value.form.email.$dirty) return errs
@@ -221,7 +221,7 @@ const registerForm = ref(null)
 
 const SignUp = async (credentials) => {
   try {
-    return await axios.post('auth/signup', credentials)
+    return await api.post('/auth/signup', credentials)
   } catch (error) {
     return error.response
   }
@@ -238,14 +238,11 @@ const submit = async () => {
     if (response?.data?.errors) {
       settings.username.success = false
       settings.username.error = true
-      overlayProgress.value = false
-      settings.username.loading = false
       return
     }
     if (response?.data?.success) {
-      await store.dispatch('auth/logIn', response.data.success)
-      overlayProgress.value = false
-      settings.username.loading = false
+      // signup sonrası direkt login
+      await auth.logIn({ email: form.email, password: form.password })
       router.replace({ name: 'Dashboard' })
     }
   } catch (e) {

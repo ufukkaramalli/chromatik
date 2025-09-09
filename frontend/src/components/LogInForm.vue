@@ -86,13 +86,13 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { useAuthStore } from '@/stores/auth'
 
-const store = useStore()
 const router = useRouter()
 const { t } = useI18n()
+const auth = useAuthStore()
 
 const loginForm = ref(null)
 const overlayProgress = ref(false)
@@ -116,16 +116,14 @@ const canSubmit = computed(() => {
   return !!form.value.email && !!form.value.password && form.value.password.length >= 8
 })
 
-const submit = () => {
+const submit = async () => {
   overlayProgress.value = true
-  store
-    .dispatch('auth/logIn', form.value)
-    .then(() => {
-      overlayProgress.value = false
-      router.replace({ name: 'Dashboard' })
-    })
-    .catch(() => {
-      overlayProgress.value = false
-    })
+  try {
+    await auth.logIn(form.value)
+    overlayProgress.value = false
+    router.replace({ name: 'Dashboard' })
+  } catch (err) {
+    overlayProgress.value = false
+  }
 }
 </script>

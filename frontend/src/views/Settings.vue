@@ -4,6 +4,7 @@
       <v-row>
         <v-col>
           <v-expansion-panels v-model="panel" multiple hover>
+            <!-- Panel 1 -->
             <v-expansion-panel>
               <v-expansion-panel-header ripple>
                 Panel 1
@@ -35,6 +36,7 @@
               </v-expansion-panel-content>
             </v-expansion-panel>
 
+            <!-- Panel 2 -->
             <v-expansion-panel>
               <v-expansion-panel-header ripple>
                 Panel 2
@@ -49,6 +51,7 @@
               </v-expansion-panel-content>
             </v-expansion-panel>
 
+            <!-- Panel 3 -->
             <v-expansion-panel>
               <v-expansion-panel-header ripple>
                 Panel 3
@@ -69,81 +72,84 @@
   </v-main>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
-import axios from 'axios'
+<script setup>
+import { ref, reactive, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useAuthStore } from '@/stores/auth'
+import { api } from '@/lib/axios'
 
-export default {
-  data() {
-    return {
-      panel: [],
-      username: '',
-      rules: {
-        required: v => !!v || this.$t('Form.required'),
-        counterMin: v => (v || '').length >= 8 || this.$t('Form.min') + ' 8 ' + this.$t('Form.character'),
-        counterMax: v => (v || '').length <= 20 || this.$t('Form.max') + ' 20 ' + this.$t('Form.character'),
-        email: v => {
-          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          return pattern.test(v) || this.$t('Form.invalidemail')
-        },
-        noSpace: v => (v || '').indexOf(' ') < 0 || 'No spaces are allowed'
-      },
-      settings: {
-        username: {
-          success: false,
-          error: false,
-          loading: false,
-          disabled: false
-        }
-      }
-    }
+const { t } = useI18n()
+const auth = useAuthStore()
+const { authenticated, user } = auth
+
+const panel = ref([])
+const username = ref('')
+
+const settings = reactive({
+  username: {
+    success: false,
+    error: false,
+    loading: false,
+    disabled: false,
   },
-  computed: {
-    ...mapGetters({
-      authenticated: 'auth/authenticated',
-      user: 'auth/user'
-    }),
-    getUsername: {
-      get() {
-        return this.username || this.user.slug
-      },
-      set(value) {
-        this.username = value
-      }
-    }
+})
+
+const rules = {
+  required: (v) => !!v || t('Form.required'),
+  counterMin: (v) =>
+    (v || '').length >= 8 || `${t('Form.min')} 8 ${t('Form.character')}`,
+  counterMax: (v) =>
+    (v || '').length <= 20 || `${t('Form.max')} 20 ${t('Form.character')}`,
+  email: (v) => {
+    const pattern =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    return pattern.test(v) || t('Form.invalidemail')
   },
-  methods: {
-    async SET_USERNAME() {
-      if (!this.$refs.usernameForm.validate()) {
-        this.settings.username.error = true
-        this.settings.username.success = false
-        return
-      }
+  noSpace: (v) => (v || '').indexOf(' ') < 0 || 'No spaces are allowed',
+}
 
-      this.settings.username.loading = true
-      this.settings.username.disabled = true
+const getUsername = computed({
+  get() {
+    return username.value || user?.slug || ''
+  },
+  set(val) {
+    username.value = val
+  },
+})
 
-      try {
-        const response = await axios.post('auth/settings/username', {
-          username: this.username
-        })
+const usernameForm = ref(null)
 
-        if (response.data.status === 1 || this.user.slug === this.username) {
-          this.settings.username.success = true
-          this.settings.username.error = false
-        } else {
-          this.settings.username.success = false
-          this.settings.username.error = true
-        }
-      } catch (err) {
-        console.error(err)
-        this.settings.username.success = false
-        this.settings.username.error = true
-      } finally {
-        this.settings.username.loading = false
-        this.settings.username.disabled = false
-      }
+const SET_USERNAME = async () => {
+  if (!usernameForm.value?.validate()) {
+    settings.username.error = true
+    settings.username.success = false
+    return
+  }
+
+  settings.username.loading = true
+  settings.username.disabled = true
+
+  try {
+    const response = await api.post('/auth/settings/username', {
+      username: username.value,
+    })
+
+    if (response.data.status === 1 || user?.slug === username.value) {
+      settings.username.success = true
+      settings.username.error = false
+      // auth store’daki user objesini güncelle
+      auth.user = { ...auth.user, slug: username.value }
+    } else {
+      settings.username.success = false
+      settings.username.error = true
     }
+  } catch (err) {
+    console.error(err)
+    settings.username.success = false
+    settings.username.error = true
+  } finally {
+    settings.username.loading = false
+    settings.username.disabled = false
   }
 }
 </script>

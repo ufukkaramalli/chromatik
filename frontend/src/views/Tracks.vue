@@ -9,7 +9,11 @@
               <h5>{{ $t('user.headers.MyTracks') }}</h5>
             </template>
             <template #subtitle>
-              <h5><small class="caption">{{ myTracks.length }} {{ $t('players.MostStreamed') }}</small></h5>
+              <h5>
+                <small class="caption">
+                  {{ myTracks.length }} {{ $t('players.MostStreamed') }}
+                </small>
+              </h5>
             </template>
           </Playlist>
         </v-col>
@@ -20,10 +24,9 @@
 
 <script setup>
 import { computed } from 'vue'
-import { useStore } from 'vuex'
+import { useAuthStore } from '@/stores/auth'
 import Playlist from '@/components/Playlist.vue'
 
-const store = useStore()
-const user = computed(() => store.getters['auth/user'])
-const myTracks = computed(() => user.value?.tracks || [])
+const auth = useAuthStore()
+const myTracks = computed(() => auth.user?.tracks || [])
 </script>

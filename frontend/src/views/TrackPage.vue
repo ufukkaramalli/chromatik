@@ -56,44 +56,50 @@
   </v-main>
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+import { useTrackStore } from '@/stores/track'
+import { useAppStore } from '@/stores/app'
 import blur from '@/directives/blur'
-import { mapActions } from 'vuex'
 
-export default {
-  directives: { blur },
-  data() {
-    return {
-      track: {},
-      success: false,
-      loading: true
-    }
-  },
-  created() {
-    this.FIND_TRACK()
-  },
-  methods: {
-    ...mapActions({
-      GET_TRACK_PAGE: 'GET_TRACK_PAGE'
-    }),
-    async FIND_TRACK() {
-      try {
-        const response = await this.GET_TRACK_PAGE(this.$route.params)
-        this.track = response.data
-        document.title = `${response.data.name} by ${response.data.user.name} | Chromatique`
-        setTimeout(() => {
-          this.success = true
-          this.loading = false
-        }, 500)
-      } catch (error) {
-        const statusText = error?.response?.statusText || 'Not Found'
-        document.title = `Track ${statusText} | Chromatique`
-        setTimeout(() => {
-          this.success = false
-          this.loading = false
-        }, 500)
-      }
-    }
+const route = useRoute()
+const trackStore = useTrackStore()
+const appStore = useAppStore()
+
+const track = ref({})
+const success = ref(false)
+const loading = ref(true)
+
+onMounted(async () => {
+  await FIND_TRACK()
+})
+
+const FIND_TRACK = async () => {
+  try {
+    const response = await trackStore.GET_TRACK_PAGE(route.params)
+    track.value = response.data
+
+    document.title = `${response.data.name} by ${response.data.user.name} | ${appStore.appName}`
+
+    setTimeout(() => {
+      success.value = true
+      loading.value = false
+    }, 500)
+  } catch (error) {
+    const statusText = error?.response?.statusText || 'Not Found'
+    document.title = `Track ${statusText} | ${appStore.appName}`
+
+    setTimeout(() => {
+      success.value = false
+      loading.value = false
+    }, 500)
   }
+}
+</script>
+
+<script>
+export default {
+  directives: { blur }
 }
 </script>
