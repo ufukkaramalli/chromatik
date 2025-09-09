@@ -140,3 +140,6 @@ vite.config.ts.timestamp-*
 
 #MacOS files
 .DS_Store
+
+# Makefile
+Makefile
