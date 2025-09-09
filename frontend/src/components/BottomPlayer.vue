@@ -5,7 +5,7 @@
       <v-progress-linear
         :buffer-value="BufferSize"
         stream
-        :value="(currentTime / getAudioElement.duration) * 100"
+        :value="progress"
         class="my-0"
         height="5"
       />
@@ -15,7 +15,7 @@
         <v-col cols="4" class="d-flex flex-row py-1">
           <v-col class="flex-grow-0">
             <v-img
-              :src="getCurrentTrack.art ?? ''"
+              :src="current?.art ?? ''"
               width="74"
               aspect-ratio="1"
               class="rounded-lg"
@@ -26,13 +26,15 @@
             <div class="text-uppercase font-weight-black body-1">
               <router-link
                 class="routerLink"
-                :title="getCurrentTrack.name"
-                :to="{ name: 'TrackPage', params: { user: getCurrentTrack.user.slug, track: getCurrentTrack.name } }"
-              >{{ getCurrentTrack.name }}</router-link>
+                :title="current?.name"
+                :to="{ name: 'TrackPage', params: { user: current?.user.slug, track: current?.name } }"
+              >
+                {{ current?.name }}
+              </router-link>
             </div>
             <div class="text-uppercase body-1">
-              <router-link class="routerLink" :to="getCurrentTrack.user.slug">
-                {{ getCurrentTrack.user.name }}
+              <router-link class="routerLink" :to="current?.user.slug">
+                {{ current?.user.name }}
               </router-link>
             </div>
           </v-col>
@@ -40,24 +42,19 @@
 
         <!-- Player Controls -->
         <v-col cols="4" class="d-flex align-center justify-center">
-          <v-btn class="mx-2" @click="previousTrack" icon>
+          <v-btn class="mx-2" @click="previous" icon>
             <v-icon>mdi-rewind</v-icon>
           </v-btn>
 
-          <v-btn
-            v-if="!getPlaying"
-            class="mx-2 scale"
-            icon
-            @click="btnPlay"
-          >
+          <v-btn v-if="!playing" class="mx-2 scale" icon @click="toggle">
             <v-icon>mdi-play</v-icon>
           </v-btn>
 
-          <v-btn v-else class="mx-2" icon @click="btnPause">
+          <v-btn v-else class="mx-2" icon @click="toggle">
             <v-icon>mdi-pause</v-icon>
           </v-btn>
 
-          <v-btn class="mx-2" @click="nextTrack" icon>
+          <v-btn class="mx-2" @click="next" icon>
             <v-icon>mdi-fast-forward</v-icon>
           </v-btn>
         </v-col>
@@ -78,56 +75,54 @@
 </template>
 
 <script setup>
-import { computed, ref, watch } from 'vue'
-import { useStore } from 'vuex'
+import { ref, watch, computed } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useTrackStore } from '@/stores/track'
+import { usePlayer } from '@/composables/usePlayer'
 
-const store = useStore()
+/** ortak player mantığı (play/pause/next/prev/progress/seek) */
+const {
+  currentTrack: current,
+  audioElement: audio,
+  isPlaying: playing,
+  progress,
+  seek,
+  next,
+  previous,
+  toggle,
+} = usePlayer()
 
-const getCurrentTrack = computed(() => store.getters['track/GET_CURRENT_TRACK'])
-const getAudioElement = computed(() => store.getters['track/GET_AUDIO_ELEMENT'])
-const getCurrentTime = computed(() => store.getters['track/GET_CURRENT_TIME'])
-const getGain = computed(() => store.getters['track/GET_GAIN'])
-const getPlaying = computed(() => store.getters['track/GET_PLAYING'])
-const getBottomPlayer = computed(() => store.getters['track/GET_BOTTOM_PLAYER'])
-const getCurrentTrackIndex = computed(() => store.getters['track/GET_CURRENT_TRACK_INDEX'])
+/** BottomPlayer’a özel ek state’ler */
+const trackStore = useTrackStore()
+const { bottomPlayer: getBottomPlayer, gainNode, currentTime } = storeToRefs(trackStore)
 
 const buffer = ref(0)
-const currentTime = ref(0)
-
-const gainSlider = computed({
-  get() { return getAudioElement.value ? getGain.value * 100 : 100 },
-  set(value) { store.commit('track/SET_GAIN', value / 100) }
-})
-
 const BufferSize = computed({
   get: () => buffer.value,
-  set: (val) => buffer.value = val
+  set: (val) => (buffer.value = val),
 })
 
-watch(getAudioElement, (newEl) => {
-  if (newEl) {
-    newEl.addEventListener('timeupdate', () => {
-      if (newEl.buffered.length > 0) {
-        BufferSize.value = (newEl.buffered.end(newEl.buffered.length - 1) / newEl.duration) * 100
+/** audio buffer & time takibi */
+watch(
+  audio,
+  (el) => {
+    if (!el) return
+    el.addEventListener('timeupdate', () => {
+      if (el.buffered.length > 0 && el.duration) {
+        BufferSize.value = (el.buffered.end(el.buffered.length - 1) / el.duration) * 100
       }
-      currentTime.value = newEl.currentTime
     })
-  }
-}, { immediate: true })
+  },
+  { immediate: true }
+)
 
-watch(getCurrentTime, (val) => {
-  if (getAudioElement.value) currentTime.value = val
+/** Volume (gain) slider */
+const gainSlider = computed({
+  get() {
+    return gainNode.value ? gainNode.value.gain.value * 100 : 100
+  },
+  set(value) {
+    trackStore.SET_GAIN(value / 100)
+  },
 })
-
-const nextTrack = () => store.dispatch('track/SET_NEXT_TRACK')
-const previousTrack = () => store.dispatch('track/SET_PREVIOUS_TRACK')
-const btnPlay = () => {
-  store.dispatch('track/clickedPlay', { trackIndex: getCurrentTrackIndex.value, track: getCurrentTrack.value })
-}
-const btnPause = () => {
-  if (getAudioElement.value) {
-    getAudioElement.value.pause()
-    store.commit('track/SET_IS_PLAYING', false)
-  }
-}
 </script>
