@@ -22,8 +22,7 @@
     "vue-router": "^4.5.1",
     "vue-socket.io": "^3.0.10",
     "vue-window-size": "^2.0.0",
-    "vuetify": "^3.9.7",
-    "vuex": "^4.1.0"
+    "vuetify": "^3.9.7"
   },
   "devDependencies": {
     "@intlify/unplugin-vue-i18n": "^11.0.0",
