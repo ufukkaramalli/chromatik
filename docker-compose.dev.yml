@@ -1,6 +1,6 @@
 services:
   frontend:
-    image: ufukkaramalli/chromatik-frontend:latest   # Hub’daki isim
+    image: ufukkaramalli/chromatik-frontend:latest
     build:
       context: ./frontend
       dockerfile: Dockerfile.dev
@@ -15,7 +15,7 @@ services:
     depends_on: [backend]
 
   backend:
-    image: ufukkaramalli/chromatik-backend:latest    # Hub’daki isim
+    image: ufukkaramalli/chromatik-backend:latest
     build:
       context: ./backend
       dockerfile: Dockerfile.dev
@@ -27,3 +27,30 @@ services:
       - /app/node_modules
     env_file:
       - ./backend/.env.development
+    depends_on: [mongo]
+
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    ports: ["27017:27017"]  # yerelden bağlanmak istersen açık kalsın
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: dev
+      MONGO_INITDB_ROOT_PASSWORD: devpass
+    volumes:
+      - mongo_data_dev:/data/db
+      # İlk kurulumda otomatik seed istiyorsan bu satırı aç ve seed/init.js ekle:
+      # - ./seed:/docker-entrypoint-initdb.d:ro
+
+  mongo-express:
+    image: mongo-express:1
+    restart: unless-stopped
+    ports: ["8081:8081"]     # GUI -> http://localhost:8081
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_AUTH_USERNAME: dev
+      ME_CONFIG_MONGODB_AUTH_PASSWORD: devpass
+      ME_CONFIG_BASICAUTH: "false"   # istersen GUI'ye basic auth koyabilirsin
+    depends_on: [mongo]
+
+volumes:
+  mongo_data_dev:
