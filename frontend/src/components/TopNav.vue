@@ -6,12 +6,14 @@
     v-cloak
   >
     <!-- Left nav button -->
-    <v-app-bar-nav-icon @click="setNavigation(themeOpts.navigation)" />
+    <v-app-bar-nav-icon
+      @click="app.themeOpts.navigation = !app.themeOpts.navigation"
+    />
 
     <!-- Title -->
     <v-toolbar-title class="ml-0 pl-4">
       <span class="hidden-sm-and-down">
-        <h2 class="xxix-regular font-weight-regular">{{ appName }}</h2>
+        <h2 class="xxix-regular font-weight-regular">{{ app.appName }}</h2>
       </span>
     </v-toolbar-title>
 
@@ -31,23 +33,23 @@
 
     <!-- Right menu -->
     <v-toolbar-items>
-      <v-btn variant="text" to="/">Home</v-btn>
+      <v-btn rounded="0" variant="text" to="/">HOME</v-btn>
       <v-divider vertical class="mx-1" />
 
-      <template v-if="authenticated">
+      <template v-if="auth.authenticated">
         <!-- User menu -->
         <v-menu transition="slide-y-transition">
           <template #activator="{ props }">
             <v-btn variant="text" v-bind="props">
-              {{ user.name }}
+              {{ auth.user?.name }}
               <v-avatar class="ml-2" size="32px">
-                <v-img :src="user.photo" alt="User" />
+                <v-img :src="auth.user?.photo" alt="User" />
               </v-avatar>
             </v-btn>
           </template>
 
           <v-list>
-            <v-list-item @click.prevent="">
+            <v-list-item>
               <v-list-item-title>Profile</v-list-item-title>
               <v-list-item-action>
                 <v-icon>mdi-account-circle</v-icon>
@@ -65,7 +67,7 @@
       </template>
 
       <template v-else>
-        <v-btn variant="text" to="/Login">Login</v-btn>
+        <v-btn rounded="0" variant="text" to="/Login">LOGIN</v-btn>
       </template>
     </v-toolbar-items>
   </v-app-bar>
@@ -73,21 +75,14 @@
 
 <script setup>
 import { useDisplay } from 'vuetify'
-import { useRouter } from 'vue-router'
-import { storeToRefs } from 'pinia'
 import { useAppStore } from '@/stores/app'
 import { useAuthStore } from '@/stores/auth'
+import { useRouter } from 'vue-router'
 
 const display = useDisplay()
-const router = useRouter()
-
 const app = useAppStore()
 const auth = useAuthStore()
-
-const { appName, themeOpts } = storeToRefs(app)
-const { authenticated, user } = storeToRefs(auth)
-
-const setNavigation = (payload) => app.setNavigation(payload)
+const router = useRouter()
 
 const logOut = async () => {
   await auth.logOut()

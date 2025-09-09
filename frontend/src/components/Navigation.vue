@@ -18,7 +18,7 @@
 
     <template #append>
       <div class="pa-2">
-        <v-divider class="mb-2" />
+        <v-divider class="mb-2" v-if="authenticated" />
         <v-btn
           v-if="authenticated"
           block
@@ -35,19 +35,19 @@
 
 <script setup>
 import { computed } from 'vue'
-import { storeToRefs } from 'pinia'
-import { useAuthStore } from '@/stores/auth'
 import { useAppStore } from '@/stores/app'
+import { useAuthStore } from '@/stores/auth'
 
-const auth = useAuthStore()
 const app = useAppStore()
-const { authenticated } = storeToRefs(auth)
-const { themeOpts } = storeToRefs(app)
+const auth = useAuthStore()
 
+// Drawer state → store.themeOpts.navigation
 const drawer = computed({
-  get: () => themeOpts.value.navigation,
-  set: (v) => app.setNavigation(v)
+  get: () => app.themeOpts.navigation,
+  set: (val) => (app.themeOpts.navigation = val),
 })
+
+const authenticated = computed(() => auth.authenticated)
 
 const items = computed(() => {
   return authenticated.value

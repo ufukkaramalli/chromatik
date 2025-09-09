@@ -3,6 +3,8 @@
     <v-spacer />
 
     <v-btn
+      rounded="0"
+      color="black"
       variant="text"
       size="small"
       :disabled="currentLocale === 'en'"
@@ -12,6 +14,8 @@
     </v-btn>
 
     <v-btn
+      rounded="0"
+      color="black"
       variant="text"
       size="small"
       :disabled="currentLocale === 'tr'"
