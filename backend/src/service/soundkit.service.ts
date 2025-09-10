@@ -1,44 +1,66 @@
 import SoundkitModel from '.././model/soundkit.model';
 import ISoundkit from '.././interfaces/soundkit.interface';
-import { Types } from "mongoose";
-import { IUpdateOne } from '.././interfaces/mongoose.interface';
-
-
+import { Types } from 'mongoose';
 
 class SoundkitService {
-    private soundkit = SoundkitModel
+  private soundkit = SoundkitModel;
 
-    /**
-     * Create a new Soundkit
-     */
-
-    public async create(title:string, description:string, thumbnailUrl:string, url:string, userId:Types.ObjectId): Promise<ISoundkit> {
-        try {
-            const soundkit = await this.soundkit.create({title, description, thumbnailUrl, url, userId})
-            return soundkit
-        } catch (error) {
-            throw new Error('Unable to create soundkit service')
-        }
+  /**
+   * Create a new Soundkit
+   */
+  public async create(
+    title: string,
+    description: string,
+    thumbnailUrl: string,
+    url: string,
+    userId: Types.ObjectId
+  ): Promise<ISoundkit> {
+    try {
+      const soundkit = await this.soundkit.create({ title, description, thumbnailUrl, url, userId });
+      return soundkit;
+    } catch (error) {
+      throw new Error('Unable to create soundkit');
     }
+  }
 
-    public async update(id:string, title:string, description:string, thumbnailUrl:string, url:string, userId:Types.ObjectId): Promise<ISoundkit | IUpdateOne> {
-        try {
-            const updatedSoundkit = {title: title, _id: id, description: description, thumbnailUrl:thumbnailUrl, url:url, userId: userId}
-            const soundkit = await this.soundkit.updateOne({_id: id}, updatedSoundkit,{new: true})
-            return soundkit
-        } catch (error) {
-            throw new Error('Unable to update soundkit service')
-        }
-    }
+  /**
+   * Get all soundkits (with user relation)
+   */
+  public async getAll(): Promise<ISoundkit[]> {
+    return this.soundkit.find().populate('userId', 'name email');
+  }
 
-    public async delete(id:string, userId:Types.ObjectId): Promise<ISoundkit | null> {
-        try {
-            const soundkit = await this.soundkit.findOneAndDelete({_id:id,userId:userId})
-            return soundkit
-        } catch (error) {
-            throw new Error('Unable to delete soundkit service')
-        }
+  /**
+   * Get a soundkit by ID (with user relation)
+   */
+  public async getById(id: string): Promise<ISoundkit | null> {
+    return this.soundkit.findById(id).populate('userId', 'name email');
+  }
+
+  /**
+   * Update a Soundkit
+   */
+  public async update(
+    id: string,
+    updateData: Partial<ISoundkit>
+  ): Promise<ISoundkit | null> {
+    try {
+      return await this.soundkit.findByIdAndUpdate(id, updateData, { new: true });
+    } catch (error) {
+      throw new Error('Unable to update soundkit');
     }
+  }
+
+  /**
+   * Delete a Soundkit
+   */
+  public async delete(id: string, userId: Types.ObjectId): Promise<ISoundkit | null> {
+    try {
+      return await this.soundkit.findOneAndDelete({ _id: id, userId });
+    } catch (error) {
+      throw new Error('Unable to delete soundkit');
+    }
+  }
 }
 
-export default SoundkitService
+export default SoundkitService;
