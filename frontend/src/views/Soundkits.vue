@@ -1,7 +1,7 @@
 <template>
   <v-main>
     <v-container>
-      <v-row v-if="authenticated">
+      <v-row v-if="authStore.isAuthenticated">
         <!-- Soundkits varsa -->
         <template v-if="Soundkits && Soundkits.length > 0">
           <v-col cols="12" class="secondary darken-2 rounded-lg">
@@ -39,18 +39,12 @@
   </v-main>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
+<script setup>
+import { computed } from 'vue'
+import { useAuthStore } from '@/stores/auth'
 
-export default {
-  computed: {
-    ...mapGetters({
-      User: 'auth/user',
-      authenticated: 'auth/authenticated'
-    }),
-    Soundkits() {
-      return this.User?.soundkits || []
-    }
-  }
-}
+const authStore = useAuthStore()
+
+// Kullanıcının soundkitlerini çek
+const Soundkits = computed(() => authStore.user?.soundkits || [])
 </script>
