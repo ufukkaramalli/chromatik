@@ -15,6 +15,7 @@ mongoose.plugin(slug)
  *         - name
  *         - email
  *         - password
+ *         - isValidPassword     
  *       properties:
  *         name:
  *           type: string
@@ -27,6 +28,7 @@ mongoose.plugin(slug)
  *           default: password123
  *         isValidPassword:
  *           type: string
+ *           description: Should match the given password to confirm validity
  *           default: password123
  *     
  *     User:
@@ -74,6 +76,17 @@ mongoose.plugin(slug)
  *         id:
  *           type: string
  *           example: "68bc256a54c0705e8e2d0c26"
+ */
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     createUserResponse:
+ *       type: object
+ *       properties:
+ *         token:
+ *           type: string
+ *           example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
  */
 
 
