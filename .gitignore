@@ -141,5 +141,9 @@ vite.config.ts.timestamp-*
 #MacOS files
 .DS_Store
 
+#Windows files
+*.bat
+
+
 # Makefile
 Makefile
