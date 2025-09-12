@@ -175,10 +175,11 @@ async function submit() {
   try {
     const res = await api.post('/user/register', form)
 
-    if (res?.data?.success) {
-      // register sonrası login
-      await auth.logIn({ email: form.email, password: form.password })
-      await api.post('/auth/login', { email: form.email, password: form.password })
+    if (res?.data?.success && res?.data?.token) {
+      // authStore üzerinden token ile giriş
+      await auth.attempt(res.data.token)
+
+      // yönlendir
       router.replace({ name: 'Dashboard' })
     }
   } catch (e) {
