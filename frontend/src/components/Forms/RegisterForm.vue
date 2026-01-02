@@ -174,9 +174,8 @@ async function submit() {
   loading.value = true
   try {
     const res = await api.post('/user/register', form)
-
-    if (res?.data?.success && res?.data?.token) {
-      // authStore üzerinden token ile giriş
+    if (res?.data?.token) {
+      console.log(res.data.token)  
       await auth.attempt(res.data.token)
 
       // yönlendir
