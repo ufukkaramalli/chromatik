@@ -51,7 +51,7 @@ class App {
   private initialiseControllers(controllers: IController[]): void {
     logger.info("Setting up Controllers...");
     controllers.forEach((controller: IController) => {
-      this.express.use('/api', controller.router);
+      this.express.use('/', controller.router);
       logger.info(`Controller ${controller.constructor.name} initialized.`);
     });
     logger.info("All controllers have been set up.");

@@ -28,6 +28,11 @@ class UserController implements IController {
             validationMiddleware(validate.login),
             this.login
         )
+        this.router.post(
+            `${this.path}/logout`,
+            authenticated,
+            this.logout
+        )
 
         this.router.use(`${this.path}`,authenticated)
         this.router.get(`${this.path}`,this.getUser)
@@ -82,7 +87,7 @@ class UserController implements IController {
                 email,
                 password
             )
-            res.status(201).json({token})
+            res.status(201).json({ success: true, token })
         } catch (error: any) {
             next(new HttpException(400, error.message))
         }
@@ -109,7 +114,7 @@ class UserController implements IController {
         try {
             const {email, password} = req.body 
             const token = await this.UserService.login(email, password)
-            res.status(200).json({ token })
+            res.status(200).json({ success: true, token })
         } catch (error: any) {
             next(new HttpException(400, error.message))
         }
@@ -142,6 +147,14 @@ class UserController implements IController {
             return next(new HttpException(404, 'No logged in user'));
         }
         res.status(200).json({user: req.user})
+    }
+
+    private logout = (
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ): Response | void => {
+        res.status(200).json({ success: true, message: 'Logged out successfully' });
     }
 }
 
