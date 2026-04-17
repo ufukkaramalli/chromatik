@@ -43,23 +43,33 @@
   </v-card>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { useTrackStore } from '@/stores/track'
+import { useQueueStore } from '@/stores/queueStore'
+import { usePlayer } from '@/composables/usePlayer'
 
-const props = defineProps({
-  tracks: { type: Array, default: () => [] }
-})
-
-const trackStore = useTrackStore()
-const router = useRouter()
-
-const play = (track, index) => {
-  // trackIndex optional olabilir, liste bağlamında gönderiyoruz
-  trackStore.clickedPlay({ trackIndex: index, track })
+interface TrackProp {
+  id?: string;
+  name: string;
+  art: string;
+  user: { slug: string; name: string };
+  [key: string]: any;
 }
 
-const go = (track) => {
+const props = defineProps<{
+  tracks: TrackProp[]
+}>()
+
+const queueStore = useQueueStore()
+const player = usePlayer()
+const router = useRouter()
+
+const play = (track: any, index: number) => {
+  queueStore.setQueue(props.tracks as any[], index)
+  player.play(track, index)
+}
+
+const go = (track: any) => {
   if (!track?.user?.slug || !track?.name) return
   router.push({ name: 'TrackPage', params: { user: track.user.slug, track: track.name } })
 }
