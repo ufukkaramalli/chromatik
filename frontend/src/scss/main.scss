@@ -32,3 +32,27 @@
   .custom-class {
     border-radius: $border-radius-root;
   }
+
+// Disabled button custom styling (darker instead of lighter)
+.v-btn--disabled {
+  background-color: #611515 !important; // Darker version of primary red
+  color: rgba(255, 255, 255, 0.3) !important;
+  opacity: 1 !important; // Ensure the button itself isn't faded out
+
+  .v-btn__overlay {
+    opacity: 0 !important; // Remove the default white overlay that makes it look lighter
+  }
+
+  .v-btn__content {
+    opacity: 0.5 !important; // Fading just the content for legibility
+  }
+}
+
+// Global premium background with radial gradients
+.app-gradient-bg {
+  background: radial-gradient(circle at top right, rgba(211, 47, 47, 0.15), transparent 40%),
+              radial-gradient(circle at bottom left, rgba(211, 47, 47, 0.1), transparent 40%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  width: 100%;
+}

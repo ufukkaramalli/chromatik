@@ -4,11 +4,13 @@
     <router-view name="SystemBar" />
     <router-view name="TopNav" />
 
-    <router-view v-slot="{ Component }">
-      <transition :name="transitionName" mode="out-in">
-        <component :is="Component" />
-      </transition>
-    </router-view>
+    <div class="app-gradient-bg">
+      <router-view v-slot="{ Component }">
+        <transition :name="transitionName" mode="out-in">
+          <component :is="Component" />
+        </transition>
+      </router-view>
+    </div>
 
     <router-view name="BottomPlayer" />
   </v-app>

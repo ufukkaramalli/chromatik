@@ -14,11 +14,12 @@ export default defineConfig({
   server: {
     host: true,
     port: 8080,
-    open: true,
+    open: false,
     strictPort: true,
+    allowedHosts: true,
     proxy: {
       '/api': {
-        target: 'http://backend:5000', // compose içi backend servisi
+        target: 'http://127.0.0.1:5000', // compose içi backend servisi
         changeOrigin: true
       }
     }
