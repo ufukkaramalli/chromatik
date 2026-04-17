@@ -15,7 +15,9 @@
     "headers": {
       "SignIn": "Sign in to continue",
       "Or": "OR",
-      "NoAccount": "Don't have an account?"
+      "NoAccount": "Don't have an account?",
+      "WelcomeBack": "Welcome back to Chromatik",
+      "ForgotPassword": "Forgot password?"
     },
     "buttons": {
       "Login": "Login",
@@ -24,6 +26,10 @@
     "placeholders": {
       "Password": "Password",
       "Email": "E-mail"
+    },
+    "errors": {
+      "InvalidCredentials": "Invalid email or password.",
+      "Failed": "Login failed. Please try again later."
     }
   },
   "Form": {
@@ -36,10 +42,21 @@
   },
   "Register": {
     "headers": {
+      "WelcomeText": "Join our creative community",
+      "CreateAccount": "Create Account",
+      "SocialRegister": "Or register with",
+      "HaveAccount": "Already have an account?",
       "SignIn": "Complete sign up"
     },
+    "terms": {
+      "Agreement": "I agree to the",
+      "Service": "Terms of Service",
+      "And": "and",
+      "Privacy": "Privacy Policy"
+    },
     "buttons": {
-      "Register": "Sign Up"
+      "Register": "Sign Up",
+      "Login": "Log In"
     },
     "placeholders": {
       "Password": "Password",
@@ -56,5 +73,14 @@
       "alphanumeric": "Only Alphanumeric Characters",
       "acceptterms": "Please check the box continue"
     }
+  },
+  "Navigation": {
+    "Home": "Home",
+    "Dashboard": "Dashboard",
+    "Tracks": "Tracks",
+    "Soundkits": "Soundkits",
+    "Login": "Login",
+    "Register": "Register",
+    "Settings": "Settings"
   }
 }

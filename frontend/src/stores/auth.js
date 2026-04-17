@@ -53,13 +53,13 @@ export const useAuthStore = defineStore('auth', {
     },
 
     async initUser() {
-      const res = await api.get('/auth/me')
-      this._setUser(res.data)
+      const res = await api.get('/user')
+      this._setUser(res.data.user)
       return res
     },
 
     async logOut() {
-      try { await api.post('/auth/signout') } catch {}
+      try { await api.post('/user/logout') } catch {}
       this._setToken(null)
       this._setUser(null)
     }

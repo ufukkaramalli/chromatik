@@ -15,7 +15,9 @@
     "headers": {
       "SignIn": "Devam etmek için giriş yapın",
       "Or": "Veya",
-      "NoAccount": "Hesabın yok mu?"
+      "NoAccount": "Hesabın yok mu?",
+      "WelcomeBack": "Chromatik'e tekrar hoş geldiniz",
+      "ForgotPassword": "Şifremi unuttum"
     },
     "buttons": {
       "Login": "Giriş Yap",
@@ -24,6 +26,10 @@
     "placeholders": {
       "Password": "Şifre",
       "Email": "E-posta"
+    },
+    "errors": {
+      "InvalidCredentials": "Hatalı e-posta veya şifre.",
+      "Failed": "Giriş yapılamadı. Lütfen daha sonra tekrar deneyin."
     }
   },
   "Form": {
@@ -36,10 +42,21 @@
   },
   "Register": {
     "headers": {
+      "WelcomeText": "Yaratıcı topluluğumuza katılın",
+      "CreateAccount": "Hesap Oluştur",
+      "SocialRegister": "Veya şununla kaydolun",
+      "HaveAccount": "Zaten bir hesabınız var mı?",
       "SignIn": "Kaydı Tamamlayın"
     },
+    "terms": {
+      "Agreement": "Şunu kabul ediyorum:",
+      "Service": "Kullanım Koşulları",
+      "And": "ve",
+      "Privacy": "Gizlilik Politikası"
+    },
     "buttons": {
-      "Register": "Kayıt Ol"
+      "Register": "Kayıt Ol",
+      "Login": "Giriş Yap"
     },
     "placeholders": {
       "Password": "Şifre",
@@ -56,5 +73,14 @@
       "alphanumeric": "Sadece Alphanumeric Karakterler",
       "acceptterms": "Devam etmek için kutuyu işaretleyin"
     }
+  },
+  "Navigation": {
+    "Home": "Ana Sayfa",
+    "Dashboard": "Panel",
+    "Tracks": "Parçalar",
+    "Soundkits": "Ses Kitleri",
+    "Login": "Giriş Yap",
+    "Register": "Kayıt Ol",
+    "Settings": "Ayarlar"
   }
 }
