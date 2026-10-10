@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "mongodb": {
+      "command": "/home/chromatik/.nvm/versions/node/v20.20.2/bin/mongodb-mcp-server",
+      "args": [],
+      "env": {
+        "MDB_MCP_CONNECTION_STRING": "mongodb://dev:devpass@localhost:27017/chromatik_dev?authSource=admin",
+        "MDB_MCP_READ_ONLY": "false"
+      }
+    }
+  }
+}

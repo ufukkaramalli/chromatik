@@ -1,0 +1,14 @@
+name: Production Auto-Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy to Chromatik Server
+    runs-on: self-hosted
+    steps:
+      - name: Trigger Production Deployment
+        run: sudo /usr/local/bin/deploy-chromatik

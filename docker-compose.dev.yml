@@ -1,0 +1,62 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    command: pnpm dev --host 0.0.0.0 --port 8080
+    ports: [ 8080:8080]
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_ADDRESS=/api
+      - BACKEND_URL=http://backend:5000
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    command: pnpm dev
+    ports: [5000:5000]
+    working_dir: /app
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+      - ./media:/media
+    environment:
+      - NODE_ENV=development
+      - PORT=5000
+      - MONGO_URI=mongodb://dev:devpass@mongo:27017/chromatik_dev?authSource=admin
+      - MEDIA_DIR=/media
+    env_file:
+      - ./backend/.env.development
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    ports: [27017:27017]
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: dev
+      MONGO_INITDB_ROOT_PASSWORD: devpass
+    volumes:
+      - mongo_data_dev:/data/db
+
+  mongo-express:
+    image: mongo-express:1
+    restart: unless-stopped
+    ports: [8081:8081]
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_AUTH_USERNAME: dev
+      ME_CONFIG_MONGODB_AUTH_PASSWORD: devpass
+      ME_CONFIG_BASICAUTH: false
+    depends_on:
+      - mongo
+
+volumes:
+  mongo_data_dev:
