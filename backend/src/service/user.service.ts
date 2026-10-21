@@ -1,7 +1,5 @@
 import UserModel from '.././model/user.model';
 import token from '.././utils/token';
-import { seedDummyTracksForUser } from '.././utils/seedDummyTracks';
-import { Types } from 'mongoose';
 
 class UserService {
     private user = UserModel;
@@ -17,9 +15,6 @@ class UserService {
         try {
             const user = await this.user.create({name, email, password})
             const accessToken = token.createToken(user);
-
-            // Seed royalty-free demo tracks in the background (non-blocking)
-            seedDummyTracksForUser(user._id as Types.ObjectId);
 
             return accessToken
         } catch (error) {
