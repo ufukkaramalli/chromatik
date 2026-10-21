@@ -1,9 +1,9 @@
 name: Production Auto-Deploy
 
 on:
-  push:
-    branches:
-      - main
+  release:
+    types:
+      - published
 
 jobs:
   deploy:
