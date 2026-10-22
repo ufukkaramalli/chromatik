@@ -16,12 +16,15 @@ import '@mdi/font/css/materialdesignicons.css'
 // ✅ Pinia
 import { pinia } from '@/stores'
 
-// ✅ Ortak axios instance
 import { api } from '@/lib/axios'
 import { useAuthStore } from '@/stores/auth'
+import { formatCompactNumber } from '@/utils/format'
+import GlassTooltip from '@/components/GlassTooltip.vue'
 
 const app = createApp(App)
+app.component('GlassTooltip', GlassTooltip)
 app.config.globalProperties.$api = api // (opsiyonel)
+app.config.globalProperties.$formatCompactNumber = formatCompactNumber
 
 app
   .use(pinia)

@@ -12,7 +12,11 @@ export const useAppStore = defineStore('app', {
     appName: import.meta.env.VITE_APPLICATION_NAME || 'Chromatik',
     RecentTracks: null,
     MostLiked: null,
-    MostStreamed: null
+    MostStreamed: null,
+    stats: {
+      producersCount: 0,
+      tracksCount: 0
+    }
   }),
 
   getters: {
@@ -23,7 +27,8 @@ export const useAppStore = defineStore('app', {
     getAppName: (s) => s.appName,
     GET_RECENT_TRACKS: (s) => s.RecentTracks,
     GET_MOST_LIKED_TRACKS: (s) => s.MostLiked,
-    GET_MOST_STREAMED_TRACKS: (s) => s.MostStreamed
+    GET_MOST_STREAMED_TRACKS: (s) => s.MostStreamed,
+    GET_STATS: (s) => s.stats
   },
 
   actions: {
@@ -31,6 +36,20 @@ export const useAppStore = defineStore('app', {
     setNavigation(v) { this.themeOpts.navigation = v },
     setSystemBar(v) { this.themeOpts.systemBar = v },
     setLoginOverlay(v) { this.loginOverlay = v },
+
+    async FETCH_STATS() {
+      try {
+        const res = await api.get('/track/stats')
+        if (res?.data) {
+          this.stats = {
+            producersCount: res.data.producersCount ?? res.data.producers ?? 0,
+            tracksCount: res.data.tracksCount ?? res.data.tracks ?? 0
+          }
+        }
+      } catch (err) {
+        console.error('Failed to fetch stats:', err)
+      }
+    },
 
     async RECENT_TRACKS() {
       const res = await api.get('/track/recent')

@@ -33,6 +33,7 @@ class TrackController implements IController {
     private initialiseRoutes(): void {
 
         /** Public listing routes (no auth required) */
+        this.router.get(`${this.path}/stats`, this.getStats)
         this.router.get(`${this.path}/recent`, this.getRecent)
         this.router.get(`${this.path}/mostlike`, this.getMostLiked)
         this.router.get(`${this.path}/moststreamed`, this.getMostStreamed)
@@ -303,6 +304,54 @@ class TrackController implements IController {
             res.status(200).json({ tracks });
         } catch (error: any) {
             next(new HttpException(500, 'Cannot fetch dashboard tracks'))
+        }
+    }
+
+    /**
+     * @openapi
+     * /api/track/stats:
+     *   get:
+     *     tags:
+     *       - Track
+     *     summary: Get platform track and producer counts
+     *     description: Returns the total count of producers and published tracks in the database
+     *     responses:
+     *       '200':
+     *         description: Platform statistics fetched successfully
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 producersCount:
+     *                   type: number
+     *                   example: 6
+     *                 tracksCount:
+     *                   type: number
+     *                   example: 7
+     *                 producers:
+     *                   type: number
+     *                   example: 6
+     *                 tracks:
+     *                   type: number
+     *                   example: 7
+     *       '500':
+     *         description: Cannot fetch platform stats
+     */
+    private getStats = async (
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ): Promise<Response | void> => {
+        try {
+            const stats = await this.TrackService.getStats();
+            res.status(200).json({
+                ...stats,
+                producers: stats.producersCount,
+                tracks: stats.tracksCount
+            });
+        } catch (error: any) {
+            next(new HttpException(500, 'Cannot fetch platform stats'));
         }
     }
 

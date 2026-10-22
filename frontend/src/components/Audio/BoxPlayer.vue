@@ -1,5 +1,23 @@
 <template>
+  <!-- Skeleton Loading State -->
   <v-card
+    v-if="loading"
+    class="pa-3 box-player-card glass-premium"
+    border
+    elevation="0"
+  >
+    <div class="player-layout">
+      <div class="art-section mb-3">
+        <v-skeleton-loader type="image" class="rounded-lg bg-transparent" />
+      </div>
+      <div class="track-info">
+        <v-skeleton-loader type="sentences" class="bg-transparent" />
+      </div>
+    </div>
+  </v-card>
+
+  <v-card
+    v-else
     class="pa-3 box-player-card glass-premium"
     :style="themeStyle"
     role="link"
@@ -153,6 +171,7 @@ const showLicenseModal = ref(false)
 
 const props = defineProps<{
   track?: TrackLike
+  loading?: boolean
   /** Artist profile theme ('ribbons' | 'flowfield' | 'pillars'); defaults to track.user.profileTheme */
   theme?: string | null
   /**

@@ -1,160 +1,164 @@
 <template>
-  <div class="playlist-section glass-section">
-    <!-- Top glowing ambient highlight -->
-    <div class="section-glow-line" aria-hidden="true"></div>
-
-    <!-- Section Header -->
-    <div class="playlist-header px-4 pt-4 pb-2 px-sm-6 pt-sm-5 d-flex align-center justify-space-between flex-wrap">
-      <div class="d-flex align-center">
-        <!-- Icon badge -->
-        <div v-if="icon || $slots.icon" class="playlist-icon-wrap mr-3 mr-sm-4">
+  <div class="playlist-horizon position-relative">
+    <!-- Streamlined Header -->
+    <div
+      v-if="!hideHeader"
+      class="d-flex align-center flex-wrap pb-3 mb-2"
+      :class="align === 'right' ? 'justify-end' : 'justify-space-between'"
+    >
+      <!-- Icon & Titles -->
+      <div
+        class="d-flex align-center"
+        :class="align === 'right' ? 'flex-row-reverse text-right' : ''"
+      >
+        <!-- Icon badge / slot -->
+        <div
+          v-if="icon || $slots.icon"
+          class="horizon-icon-wrap"
+          :class="align === 'right' ? 'ml-3 ml-sm-4' : 'mr-3 mr-sm-4'"
+        >
           <slot name="icon">
             <v-icon :icon="icon" :color="iconColor || 'primary'" size="22" />
           </slot>
         </div>
 
         <!-- Title & Subtitle / Badge -->
-        <div class="playlist-header-text">
+        <div :class="align === 'right' ? 'd-flex flex-column align-end' : ''">
           <slot name="title">
-            <h2 v-if="title" class="playlist-title text-truncate">{{ title }}</h2>
+            <h2 v-if="title" class="horizon-title font-display text-truncate text-white">{{ title }}</h2>
           </slot>
 
-          <div class="d-flex align-center flex-wrap gap-2 mt-1">
+          <div
+            class="d-flex align-center flex-wrap ga-2 mt-1"
+            :class="align === 'right' ? 'justify-end' : ''"
+          >
             <slot name="subtitle">
-              <span v-if="subtitle" class="playlist-badge">
-                <span class="live-dot" aria-hidden="true"></span>
+              <v-chip
+                v-if="subtitle"
+                size="x-small"
+                variant="outlined"
+                class="font-mono text-caption text-grey-lighten-1 px-3"
+                rounded="pill"
+              >
+                <span class="pulse-beacon mr-1" aria-hidden="true"></span>
                 {{ subtitle }}
-              </span>
+              </v-chip>
             </slot>
-            <span v-if="badge" class="playlist-badge">
-              <span class="live-dot" aria-hidden="true"></span>
+            <v-chip
+              v-if="badge"
+              size="x-small"
+              variant="tonal"
+              color="primary"
+              class="font-mono text-caption font-weight-bold"
+              rounded="pill"
+            >
+              <span class="pulse-beacon mr-1" aria-hidden="true"></span>
               {{ badge }}
-            </span>
+            </v-chip>
           </div>
         </div>
-      </div>
-
-      <!-- Header Controls: Carousel arrows & View Switcher (No Play All, No Track Count) -->
-      <div class="playlist-header-controls d-flex align-center mt-2 mt-sm-0" v-if="tracks && tracks.length > 0">
-        <!-- Left / Right scroll navigation (carousel mode) -->
-        <template v-if="viewMode === 'carousel'">
-          <v-btn
-            icon
-            variant="tonal"
-            size="small"
-            class="carousel-nav-btn mr-1.5"
-            :aria-label="$t('players.ScrollLeft')"
-            @click="scroll('left')"
-          >
-            <v-icon size="18">mdi-chevron-left</v-icon>
-          </v-btn>
-          <v-btn
-            icon
-            variant="tonal"
-            size="small"
-            class="carousel-nav-btn mr-2"
-            :aria-label="$t('players.ScrollRight')"
-            @click="scroll('right')"
-          >
-            <v-icon size="18">mdi-chevron-right</v-icon>
-          </v-btn>
-        </template>
-
-        <!-- Toggle Carousel / Grid view -->
-        <v-btn
-          icon
-          variant="tonal"
-          size="small"
-          class="view-toggle-btn"
-          :aria-label="viewMode === 'carousel' ? $t('players.ViewModeGrid') : $t('players.ViewModeCarousel')"
-          @click="toggleViewMode"
-        >
-          <v-icon size="16">
-            {{ viewMode === 'carousel' ? 'mdi-view-grid-outline' : 'mdi-view-carousel-outline' }}
-          </v-icon>
-        </v-btn>
       </div>
     </div>
 
-    <!-- Section Body -->
-    <div class="playlist-body pa-3 pa-sm-5 position-relative">
-      <!-- Loading Skeleton State -->
-      <div v-if="isTracksLoading">
-        <div v-if="viewMode === 'carousel'" class="carousel-track">
-          <div v-for="n in 6" :key="n" class="carousel-card-item">
-            <div class="skeleton-card">
-              <div class="skeleton-art"></div>
-              <div class="skeleton-line skeleton-title"></div>
-              <div class="skeleton-line skeleton-artist"></div>
-            </div>
-          </div>
-        </div>
-        <v-row v-else dense class="track-grid">
-          <v-col v-for="n in 6" :key="n" cols="6" sm="4" md="3" lg="2">
-            <div class="skeleton-card">
-              <div class="skeleton-art"></div>
-              <div class="skeleton-line skeleton-title"></div>
-              <div class="skeleton-line skeleton-artist"></div>
-            </div>
-          </v-col>
-        </v-row>
+    <!-- Empty State -->
+    <v-sheet
+      v-if="!isTracksLoading && (!tracks || tracks.length === 0)"
+      color="transparent"
+      rounded="xl"
+      border
+      class="text-center py-12 px-4"
+    >
+      <v-avatar size="54" color="surface-variant" variant="tonal" class="mb-3">
+        <v-icon size="28" color="grey-lighten-1">mdi-music-note-off</v-icon>
+      </v-avatar>
+      <div class="text-body-2 font-mono text-grey-lighten-1">
+        {{ $t('players.NoTracks') }}
       </div>
+    </v-sheet>
 
-      <!-- Empty State -->
+    <!-- Frameless Horizon Stream with Side Carousel Controls -->
+    <div v-else class="carousel-stage position-relative">
+      <!-- Seamless Edge Vignette / Floor Emergence Shadows -->
       <div
-        v-else-if="!tracks || tracks.length === 0"
-        class="playlist-empty text-center py-10"
+        class="nav-backdrop-fade nav-backdrop-left"
+        aria-hidden="true"
+      />
+      <div
+        class="nav-backdrop-fade nav-backdrop-right"
+        aria-hidden="true"
+      />
+
+      <!-- Floating High-Contrast Carousel Prev Button -->
+      <v-btn
+        variant="flat"
+        class="carousel-nav-btn nav-prev"
+        :class="{ 'is-hidden': isAtStart || !canScroll }"
+        :style="{ '--btn-accent': iconColor || '#ff5252' }"
+        :aria-label="$t('players.ScrollLeft')"
+        elevation="8"
+        @click="scroll('left')"
       >
-        <div class="empty-icon-wrap mb-3 mx-auto">
-          <v-icon size="36" color="grey-darken-1">mdi-music-note-off</v-icon>
-        </div>
-        <div class="text-body-2 text-grey-lighten-1">
-          {{ $t('players.NoTracks') }}
+        <v-icon size="28">mdi-chevron-left</v-icon>
+      </v-btn>
+
+      <!-- Loading State: BoxPlayer handles its own skeleton -->
+      <div v-if="isTracksLoading" class="playlist-rail">
+        <div v-for="n in 6" :key="n" class="playlist-rail-card">
+          <BoxPlayer loading />
         </div>
       </div>
 
-      <!-- Tracks in Carousel or Grid Mode -->
+      <!-- Ready Tracks -->
       <template v-else>
-        <!-- Carousel Stream -->
         <div
-          v-if="viewMode === 'carousel'"
           ref="scrollRef"
-          class="carousel-track"
+          class="playlist-rail"
+          @scroll.passive="updateScrollState"
         >
           <div
             v-for="(track, idx) in tracks"
             :key="getTrackId(track) || idx"
-            class="carousel-card-item"
+            class="playlist-rail-card"
           >
-            <BoxPlayer 
-              :track="track" 
+            <BoxPlayer
+              :track="track"
               :on-play="() => playFromList(track, idx)"
               @play="() => playFromList(track, idx)"
             />
           </div>
         </div>
 
-        <!-- Full Grid Layout -->
-        <v-row v-else dense class="track-grid">
-          <v-col
-            v-for="(track, idx) in tracks"
-            :key="getTrackId(track) || idx"
-            cols="6" sm="4" md="3" lg="2"
-          >
-            <BoxPlayer 
-              :track="track" 
-              :on-play="() => playFromList(track, idx)"
-              @play="() => playFromList(track, idx)"
-            />
-          </v-col>
-        </v-row>
+        <!-- Laser Scroll Progress Rail -->
+        <div v-if="canScroll" class="horizon-progress-track mt-3">
+          <div 
+            class="horizon-progress-indicator" 
+            :style="{ 
+              width: `${scrollProgress}%`,
+              backgroundColor: iconColor || '#ff5252',
+              color: iconColor || '#ff5252'
+            }"
+          ></div>
+        </div>
       </template>
+
+      <!-- Floating High-Contrast Carousel Next Button -->
+      <v-btn
+        variant="flat"
+        class="carousel-nav-btn nav-next"
+        :class="{ 'is-hidden': isAtEnd || !canScroll }"
+        :style="{ '--btn-accent': iconColor || '#ff5252' }"
+        :aria-label="$t('players.ScrollRight')"
+        elevation="8"
+        @click="scroll('right')"
+      >
+        <v-icon size="28">mdi-chevron-right</v-icon>
+      </v-btn>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount, watch, nextTick } from 'vue'
 import { useQueueStore } from '@/stores/queueStore'
 import { usePlayer } from '@/composables/usePlayer'
 import BoxPlayer from '@/components/Audio/BoxPlayer.vue'
@@ -170,7 +174,8 @@ const props = withDefaults(
     badge?: string
     icon?: string
     iconColor?: string
-    initialViewMode?: 'carousel' | 'grid'
+    align?: 'left' | 'right'
+    hideHeader?: boolean
   }>(),
   {
     tracks: null,
@@ -180,25 +185,35 @@ const props = withDefaults(
     badge: '',
     icon: '',
     iconColor: 'primary',
-    initialViewMode: 'carousel'
+    align: 'left',
+    hideHeader: false
   }
 )
 
 const queueStore = useQueueStore()
 const player = usePlayer()
 
-const viewMode = ref<'carousel' | 'grid'>(props.initialViewMode)
 const scrollRef = ref<HTMLElement | null>(null)
+const isAtStart = ref(true)
+const isAtEnd = ref(false)
+const scrollProgress = ref(0)
+const canScroll = ref(false)
 
 const isTracksLoading = computed(() => props.loading || props.tracks === null)
 
-const toggleViewMode = () => {
-  viewMode.value = viewMode.value === 'carousel' ? 'grid' : 'carousel'
+const updateScrollState = () => {
+  if (!scrollRef.value) return
+  const { scrollLeft, scrollWidth, clientWidth } = scrollRef.value
+  const maxScroll = scrollWidth - clientWidth
+  canScroll.value = maxScroll > 15
+  isAtStart.value = scrollLeft <= 8
+  isAtEnd.value = scrollLeft >= maxScroll - 8
+  scrollProgress.value = maxScroll > 0 ? Math.min(100, Math.max(0, (scrollLeft / maxScroll) * 100)) : 0
 }
 
 const scroll = (direction: 'left' | 'right') => {
   if (!scrollRef.value) return
-  const scrollAmount = 480
+  const scrollAmount = Math.max(300, Math.floor(scrollRef.value.clientWidth * 0.75))
   scrollRef.value.scrollBy({
     left: direction === 'left' ? -scrollAmount : scrollAmount,
     behavior: 'smooth'
@@ -210,246 +225,222 @@ const playFromList = (track: any, index: number) => {
   queueStore.setQueue(props.tracks as any[], index)
   player.play(track, index)
 }
+
+onMounted(() => {
+  nextTick(updateScrollState)
+  setTimeout(updateScrollState, 150)
+  setTimeout(updateScrollState, 500)
+  window.addEventListener('resize', updateScrollState, { passive: true })
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', updateScrollState)
+})
+
+watch(() => props.tracks, () => {
+  nextTick(updateScrollState)
+  setTimeout(updateScrollState, 100)
+}, { deep: true })
 </script>
 
 <style scoped lang="scss">
-.glass-section {
+.playlist-horizon {
   position: relative;
-  isolation: isolate;
-  background: linear-gradient(175deg, rgba(24, 24, 30, 0.7) 0%, rgba(13, 13, 17, 0.85) 100%);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-
-  &:hover {
-    border-color: rgba(255, 82, 82, 0.22);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
-  }
+  width: 100%;
 }
 
-.section-glow-line {
-  position: absolute;
-  top: 0;
-  left: 6%;
-  right: 6%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 82, 82, 0.4), transparent);
-  pointer-events: none;
-}
-
-.playlist-header {
-  position: relative;
-  z-index: 1;
-}
-
-.playlist-body {
-  position: relative;
-  z-index: 2;
-}
-
-.playlist-icon-wrap {
-  width: 44px;
-  height: 44px;
-  min-width: 44px;
+.horizon-icon-wrap {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at center, rgba(211, 47, 47, 0.22), rgba(211, 47, 47, 0.06));
-  border: 1px solid rgba(255, 82, 82, 0.3);
-  box-shadow: 0 0 14px rgba(211, 47, 47, 0.18);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.playlist-title {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #ffffff;
-  letter-spacing: -0.01em;
+.horizon-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
   margin: 0;
   line-height: 1.25;
 
   @media (min-width: 600px) {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
   }
 }
 
-.playlist-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 2px 10px;
-  border-radius: 9999px;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.4px;
-  text-transform: uppercase;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.8);
+.pulse-beacon {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #ff5252;
+  box-shadow: 0 0 8px #ff5252;
+  animation: beacon-pulse 2s infinite ease-in-out;
+}
 
-  .live-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background-color: #ff5252;
-    box-shadow: 0 0 8px #ff5252;
-    animation: live-pulse 2s infinite ease-in-out;
+@keyframes beacon-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 0.45;
   }
 }
 
-.carousel-nav-btn, .view-toggle-btn {
-  background: rgba(255, 255, 255, 0.05) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  color: rgba(255, 255, 255, 0.85) !important;
-  border-radius: 10px !important;
-  width: 32px !important;
-  height: 32px !important;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+.carousel-stage {
+  position: relative;
+  width: 100%;
+}
+
+/* Floating High-Contrast Carousel Navigation Controls */
+.carousel-nav-btn {
+  position: absolute !important;
+  top: 38% !important;
+  transform: translateY(-50%) scale(1) !important;
+  z-index: 25 !important;
+  width: 46px !important;
+  height: 46px !important;
+  min-width: 46px !important;
+  border-radius: 50% !important;
+  background: rgba(26, 20, 38, 0.96) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.35) !important;
+  color: #ffffff !important;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.85), 0 0 1px rgba(255, 255, 255, 0.6) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  cursor: pointer !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  opacity: 0.95;
+
+  :deep(.v-icon) {
+    font-size: 28px !important;
+    color: #ffffff !important;
+  }
+
+  &.nav-prev {
+    left: 8px;
+  }
+
+  &.nav-next {
+    right: 8px;
+  }
 
   &:hover {
-    background: rgba(211, 47, 47, 0.25) !important;
-    border-color: rgba(255, 82, 82, 0.45) !important;
-    color: #fff !important;
-    transform: translateY(-1px);
-    box-shadow: 0 0 12px rgba(255, 82, 82, 0.3);
+    opacity: 1 !important;
+    background: var(--btn-accent, #ff5252) !important;
+    border-color: #ffffff !important;
+    color: #ffffff !important;
+    transform: translateY(-50%) scale(1.12) !important;
+    box-shadow: 0 0 24px var(--btn-accent, rgba(255, 82, 82, 0.8)), 0 10px 28px rgba(0, 0, 0, 0.9) !important;
+
+    :deep(.v-icon) {
+      color: #ffffff !important;
+    }
+  }
+
+  &:active {
+    transform: translateY(-50%) scale(0.96) !important;
+  }
+
+  &.is-hidden {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: translateY(-50%) scale(0.75) !important;
   }
 }
 
-/* Horizontal Carousel */
-.carousel-track {
+/* Seamless Edge Vignette / Floor Emergence Shadows */
+.nav-backdrop-fade {
+  position: absolute;
+  top: 0;
+  bottom: 14px;
+  width: 105px;
+  pointer-events: none;
+  z-index: 15;
+  transition: opacity 0.3s ease;
+
+  @media (max-width: 600px) {
+    width: 60px;
+  }
+
+  &.nav-backdrop-left {
+    left: 0;
+    background: linear-gradient(
+      to right,
+      #0c0b10 0%,
+      rgba(12, 11, 16, 0.94) 22%,
+      rgba(12, 11, 16, 0.72) 48%,
+      rgba(12, 11, 16, 0.32) 75%,
+      transparent 100%
+    );
+  }
+
+  &.nav-backdrop-right {
+    right: 0;
+    background: linear-gradient(
+      to left,
+      #0c0b10 0%,
+      rgba(12, 11, 16, 0.94) 22%,
+      rgba(12, 11, 16, 0.72) 48%,
+      rgba(12, 11, 16, 0.32) 75%,
+      transparent 100%
+    );
+  }
+}
+
+/* Smooth Horizontal Rail */
+.playlist-rail {
   display: flex;
   gap: 16px;
   overflow-x: auto;
+  overflow-y: hidden;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
-  padding: 16px 6px 16px 6px;
-  margin-top: -6px;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255, 82, 82, 0.25) transparent;
+  padding: 8px 8px 14px 8px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 
   &::-webkit-scrollbar {
-    height: 4px;
-  }
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: rgba(255, 82, 82, 0.25);
-    border-radius: 4px;
-    &:hover {
-      background: rgba(255, 82, 82, 0.5);
-    }
+    display: none;
   }
 }
 
-.carousel-card-item {
-  position: relative;
-  z-index: 1;
-  flex: 0 0 calc(50% - 10px);
-  min-width: 150px;
+.playlist-rail-card {
+  flex: 0 0 auto;
+  width: 175px;
   scroll-snap-align: start;
-  transition: z-index 0.2s;
-
-  &:hover,
-  &:focus-within {
-    z-index: 20;
-  }
 
   @media (min-width: 600px) {
-    flex: 0 0 200px;
+    width: 200px;
   }
   @media (min-width: 960px) {
-    flex: 0 0 220px;
+    width: 215px;
   }
-  @media (min-width: 1280px) {
-    flex: 0 0 230px;
-  }
-}
-
-.track-grid {
-  padding-top: 10px;
-
-  :deep(.v-col) {
-    position: relative;
-    z-index: 1;
-    transition: z-index 0.2s;
-
-    &:hover,
-    &:focus-within {
-      z-index: 20;
-    }
+  @media (min-width: 1400px) {
+    width: 225px;
   }
 }
 
-/* Skeleton Loading */
-.skeleton-card {
-  padding: 12px;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.04);
+/* Laser Scroll Progress Rail */
+.horizon-progress-track {
+  height: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+  overflow: hidden;
+  position: relative;
+  margin: 0 4px;
 }
 
-.skeleton-art {
-  width: 100%;
-  aspect-ratio: 1;
-  border-radius: 10px;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.03) 25%, rgba(255, 255, 255, 0.08) 50%, rgba(255, 255, 255, 0.03) 75%);
-  background-size: 200% 100%;
-  animation: skeleton-shimmer 1.8s infinite;
-  margin-bottom: 12px;
-}
-
-.skeleton-line {
-  border-radius: 4px;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.03) 25%, rgba(255, 255, 255, 0.08) 50%, rgba(255, 255, 255, 0.03) 75%);
-  background-size: 200% 100%;
-  animation: skeleton-shimmer 1.8s infinite;
-
-  &.skeleton-title {
-    height: 14px;
-    width: 75%;
-    margin-bottom: 6px;
-  }
-
-  &.skeleton-artist {
-    height: 10px;
-    width: 45%;
-  }
-}
-
-/* Empty State */
-.empty-icon-wrap {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-@keyframes skeleton-shimmer {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
-}
-
-@keyframes live-pulse {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.4;
-    transform: scale(0.85);
-  }
+.horizon-progress-indicator {
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.15s ease-out;
+  box-shadow: 0 0 10px currentColor;
 }
 </style>
