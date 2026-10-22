@@ -96,12 +96,14 @@ const items = computed(() => {
   return authenticated.value
     ? [
         { key: 'Home', icon: 'mdi-home-outline', to: { name: 'Home' } },
+        { key: 'Explore', icon: 'mdi-compass-outline', to: { name: 'Explore' } },
         { key: 'Dashboard', icon: 'mdi-view-dashboard-outline', to: { name: 'Dashboard' } },
         { key: 'Tracks', icon: 'mdi-music-note-outline', to: { name: 'Tracks' } },
         { key: 'Soundkits', icon: 'mdi-folder-music-outline', to: { name: 'Soundkits' } },
       ]
     : [
         { key: 'Home', icon: 'mdi-home-outline', to: { name: 'Home' } },
+        { key: 'Explore', icon: 'mdi-compass-outline', to: { name: 'Explore' } },
         { key: 'Login', icon: 'mdi-login-variant', to: { name: 'Login' } },
         { key: 'Register', icon: 'mdi-account-plus-outline', to: { name: 'Register' } },
       ]

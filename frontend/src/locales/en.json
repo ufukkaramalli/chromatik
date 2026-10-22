@@ -233,8 +233,69 @@
       "acceptterms": "Please check the box continue"
     }
   },
+  "Explore": {
+    "Badge": "Explore",
+    "Title": "Discover new sounds",
+    "Subtitle": "Filter beats by genre, mood, BPM, key and price; find rising producers and sound kits.",
+    "Tabs": {
+      "Tracks": "Beats",
+      "Producers": "Producers",
+      "Soundkits": "Sound Kits"
+    },
+    "Sort": {
+      "Label": "Sort by",
+      "Newest": "Newest",
+      "MostStreamed": "Most streamed",
+      "MostLiked": "Most liked",
+      "MostViewed": "Most viewed",
+      "PriceAsc": "Price: low to high",
+      "PriceDesc": "Price: high to low",
+      "RecentlyActive": "Recently active",
+      "MostTracks": "Most beats"
+    },
+    "Filters": {
+      "Title": "Filters",
+      "Open": "Filters",
+      "Reset": "Reset",
+      "ClearAll": "Clear all",
+      "Genre": "Genre",
+      "Mood": "Mood",
+      "Key": "Key",
+      "Bpm": "BPM",
+      "Price": "Price",
+      "PriceHint": "Filters by Basic license price.",
+      "NoOptions": "No options yet",
+      "ShowResults": "Show {count} results"
+    },
+    "Tracks": {
+      "Results": "{count} beats found",
+      "EmptyTitle": "No matching beats",
+      "EmptyDesc": "Try loosening your filters or picking a different genre."
+    },
+    "Producers": {
+      "Results": "{count} producers",
+      "Tracks": "{count} beats",
+      "TracksHint": "Published beats",
+      "PlaysHint": "Total plays",
+      "LikesHint": "Total likes",
+      "EmptyTitle": "No producers yet",
+      "EmptyDesc": "Producers with published beats will appear here."
+    },
+    "Soundkits": {
+      "Results": "{count} sound kits",
+      "Badge": "Sound Kit",
+      "Free": "Free",
+      "EmptyTitle": "No sound kits yet",
+      "EmptyDesc": "Published sound kits will appear here."
+    },
+    "LoadMore": "Load more",
+    "Showing": "Showing {shown} of {total}",
+    "Error": "Something went wrong while loading content.",
+    "Retry": "Retry"
+  },
   "Navigation": {
     "Home": "Home",
+    "Explore": "Explore",
     "Dashboard": "Dashboard",
     "Tracks": "Tracks",
     "Soundkits": "Soundkits",

@@ -233,8 +233,69 @@
       "acceptterms": "Devam etmek için kutuyu işaretleyin"
     }
   },
+  "Explore": {
+    "Badge": "Keşfet",
+    "Title": "Yeni sesler keşfet",
+    "Subtitle": "Türe, ruh haline, BPM'e, tona ve fiyata göre beat'leri filtrele; yükselen prodüktörleri ve ses kitlerini keşfet.",
+    "Tabs": {
+      "Tracks": "Beat'ler",
+      "Producers": "Prodüktörler",
+      "Soundkits": "Ses Kitleri"
+    },
+    "Sort": {
+      "Label": "Sırala",
+      "Newest": "En yeni",
+      "MostStreamed": "En çok dinlenen",
+      "MostLiked": "En çok beğenilen",
+      "MostViewed": "En çok görüntülenen",
+      "PriceAsc": "Fiyat: düşükten yükseğe",
+      "PriceDesc": "Fiyat: yüksekten düşüğe",
+      "RecentlyActive": "Son yükleme yapan",
+      "MostTracks": "En çok beat"
+    },
+    "Filters": {
+      "Title": "Filtreler",
+      "Open": "Filtreler",
+      "Reset": "Sıfırla",
+      "ClearAll": "Tümünü temizle",
+      "Genre": "Tür",
+      "Mood": "Ruh hali",
+      "Key": "Ton",
+      "Bpm": "BPM",
+      "Price": "Fiyat",
+      "PriceHint": "Basic lisans fiyatına göre filtrelenir.",
+      "NoOptions": "Henüz seçenek yok",
+      "ShowResults": "{count} sonucu göster"
+    },
+    "Tracks": {
+      "Results": "{count} beat bulundu",
+      "EmptyTitle": "Eşleşen beat bulunamadı",
+      "EmptyDesc": "Filtreleri gevşetmeyi ya da farklı bir tür seçmeyi dene."
+    },
+    "Producers": {
+      "Results": "{count} prodüktör",
+      "Tracks": "{count} beat",
+      "TracksHint": "Yayındaki beat sayısı",
+      "PlaysHint": "Toplam dinlenme",
+      "LikesHint": "Toplam beğeni",
+      "EmptyTitle": "Henüz prodüktör yok",
+      "EmptyDesc": "Beat yayınlayan prodüktörler burada listelenecek."
+    },
+    "Soundkits": {
+      "Results": "{count} ses kiti",
+      "Badge": "Ses Kiti",
+      "Free": "Ücretsiz",
+      "EmptyTitle": "Henüz ses kiti yok",
+      "EmptyDesc": "Yayınlanan ses kitleri burada listelenecek."
+    },
+    "LoadMore": "Daha fazla yükle",
+    "Showing": "{shown} / {total} gösteriliyor",
+    "Error": "İçerik yüklenirken bir hata oluştu.",
+    "Retry": "Tekrar dene"
+  },
   "Navigation": {
     "Home": "Ana Sayfa",
+    "Explore": "Keşfet",
     "Dashboard": "Panel",
     "Tracks": "Parçalar",
     "Soundkits": "Ses Kitleri",
