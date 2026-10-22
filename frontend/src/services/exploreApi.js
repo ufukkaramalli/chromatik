@@ -39,18 +39,19 @@ export async function fetchExploreFacets(config = {}) {
   return data
 }
 
-export async function fetchExploreProducers({ sort, page, limit } = {}, config = {}) {
+export async function fetchExploreProducers({ q, sort, page, limit } = {}, config = {}) {
   const { data } = await api.get('/explore/producers', {
     ...config,
-    params: clean({ sort, page, limit })
+    params: clean({ q, sort, page, limit })
   })
   return data
 }
 
-export async function fetchExploreSoundkits({ sort, price, page, limit } = {}, config = {}) {
+export async function fetchExploreSoundkits({ q, sort, price, page, limit } = {}, config = {}) {
   const { data } = await api.get('/explore/soundkits', {
     ...config,
     params: clean({
+      q,
       sort,
       priceMin: price?.[0],
       priceMax: price?.[1],

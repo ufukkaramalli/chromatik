@@ -293,9 +293,41 @@
     "Error": "Something went wrong while loading content.",
     "Retry": "Retry"
   },
+  "Search": {
+    "Badge": "Search",
+    "TitleWithQuery": "Results for \"{query}\"",
+    "TitleEmpty": "What are you looking for?",
+    "Placeholder": "Search beats, producers, genres or keywords...",
+    "AdvancedFilters": "Advanced Filters",
+    "AdvancedFiltersHint": "Go to Explore for deep BPM, key, and price filtering",
+    "Trending": "Trending",
+    "InitialPromptTitle": "Discover Fresh Sounds & Producers",
+    "InitialPromptDesc": "Type a beat title, producer name, genre, or mood into the search bar to explore the entire catalog.",
+    "BrowseExplore": "Browse Explore",
+    "EmptyTitle": "No results found for \"{query}\"",
+    "EmptyDesc": "Try different or more general keywords, or clear your filters.",
+    "ClearSearch": "Clear Search",
+    "GoToExplore": "Go to Explore",
+    "Tabs": {
+      "All": "All",
+      "Tracks": "Beats",
+      "Producers": "Producers",
+      "Soundkits": "Sound Kits"
+    },
+    "Sections": {
+      "TopTracks": "Top Beats",
+      "Producers": "Producers",
+      "Soundkits": "Sound Kits"
+    },
+    "ViewAllTracks": "View All ({count})",
+    "ViewAllProducers": "View All ({count})",
+    "ViewAllSoundkits": "View All ({count})"
+  },
   "Navigation": {
     "Home": "Home",
     "Explore": "Explore",
+    "Search": "Search",
+    "SearchPlaceholder": "Search beats or producers...",
     "Dashboard": "Dashboard",
     "Tracks": "Tracks",
     "Soundkits": "Soundkits",

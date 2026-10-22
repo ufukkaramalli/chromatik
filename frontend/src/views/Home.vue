@@ -787,7 +787,8 @@ function scrollToSection(id) {
 }
 
 function handleHeroSearch() {
-  scrollToSection('streamed-section')
+  const q = searchQuery.value?.trim()
+  router.push({ name: 'Search', query: q ? { q } : {} }).catch(() => {})
 }
 
 function handleUploadClick() {
