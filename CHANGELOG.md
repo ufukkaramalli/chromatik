@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://www.conventionalcommits.org/) for commit guidelines.
 
+## [0.4.0](https://github.com/ufukkaramalli/chromatik/compare/v0.3.0...v0.4.0) (2026-10-22)
+
+### ✨ Features
+
+* **backend:** support search query parameter across producers and soundkits ([88bd2c0](https://github.com/ufukkaramalli/chromatik/commit/88bd2c0666ce7678dfeabe8d7c183e212f8e92d8))
+* **explore:** add explore page with track, producer and soundkit discovery ([3076b0f](https://github.com/ufukkaramalli/chromatik/commit/3076b0fb10d7426e836777db54152e9613093596))
+* **search:** add dedicated search page with topnav and hero integration ([a9a5701](https://github.com/ufukkaramalli/chromatik/commit/a9a57016a6c5a7f124960cc9b1f026956261ec8e))
+
+### 🐛 Bug Fixes
+
+* **security:** prevent leakage of untagged audio and stems across public endpoints ([6e92cf9](https://github.com/ufukkaramalli/chromatik/commit/6e92cf9d9b9518a50e329dc382fcc1aeef7a4bb4))
+
 ## [0.3.0](https://github.com/ufukkaramalli/chromatik/compare/v0.2.0...v0.3.0) (2026-10-22)
 
 ### ✨ Features
