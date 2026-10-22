@@ -96,11 +96,13 @@ class UserService {
             .populate({
                 path: 'tracks',
                 match: { status: 'public' },
+                select: '-untaggedAudioUrl -stemsUrl',
                 options: { sort: { createdAt: -1 } }
             })
             .populate({
                 path: 'soundkits',
                 match: { status: 'public' },
+                select: '-downloadUrl -url',
                 options: { sort: { createdAt: -1 } }
             })
             .lean();

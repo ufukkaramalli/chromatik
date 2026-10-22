@@ -91,6 +91,7 @@ class TrackService {
         const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
         return this.track
             .find({ status: 'public', createdAt: { $gte: oneDayAgo } })
+            .select('-untaggedAudioUrl -stemsUrl')
             .sort({ createdAt: -1 })
             .limit(12)
             .populate('userId', 'name slug photoUrl')
@@ -103,6 +104,7 @@ class TrackService {
     public async getMostLiked(): Promise<ITrack[]> {
         return this.track
             .find({ status: 'public' })
+            .select('-untaggedAudioUrl -stemsUrl')
             .sort({ likes: -1 })
             .limit(12)
             .populate('userId', 'name slug photoUrl')
@@ -115,6 +117,7 @@ class TrackService {
     public async getMostStreamed(): Promise<ITrack[]> {
         return this.track
             .find({ status: 'public' })
+            .select('-untaggedAudioUrl -stemsUrl')
             .sort({ views: -1 })
             .limit(12)
             .populate('userId', 'name slug photoUrl')
@@ -132,6 +135,7 @@ class TrackService {
         // Then find the track by user and name (or slug)
         return this.track
             .findOne({ userId: User._id, $or: [{ name: trackSlug }, { slug: trackSlug }] })
+            .select('-untaggedAudioUrl -stemsUrl')
             .populate('userId', 'name slug photoUrl profileTheme')
             .lean();
     }

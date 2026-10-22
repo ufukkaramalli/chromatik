@@ -54,9 +54,12 @@ export interface PagedResult<T> {
 
 const escapeRegex = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
-/** Case-insensitive exact matchers so "trap" and "Trap" are treated as the same tag. */
+/** Case-insensitive exact matchers treating spaces and hyphens interchangeably (e.g. "Hip-Hop" matches "Hip Hop"). */
 const exactMatchers = (values: string[]) =>
-    values.map((v) => new RegExp(`^\\s*${escapeRegex(v.trim())}\\s*$`, 'i'));
+    values.map((v) => {
+        const pattern = escapeRegex(v.trim()).replace(/[-_ ]+/g, '[-_ ]+');
+        return new RegExp(`^\\s*${pattern}\\s*$`, 'i');
+    });
 
 const applyRange = (filter: any, field: string, range: Range) => {
     const condition: any = {};
