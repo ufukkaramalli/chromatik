@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://www.conventionalcommits.org/) for commit guidelines.
 
+## [0.3.0](https://github.com/ufukkaramalli/chromatik/compare/v0.2.0...v0.3.0) (2026-10-22)
+
+### ✨ Features
+
+* **footer:** add site footer, legal pages and support center ([19d9d69](https://github.com/ufukkaramalli/chromatik/commit/19d9d6989a8e0f6e385017f5a0676f55482ffa3e))
+
 ## [0.2.0](https://github.com/ufukkaramalli/chromatik/compare/v0.1.1...v0.2.0) (2026-10-22)
 
 ### ✨ Features
