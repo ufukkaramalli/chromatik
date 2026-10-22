@@ -293,9 +293,41 @@
     "Error": "İçerik yüklenirken bir hata oluştu.",
     "Retry": "Tekrar dene"
   },
+  "Search": {
+    "Badge": "Arama",
+    "TitleWithQuery": "\"{query}\" için sonuçlar",
+    "TitleEmpty": "Ne aramak istiyorsun?",
+    "Placeholder": "Beat, prodüktör, tür veya anahtar kelime ara...",
+    "AdvancedFilters": "Gelişmiş Filtreler",
+    "AdvancedFiltersHint": "BPM, ton ve fiyata göre detaylı filtrelemek için Keşfet'e git",
+    "Trending": "Trendler",
+    "InitialPromptTitle": "Yeni Sesler ve Prodüktörler Keşfet",
+    "InitialPromptDesc": "Arama kutusuna bir beat ismi, prodüktör adı, tür veya ruh hali yazarak platformdaki tüm müzikleri tara.",
+    "BrowseExplore": "Keşfet Sayfasına Git",
+    "EmptyTitle": "\"{query}\" ile eşleşen sonuç bulunamadı",
+    "EmptyDesc": "Aramanı farklı veya daha genel kelimelerle yapmayı dene ya da filtreleri temizle.",
+    "ClearSearch": "Aramayı Temizle",
+    "GoToExplore": "Keşfet'e Göz At",
+    "Tabs": {
+      "All": "Tümü",
+      "Tracks": "Beat'ler",
+      "Producers": "Prodüktörler",
+      "Soundkits": "Ses Kitleri"
+    },
+    "Sections": {
+      "TopTracks": "Öne Çıkan Beat'ler",
+      "Producers": "Prodüktörler",
+      "Soundkits": "Ses Kitleri"
+    },
+    "ViewAllTracks": "Tümünü Gör ({count})",
+    "ViewAllProducers": "Tümünü Gör ({count})",
+    "ViewAllSoundkits": "Tümünü Gör ({count})"
+  },
   "Navigation": {
     "Home": "Ana Sayfa",
     "Explore": "Keşfet",
+    "Search": "Ara",
+    "SearchPlaceholder": "Beat veya prodüktör ara...",
     "Dashboard": "Panel",
     "Tracks": "Parçalar",
     "Soundkits": "Ses Kitleri",

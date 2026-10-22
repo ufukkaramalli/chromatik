@@ -19,6 +19,7 @@ const Profile = () => import('@/views/Profile.vue')
 const Support = () => import('@/views/Support.vue')
 const LegalPage = () => import('@/views/LegalPage.vue')
 const Explore = () => import('@/views/Explore.vue')
+const Search = () => import('@/views/Search.vue')
 
 const shellComponents = (view) => ({
   default: view,
@@ -101,6 +102,12 @@ const routes = [
     name: 'Explore',
     components: shellComponents(Explore),
     meta: { title: `Explore | ${APP_NAME}` }
+  },
+  {
+    path: '/search',
+    name: 'Search',
+    components: shellComponents(Search),
+    meta: { title: `Search | ${APP_NAME}` }
   },
   {
     path: '/support',

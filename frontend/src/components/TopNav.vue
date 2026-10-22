@@ -22,18 +22,40 @@
 
     <!-- Search -->
     <v-text-field
+      id="topnav-search-input"
+      v-model="navSearch"
       flat
       variant="solo"
       hide-details
       prepend-inner-icon="mdi-magnify"
-      label="Search"
-      class="hidden-sm-and-down"
+      :placeholder="$t('Navigation.SearchPlaceholder')"
+      :aria-label="$t('Navigation.Search')"
+      clearable
+      density="compact"
+      rounded="pill"
+      class="hidden-sm-and-down topnav-search-field"
+      style="max-width: 380px;"
+      @keyup.enter="handleNavSearch"
+      @click:prepend-inner="handleNavSearch"
     />
 
     <v-spacer />
 
     <!-- Right menu -->
     <v-toolbar-items>
+      <!-- Mobile Search Button -->
+      <v-btn
+        id="topnav-mobile-search-btn"
+        icon
+        rounded="0"
+        variant="text"
+        class="hidden-md-and-up"
+        :aria-label="$t('Navigation.Search')"
+        @click="handleNavSearch"
+      >
+        <v-icon size="22">mdi-magnify</v-icon>
+      </v-btn>
+
       <v-btn rounded="0" variant="text" to="/">HOME</v-btn>
       <v-divider vertical class="mx-1" />
 
@@ -124,7 +146,8 @@ import { useAuthStore } from '@/stores/auth'
 import { useCartStore } from '@/stores/cartStore'
 import { useCurrencyStore } from '@/stores/currencyStore'
 import { resolveMediaUrl } from '@/utils/url'
-import { useRouter } from 'vue-router'
+import { ref, watch } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import { useDisplay } from 'vuetify'
 
 const display = useDisplay()
@@ -133,6 +156,24 @@ const auth = useAuthStore()
 const cartStore = useCartStore()
 const currencyStore = useCurrencyStore()
 const router = useRouter()
+const route = useRoute()
+
+const navSearch = ref('')
+
+watch(
+  () => route.query.q,
+  (q) => {
+    if (route.name === 'Search') {
+      navSearch.value = (q || '').toString()
+    }
+  },
+  { immediate: true }
+)
+
+function handleNavSearch() {
+  const q = (navSearch.value || '').toString().trim()
+  router.push({ name: 'Search', query: q ? { q } : {} }).catch(() => {})
+}
 
 function toggleCurrency() {
   currencyStore.setCurrency(currencyStore.activeCurrency === 'TRY' ? 'USD' : 'TRY')
