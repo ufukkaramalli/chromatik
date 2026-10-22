@@ -63,6 +63,7 @@
               v-for="link in column.links"
               :id="`footer-link-${link.id}`"
               :key="link.id"
+              :value="link.id"
               :to="link.to"
               :href="link.href"
               :prepend-icon="link.icon"
@@ -235,7 +236,10 @@ const socialLinks = [
 const navLink = (key, icon, to) => ({ id: key.toLowerCase(), label: t(`Navigation.${key}`), icon, to })
 
 const linkColumns = computed(() => {
-  const explore = [navLink('Home', 'mdi-home-outline', { name: 'Home' })]
+  const explore = [
+    navLink('Home', 'mdi-home-outline', { name: 'Home' }),
+    navLink('Explore', 'mdi-compass-outline', { name: 'Explore' })
+  ]
   if (authenticated.value) {
     explore.push(
       navLink('Tracks', 'mdi-music-note-outline', { name: 'Tracks' }),

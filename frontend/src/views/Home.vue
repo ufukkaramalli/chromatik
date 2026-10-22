@@ -776,7 +776,7 @@ const featuredTrack = computed(() => {
 })
 
 function handleVibeClick(vibe) {
-  // Reserved for future search/discovery page navigation
+  router.push({ name: 'Explore', query: { genre: vibe } }).catch(() => {})
 }
 
 function scrollToSection(id) {

@@ -18,6 +18,7 @@ const TrackPage = () => import('@/views/TrackPage.vue')
 const Profile = () => import('@/views/Profile.vue')
 const Support = () => import('@/views/Support.vue')
 const LegalPage = () => import('@/views/LegalPage.vue')
+const Explore = () => import('@/views/Explore.vue')
 
 const shellComponents = (view) => ({
   default: view,
@@ -94,6 +95,12 @@ const routes = [
       const auth = useAuthStore()
       if (!auth.authenticated) return { name: 'Home' }
     }
+  },
+  {
+    path: '/explore',
+    name: 'Explore',
+    components: shellComponents(Explore),
+    meta: { title: `Explore | ${APP_NAME}` }
   },
   {
     path: '/support',
