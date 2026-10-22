@@ -244,6 +244,146 @@
     "Profile": "Profil",
     "Logout": "Çıkış Yap"
   },
+  "Footer": {
+    "Tagline": "Yapımcılar için tasarlanmış beat ve ses kiti platformu. Keşfet, dinle, lisansla ve kendi sesini dünyaya duyur.",
+    "Columns": {
+      "Explore": "Keşfet",
+      "Studio": "Stüdyo",
+      "Help": "Yardım"
+    },
+    "Cta": {
+      "Badge": "Yapımcılar İçin",
+      "GuestTitle": "Beatlerini satmaya hazır mısın?",
+      "GuestDesc": "Ücretsiz hesap aç, parçalarını yükle ve lisanslamaya başla.",
+      "GuestButton": "Ücretsiz Katıl",
+      "AuthTitle": "Yeni bir parçan mı var?",
+      "AuthDesc": "Stüdyo panelinden yükle, fiyatlandır ve yayınla.",
+      "AuthButton": "Stüdyo Panelini Aç"
+    },
+    "Rights": "Tüm hakları saklıdır.",
+    "Status": "Tüm sistemler aktif",
+    "Help": {
+      "Support": "Destek ve SSS",
+      "Contact": "İletişim",
+      "LicenseGuide": "Lisans Rehberi"
+    },
+    "LegalColumn": "Yasal",
+    "SecurePayment": "Güvenli Ödeme",
+    "Ssl": "256-bit SSL",
+    "BackToTop": "Yukarı çık"
+  },
+  "Legal": {
+    "Badge": "Yasal Belgeler",
+    "LastUpdated": "Son güncelleme: {date}",
+    "OtherDocs": "Diğer Belgeler",
+    "QuestionsTitle": "Sorunuz mu var?",
+    "QuestionsDesc": "Bu belgelerle ilgili her türlü soru için destek ekibimize ulaşabilirsiniz.",
+    "QuestionsButton": "Destek Sayfası",
+    "Nav": {
+      "terms": "Kullanım Koşulları",
+      "privacy": "Gizlilik ve KVKK",
+      "license": "Lisans Sözleşmesi",
+      "cookies": "Çerez Politikası",
+      "distanceSales": "Mesafeli Satış Sözleşmesi",
+      "refund": "İade ve İptal Politikası"
+    },
+    "Docs": {
+      "terms": {
+        "Title": "Kullanım Koşulları",
+        "Summary": "CHROMATIK platformunu kullanarak aşağıdaki koşulları kabul etmiş sayılırsınız.",
+        "Sections": [
+          { "Title": "Taraflar ve Kapsam", "Body": "Bu koşullar, CHROMATIK platformu ile platformu ziyaret eden, üye olan, içerik yükleyen veya satın alma yapan tüm kullanıcılar arasındaki ilişkiyi düzenler." },
+          { "Title": "Hizmetin Tanımı", "Body": "CHROMATIK, yapımcıların beat ve ses kitlerini yayınlayıp lisansladığı, alıcıların ise bu içerikleri dinleyip lisans satın aldığı bir pazar yeridir. Platform, satıcı ile alıcı arasında aracı hizmet sağlayıcı konumundadır." },
+          { "Title": "Üyelik ve Hesap Güvenliği", "Body": "Üyelik için doğru ve güncel bilgi vermeniz gerekir. Hesabınızın ve şifrenizin güvenliğinden siz sorumlusunuz; hesabınız üzerinden yapılan tüm işlemler size ait sayılır." },
+          { "Title": "İçerik Yükleme Kuralları", "Body": "Yüklediğiniz tüm içeriklerin haklarına sahip olduğunuzu veya gerekli izinleri aldığınızı beyan edersiniz. Telif hakkı ihlali içeren, izinsiz örnekleme yapılmış veya yasalara aykırı içerikler bildirim üzerine kaldırılır." },
+          { "Title": "Yasaklı Kullanımlar", "Body": "Platformu dolandırıcılık, spam, otomatik veri toplama, başkalarının hesaplarına izinsiz erişim veya sistemin işleyişini bozacak faaliyetler için kullanamazsınız." },
+          { "Title": "Fikri Mülkiyet", "Body": "CHROMATIK markası, logosu ve arayüz tasarımı platforma aittir. Kullanıcıların yüklediği içeriklerin hakları ise ilgili yapımcıya aittir ve yalnızca satın alınan lisans kapsamında kullanılabilir." },
+          { "Title": "Sorumluluğun Sınırlandırılması", "Body": "Platform, kullanıcılar arasındaki lisans ilişkisinden doğan uyuşmazlıklarda doğrudan taraf değildir. Hizmet kesintileri veya veri kayıpları nedeniyle oluşabilecek dolaylı zararlardan sorumlu tutulamaz." },
+          { "Title": "Değişiklikler ve Uygulanacak Hukuk", "Body": "Bu koşullar güncellenebilir; güncel sürüm bu sayfada yayımlanır. Uyuşmazlıklarda Türkiye Cumhuriyeti hukuku uygulanır." }
+        ]
+      },
+      "privacy": {
+        "Title": "Gizlilik Politikası ve KVKK Aydınlatma Metni",
+        "Summary": "Kişisel verilerinizin 6698 sayılı Kişisel Verilerin Korunması Kanunu kapsamında nasıl işlendiğini açıklar.",
+        "Sections": [
+          { "Title": "Veri Sorumlusu", "Body": "Kişisel verileriniz, veri sorumlusu sıfatıyla CHROMATIK tarafından bu metinde açıklanan amaçlarla işlenir." },
+          { "Title": "İşlenen Kişisel Veriler", "Body": "Ad, kullanıcı adı, e-posta adresi, profil görseli, dil tercihi, satın alma ve satış geçmişi, dinleme istatistikleri, IP adresi ve tarayıcı bilgileri işlenebilir." },
+          { "Title": "İşleme Amaçları", "Body": "Üyelik oluşturma, satın alma ve lisans süreçlerinin yürütülmesi, yapımcılara satış istatistiklerinin sunulması, platform güvenliğinin sağlanması ve yasal yükümlülüklerin yerine getirilmesi." },
+          { "Title": "Hukuki Sebepler", "Body": "Verileriniz; sözleşmenin kurulması ve ifası, hukuki yükümlülüklerin yerine getirilmesi, meşru menfaat ve gerekli hallerde açık rızanıza dayanılarak işlenir." },
+          { "Title": "Aktarım", "Body": "Verileriniz yalnızca hizmetin gerektirdiği ölçüde ödeme kuruluşları, barındırma sağlayıcıları ve yetkili kamu kurumlarıyla paylaşılabilir. Satış gerçekleştiğinde alıcının kullanıcı adı ilgili yapımcıyla paylaşılır." },
+          { "Title": "Saklama Süresi", "Body": "Kişisel verileriniz işleme amacının gerektirdiği süre ve ilgili mevzuatta öngörülen yasal saklama süreleri boyunca saklanır, ardından silinir veya anonim hale getirilir." },
+          { "Title": "Haklarınız", "Body": "KVKK madde 11 uyarınca verilerinizin işlenip işlenmediğini öğrenme, düzeltilmesini veya silinmesini isteme ve işlemeye itiraz etme haklarına sahipsiniz. Taleplerinizi destek sayfasındaki iletişim adresine iletebilirsiniz." }
+        ]
+      },
+      "license": {
+        "Title": "Lisans Sözleşmesi",
+        "Summary": "Platformda satın alınan beat lisanslarının kapsamını ve kullanım haklarını açıklar.",
+        "Sections": [
+          { "Title": "Genel Hükümler", "Body": "Lisans satın almak, eserin mülkiyetini değil, seçilen lisans türünde belirtilen kullanım hakkını verir. Eserin telif hakkı, Exclusive lisans hariç yapımcıda kalır." },
+          { "Title": "Basic Lease", "Body": "Etiketsiz MP3 dosyası teslim edilir. Ticari olmayan ve sınırlı ticari kullanım, belirli bir dinlenme ve satış limitine kadar yayın hakkı içerir. Münhasır değildir; beat başkalarına da lisanslanabilir." },
+          { "Title": "Premium Lease", "Body": "Yüksek kaliteli WAV ve MP3 dosyaları teslim edilir. Basic lisansa göre daha yüksek yayın ve satış limitleri sunar. Münhasır değildir." },
+          { "Title": "Unlimited Lease", "Body": "WAV, MP3 ve kanal kayıtları (stems) teslim edilir. Dinlenme ve satış limiti olmaksızın yayın hakkı sağlar. Münhasır değildir." },
+          { "Title": "Exclusive Rights", "Body": "Beat'in münhasır kullanım hakkı alıcıya geçer ve parça satıştan kaldırılır. Exclusive satıştan önce verilmiş non-exclusive lisanslar geçerliliğini korur." },
+          { "Title": "Kredi ve Atıf", "Body": "Tüm lisans türlerinde eserin yayımlandığı platformlarda yapımcıya kredi verilmesi zorunludur. Örnek kullanım: Prod. by yapımcı adı." },
+          { "Title": "Yasaklı Kullanımlar", "Body": "Beat'in tek başına yeniden satılması, başka bir kütüphanede dağıtılması, içerik kimliği (Content ID) sistemlerine yapımcının izni olmadan kaydedilmesi yasaktır." }
+        ]
+      },
+      "cookies": {
+        "Title": "Çerez Politikası",
+        "Summary": "Platformda kullanılan çerezler ve benzeri teknolojiler hakkında bilgi verir.",
+        "Sections": [
+          { "Title": "Çerez Nedir?", "Body": "Çerezler ve yerel depolama, ziyaret ettiğiniz sitenin tarayıcınızda sakladığı küçük veri parçalarıdır ve sitenin sizi hatırlamasını sağlar." },
+          { "Title": "Zorunlu Çerezler", "Body": "Oturumunuzun açık kalması, sepet içeriğinizin korunması ve güvenlik için gereklidir. Bu çerezler olmadan platform düzgün çalışmaz." },
+          { "Title": "Tercih Çerezleri", "Body": "Dil seçiminiz, ses seviyesi ve oynatıcı ayarlarınız gibi tercihlerinizi hatırlamak için kullanılır." },
+          { "Title": "Analitik Çerezler", "Body": "Platformun nasıl kullanıldığını anlamak ve performansı iyileştirmek amacıyla anonim kullanım istatistikleri toplanabilir." },
+          { "Title": "Çerezleri Yönetme", "Body": "Tarayıcı ayarlarınızdan çerezleri silebilir veya engelleyebilirsiniz. Zorunlu çerezlerin engellenmesi bazı özelliklerin çalışmamasına neden olabilir." }
+        ]
+      },
+      "distanceSales": {
+        "Title": "Mesafeli Satış Sözleşmesi",
+        "Summary": "6502 sayılı Tüketicinin Korunması Hakkında Kanun ve Mesafeli Sözleşmeler Yönetmeliği uyarınca dijital ürün satışlarını düzenler.",
+        "Sections": [
+          { "Title": "Taraflar", "Body": "Satıcı, ilgili ürünü platformda yayımlayan yapımcıdır; alıcı, satın alma işlemini gerçekleştiren kullanıcıdır. CHROMATIK, satışa aracılık eden platformdur." },
+          { "Title": "Sözleşmenin Konusu", "Body": "Alıcının elektronik ortamda sipariş verdiği dijital ses dosyası ve buna bağlı kullanım lisansının satışı ile tarafların hak ve yükümlülükleridir." },
+          { "Title": "Ürün ve Fiyat Bilgisi", "Body": "Ürünün adı, lisans türü, teslim edilen dosya formatları ve vergiler dahil toplam satış bedeli ödeme adımında alıcıya gösterilir." },
+          { "Title": "Ödeme ve Teslimat", "Body": "Ödeme, kredi veya banka kartı ile güvenli ödeme altyapısı üzerinden alınır. Ödemenin onaylanmasının ardından dosyalar ve lisans belgesi alıcının hesabına anında teslim edilir." },
+          { "Title": "Cayma Hakkı", "Body": "Mesafeli Sözleşmeler Yönetmeliği madde 15 uyarınca, elektronik ortamda anında teslim edilen gayrimaddi mallarda cayma hakkı bulunmamaktadır. Alıcı, satın alma işlemini onaylayarak bunu kabul eder." },
+          { "Title": "Uyuşmazlıkların Çözümü", "Body": "Uyuşmazlıklarda Ticaret Bakanlığınca ilan edilen parasal sınırlar dahilinde Tüketici Hakem Heyetleri ve Tüketici Mahkemeleri yetkilidir." }
+        ]
+      },
+      "refund": {
+        "Title": "İade ve İptal Politikası",
+        "Summary": "Dijital ürünlerde hangi durumlarda iade yapılabileceğini açıklar.",
+        "Sections": [
+          { "Title": "Genel Kural", "Body": "Satın alınan ürünler anında teslim edilen dijital içerik olduğundan, indirme işlemi gerçekleştikten sonra cayma veya fikir değişikliği nedeniyle iade yapılmaz." },
+          { "Title": "İade Yapılabilen Durumlar", "Body": "Teslim edilen dosyanın bozuk veya açıklamayla uyuşmaması, aynı ürünün yanlışlıkla birden fazla kez satın alınması ya da ödemenin alınmasına rağmen teslimatın gerçekleşmemesi durumlarında iade talep edilebilir." },
+          { "Title": "Talep Süreci", "Body": "İade talebinizi satın alma tarihinden itibaren 14 gün içinde, sipariş bilgileriyle birlikte destek sayfasındaki iletişim adresine iletmeniz gerekir." },
+          { "Title": "Sonuçlandırma", "Body": "Uygun bulunan talepler en geç 14 gün içinde, ödemenin yapıldığı yönteme iade edilir. İade sonrası ilgili lisans geçersiz hale gelir." },
+          { "Title": "Exclusive Satışlar", "Body": "Exclusive lisans satışlarında parça katalogdan kaldırıldığı için iade, yalnızca teknik bir hata nedeniyle teslimat gerçekleşmemişse mümkündür." }
+        ]
+      }
+    }
+  },
+  "Support": {
+    "Badge": "Destek Merkezi",
+    "Title": "Size nasıl yardımcı olabiliriz?",
+    "Subtitle": "Sık sorulan soruların yanıtlarını burada bulabilir, bulamadığınız her şey için bize doğrudan yazabilirsiniz.",
+    "FaqTitle": "Sık Sorulan Sorular",
+    "Faq": [
+      { "Q": "Bir beat nasıl satın alırım?", "A": "Parçanın sayfasında veya kartında lisans türünü seçip sepete ekleyin, ardından sepetten ödemeye geçin. Ödeme onaylandığında dosyalar hesabınıza anında teslim edilir." },
+      { "Q": "Lisans türleri arasındaki fark nedir?", "A": "Basic MP3, Premium WAV ve MP3, Unlimited ise kanal kayıtlarını (stems) ve sınırsız yayın hakkını içerir. Exclusive lisansta parça yalnızca size ait olur ve satıştan kaldırılır. Ayrıntılar için Lisans Sözleşmesi'ne göz atın." },
+      { "Q": "Satın aldığım dosyaları nereden indiririm?", "A": "Satın alma tamamlandıktan sonra dosyalar ve lisans belgesi hesabınızdaki satın alımlar bölümünde yer alır ve dilediğiniz zaman yeniden indirilebilir." },
+      { "Q": "Yapımcı olarak nasıl satış yapabilirim?", "A": "Ücretsiz hesap oluşturun, Stüdyo Panelinden parçanızı yükleyin, lisans türlerine fiyat belirleyin ve yayınlayın. Satış istatistiklerinizi aynı panelden takip edebilirsiniz." },
+      { "Q": "Ödemelerim güvende mi?", "A": "Tüm ödemeler 256-bit SSL ile şifrelenen güvenli ödeme altyapısı üzerinden alınır. Kart bilgileriniz CHROMATIK sunucularında saklanmaz." },
+      { "Q": "İade alabilir miyim?", "A": "Dijital ürünler anında teslim edildiği için genel olarak iade yapılmaz. Ancak bozuk dosya, mükerrer satın alma veya teslim edilmeyen siparişlerde iade mümkündür. Ayrıntılar İade ve İptal Politikası'nda yer alır." }
+    ],
+    "ContactTitle": "Bize Ulaşın",
+    "ContactDesc": "Sorunuzun yanıtını bulamadıysanız destek ekibimize e-posta gönderin.",
+    "ContactButton": "E-posta Gönder",
+    "ContactUnavailable": "İletişim adresi yakında eklenecek.",
+    "ResponseTime": "Genellikle 24-48 saat içinde yanıt veriyoruz.",
+    "LegalTitle": "Yasal Belgeler"
+  },
   "Dashboard": {
     "Welcome": "Tekrar hoş geldin, {name}",
     "Subtitle": "Bugün mağazanda olan bitenler burada.",
