@@ -244,16 +244,7 @@
                       <v-icon size="16" class="mr-1 text-primary">mdi-auto-fix</v-icon>
                       <span class="text-caption font-weight-bold">{{ $t('Player.Settings.Crossfade') }}</span>
                       <v-icon size="13" class="ml-1 opacity-40">mdi-information-outline</v-icon>
-                      <v-tooltip
-                        activator="parent"
-                        location="top"
-                        offset="8"
-                        content-class="player-settings-tooltip"
-                      >
-                        <div class="tooltip-body">
-                          {{ $t('Player.Settings.CrossfadeDesc') }}
-                        </div>
-                      </v-tooltip>
+                      <GlassTooltip :text="$t('Player.Settings.CrossfadeDesc')" />
                     </div>
                     <v-switch v-model="crossfadeEnabled" color="primary" hide-details density="compact" />
                   </div>
@@ -274,22 +265,15 @@
                         ({{ formatGainDb(normalizationGainDb) }})
                       </span>
                       <v-icon size="13" class="ml-1 opacity-40">mdi-information-outline</v-icon>
-                      <v-tooltip
-                        activator="parent"
-                        location="top"
-                        offset="8"
-                        content-class="player-settings-tooltip"
-                      >
-                        <div class="tooltip-body">
-                          <div>{{ $t('Player.Settings.NormalizationTarget', { target: NORMALIZATION_TARGET_LUFS }) }}</div>
-                          <div v-if="normalizationEnabled && current" class="mt-1 d-flex align-center">
-                            <span class="opacity-70 mr-1">{{ $t('Player.Settings.NormalizationApplied') }}:</span>
-                            <span :class="normalizationGainDb !== null ? 'text-primary font-weight-bold' : 'opacity-70'">
-                              {{ normalizationGainDb !== null ? formatGainDb(normalizationGainDb) : $t('Player.Settings.NormalizationNotAnalyzed') }}
-                            </span>
-                          </div>
+                      <GlassTooltip>
+                        <div>{{ $t('Player.Settings.NormalizationTarget', { target: NORMALIZATION_TARGET_LUFS }) }}</div>
+                        <div v-if="normalizationEnabled && current" class="mt-1 d-flex align-center">
+                          <span class="opacity-70 mr-1">{{ $t('Player.Settings.NormalizationApplied') }}:</span>
+                          <span :class="normalizationGainDb !== null ? 'text-primary font-weight-bold' : 'opacity-70'">
+                            {{ normalizationGainDb !== null ? formatGainDb(normalizationGainDb) : $t('Player.Settings.NormalizationNotAnalyzed') }}
+                          </span>
                         </div>
-                      </v-tooltip>
+                      </GlassTooltip>
                     </div>
                     <v-switch v-model="normalizationEnabled" color="primary" hide-details density="compact" />
                   </div>
@@ -608,31 +592,4 @@ watch(crossfadeEnabled, (enabled) => {
   .time-text { font-size: 11px; min-width: 40px; }
 }
 </style>
-
-<style lang="scss">
-/* Premium Glassmorphic Settings Tooltip */
-.v-overlay__content.player-settings-tooltip {
-  background: rgba(16, 17, 24, 0.96) !important;
-  backdrop-filter: blur(20px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.22) !important;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.75), 0 0 16px rgba(var(--v-theme-primary), 0.12) !important;
-  border-radius: 10px !important;
-  padding: 8px 12px !important;
-  color: #ffffff !important;
-  font-size: 11px !important;
-  font-weight: 500 !important;
-  line-height: 1.45 !important;
-  letter-spacing: 0.2px !important;
-  max-width: 250px !important;
-  text-align: left !important;
-  pointer-events: none !important;
-
-  .tooltip-body {
-    font-size: 11px;
-    line-height: 1.45;
-    color: rgba(255, 255, 255, 0.85);
-  }
-}
-</style>
+

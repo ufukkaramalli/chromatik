@@ -50,6 +50,119 @@
       "Subtitle": "Stream fresh releases, trending beats and top community tracks in high fidelity.",
       "Spotlight": "Featured Track",
       "ExploreGenres": "Explore Vibes"
+    },
+    "Landing": {
+      "Hero": {
+        "Badge": "Music Marketplace",
+        "LiveEngine": "Live Platform",
+        "Title": "Buy and Sell Beats Online",
+        "Subtitle": "Discover and license chart-ready beats, sound kits, and royalty-free tracks directly from independent producers worldwide.",
+        "SearchPlaceholder": "Search beats, artists, genres or BPM...",
+        "SearchBtn": "Search",
+        "Explore": "Explore Trending",
+        "Upload": "Start Selling Beats",
+        "ProducersCount": "{count} Producers",
+        "TracksCount": "{count} Tracks",
+        "CurateFrequency": "Curate Your Frequency // Select Vibe",
+        "AllVibes": "All Vibes",
+        "Clear": "Reset",
+        "Spotlight": "Featured Release",
+        "TrackOfTheDay": "Track of the Day",
+        "CountdownTooltip": "Next track of the day in {time}",
+        "Listeners": "Listeners",
+        "ListenersCount": "4.8K",
+        "Tempo": "TEMPO",
+        "Key": "KEY",
+        "Style": "STYLE",
+        "DefaultBpm": "140 BPM",
+        "DefaultKey": "D Minor",
+        "DefaultStyle": "Trap"
+      },
+      "Marquee": {
+        "Item1": "100% ROYALTY-FREE LICENSES",
+        "Item2": "0% COMMISSION OPTION FOR PRODUCERS",
+        "Item3": "INSTANT WAV & CONTRACT DELIVERY",
+        "Item4": "EBU R128 AUDIO NORMALIZATION",
+        "Item5": "GLOBAL ARTIST NETWORK",
+        "Item6": "SECURE INSTANT PAYOUTS"
+      },
+      "MostStreamed": {
+        "Badge": "Trending Beats",
+        "Title": "Top Streamed Tracks",
+        "Desc": "The highest-energy beats ruling subwoofers and artist sessions worldwide right now.",
+        "Action": "Top Charts",
+        "IndexTag": "// 01.TREND_BEATS"
+      },
+      "ProducerCareer": {
+        "Badge": "For Producers & Beatmakers",
+        "Title": "Kickstart Your Music Career Today",
+        "Subtitle": "Upload your beats and sound kits, set your own licensing terms, and sell directly to thousands of artists across the globe.",
+        "Point1Title": "Keep Up to 100% of Your Sales",
+        "Point1Desc": "Maximize your income with transparent, creator-first earnings and zero hidden fees.",
+        "Point2Title": "Sell Beats and Sound Kits",
+        "Point2Desc": "Distribute instrumentals, drum kits, loop packs, and presets from a unified creator hub.",
+        "Point3Title": "Automated Licensing Agreements",
+        "Point3Desc": "Legally binding custom contracts generated automatically with every single purchase.",
+        "Point4Title": "Direct & Instant Payouts",
+        "Point4Desc": "Access your marketplace revenues swiftly whenever you want without delay.",
+        "Cta": "Start Selling Beats",
+        "StudioCardTitle": "Chromatik Producer Network",
+        "StudioCardSubtitle": "Put your studio on the map. Thousands of recording artists are looking for their next hit record.",
+        "ActiveSellers": "Active Producers Online",
+        "PublishedTracks": "Published Beats & Kits",
+        "InstantDelivery": "Instant Digital Delivery",
+        "SpectrumTitle": "Live Master Stream",
+        "AudioQuality": "24-Bit / 96kHz Lossless"
+      },
+      "Genres": {
+        "Badge": "Music Genres",
+        "Title": "Explore Popular Genres",
+        "Subtitle": "Find the perfect rhythm for your next project by filtering across signature sounds.",
+        "All": "All Genres",
+        "Clear": "Clear Filter"
+      },
+      "MostLiked": {
+        "Badge": "Community Verified",
+        "Title": "Community Certified Beats",
+        "Desc": "Hand-picked and elevated by the ears of passionate beatmakers and recording vocalists.",
+        "Action": "Hall of Fame",
+        "IndexTag": "// 02.COMMUNITY_GOLD",
+        "Stat": "Community Verified",
+        "RatingCount": "350K+ Active Ratings"
+      },
+      "SoundkitsCallout": {
+        "Badge": "Sound Kits & Packs",
+        "Title": "Explore Premium Sound Kits & Sample Packs",
+        "Subtitle": "Studio-grade drum kits, 808s, melodic loops, and presets crafted by industry-leading sound designers.",
+        "Button": "Explore Sound Kits",
+        "Chip1": "Lossless 24-bit WAV",
+        "Chip2": "Compatible With All DAWs",
+        "Chip3": "100% Royalty-Free Commercial Use"
+      },
+      "Studio": {
+        "Badge": "Creator Studio",
+        "Title": "Your Entire Music Business in One Place",
+        "Subtitle": "Manage your catalogue, track detailed streaming analytics, configure custom licensing, and scale your brand.",
+        "Button": "Open Studio Dashboard",
+        "Feature1": "Advanced Sales & Streaming Analytics",
+        "Feature2": "Custom Pricing & Licensing Management",
+        "Feature3": "Direct & Fast Payout Infrastructure"
+      },
+      "Recent": {
+        "Badge": "Fresh Releases",
+        "Title": "Recently Dropped Beats",
+        "Subtitle": "Dispatched to the platform by our producer community in the past 24 hours.",
+        "IndexTag": "// 03.FRESH_DROPS",
+        "RealtimeBadge": "24H REAL-TIME",
+        "SignalUptime": "99.98% UPTIME",
+        "UptimeBadge": "LIVE NETWORK FEED",
+        "LiveRadarTitle": "Live Radar: Freshly Dropped Beats",
+        "LiveRadarSubtitle": "The freshest instrumentals and beats uploaded by independent producers worldwide in the past 24 hours.",
+        "LiveRadarIndexTag": "// 03.LIVE_RADAR",
+        "LiveRadarBadge": "24H LIVE FEED",
+        "LiveCount": "{count} Fresh Beats",
+        "SignalActive": "99.9% Signal Active"
+      }
     }
   },
   "user": {

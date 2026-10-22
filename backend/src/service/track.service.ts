@@ -1,5 +1,6 @@
 import TrackModel from '.././model/track.model';
-import ITrack from '.././interfaces/track.interface'
+import UserModel from '.././model/user.model';
+import ITrack from '.././interfaces/track.interface';
 
 class TrackService {
     private track = TrackModel;
@@ -133,6 +134,27 @@ class TrackService {
             .findOne({ userId: User._id, $or: [{ name: trackSlug }, { slug: trackSlug }] })
             .populate('userId', 'name slug photoUrl profileTheme')
             .lean();
+    }
+
+    /**
+     * Get platform statistics (producer and track counts)
+     */
+    public async getStats(): Promise<{ producersCount: number; tracksCount: number }> {
+        const [producersCount, tracksCount] = await Promise.all([
+            UserModel.countDocuments({
+                $or: [
+                    { role: { $in: ['producer', 'admin'] } },
+                    { role: { $exists: false } },
+                    { role: null }
+                ]
+            }),
+            this.track.countDocuments({ status: { $ne: 'draft' } })
+        ]);
+
+        return {
+            producersCount,
+            tracksCount
+        };
     }
 }
 

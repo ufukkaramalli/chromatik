@@ -21,3 +21,18 @@ export function formatDuration(seconds: number): string {
   if (m > 0) return `${m}m ${s}s`
   return `${s}s`
 }
+
+/**
+ * Formats large numbers compactly for UI badges, counts, and metrics.
+ * Examples: 6 -> '6', 1500 -> '1.5K+', 1000000 -> '1M+'
+ */
+export function formatCompactNumber(num: number | string | null | undefined): string {
+  const n = Number(num) || 0
+  if (n >= 1_000_000) {
+    return (n / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'M+'
+  }
+  if (n >= 1_000) {
+    return (n / 1_000).toFixed(1).replace(/\.0$/, '') + 'K+'
+  }
+  return n.toLocaleString()
+}

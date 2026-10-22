@@ -50,6 +50,119 @@
       "Subtitle": "En yeni parçaları, trend beatleri ve topluluk çalışmalarını yüksek kalitede dinleyin.",
       "Spotlight": "Öne Çıkan Parça",
       "ExploreGenres": "Tarzları Keşfet"
+    },
+    "Landing": {
+      "Hero": {
+        "Badge": "Müzik Pazaryeri",
+        "LiveEngine": "Canlı Platform",
+        "Title": "Online Beat Al ve Sat",
+        "Subtitle": "Dünya çapındaki bağımsız prodüktörlerden en iyi beatleri, ses kitlerini ve telifsiz lisansları anında keşfedin.",
+        "SearchPlaceholder": "Beat, prodüktör, tarz veya BPM ara...",
+        "SearchBtn": "Ara",
+        "Explore": "Trendleri Keşfet",
+        "Upload": "Beat Satmaya Başla",
+        "ProducersCount": "{count} Prodüktör",
+        "TracksCount": "{count} Track",
+        "CurateFrequency": "Frekansını Seç // Tarzı Belirle",
+        "AllVibes": "Tüm Tarzlar",
+        "Clear": "Sıfırla",
+        "Spotlight": "Günün Öne Çıkanı",
+        "TrackOfTheDay": "Günün Parçası",
+        "CountdownTooltip": "Sıradaki günün parçasına kalan süre: {time}",
+        "Listeners": "Dinleyici",
+        "ListenersCount": "4.8K",
+        "Tempo": "TEMPO",
+        "Key": "TON",
+        "Style": "TARZ",
+        "DefaultBpm": "140 BPM",
+        "DefaultKey": "D Minör",
+        "DefaultStyle": "Trap"
+      },
+      "Marquee": {
+        "Item1": "%100 TELİFSİZ LİSANSLAR",
+        "Item2": "PRODÜKTÖRLER İÇİN %0 KOMİSYON",
+        "Item3": "ANINDA WAV & SÖZLEŞME TESLİMATI",
+        "Item4": "EBU R128 SES STANDARDI",
+        "Item5": "GLOBAL MÜZİSYEN AĞI",
+        "Item6": "GÜVENLİ VE ANINDA ÖDEME"
+      },
+      "MostStreamed": {
+        "Badge": "Trend Beatler",
+        "Title": "En Çok Dinlenenler",
+        "Desc": "Dünya genelinde sanatçılar ve vokaller tarafından en çok dinlenen ve listeleri zorlayan trend parçalar.",
+        "Action": "Tüm Trendler",
+        "IndexTag": "// 01.TREND_BEATS"
+      },
+      "ProducerCareer": {
+        "Badge": "Prodüktörler & Beatmakerlar İçin",
+        "Title": "Müzik Kariyerinizi Bugün Başlatın",
+        "Subtitle": "Beatlerinizi ve ses kitlerinizi yükleyin, kendi lisans fiyatlarınızı belirleyin ve dünya çapındaki binlerce sanatçıya doğrudan satış yapın.",
+        "Point1Title": "Satışlarınızın %100'e Varan Kısmını Koruyun",
+        "Point1Desc": "Aracılara yüksek komisyonlar ödemeden emeğinizin karşılığını tam olarak alın.",
+        "Point2Title": "Beatler ve Ses Kitleri Satın",
+        "Point2Desc": "Enstrümantallerin yanında drum kitler, loop paketleri ve sample sesleri tek panelden yayınlayın.",
+        "Point3Title": "Otomatik Lisans ve Telif Sözleşmeleri",
+        "Point3Desc": "Her satışta yasal olarak geçerli özel lisans sözleşmeleri anında alıcıya iletilir.",
+        "Point4Title": "Anında ve Güvenli Kazanç Çekimi",
+        "Point4Desc": "Kazançlarınızı dilediğiniz zaman bekletilmeden doğrudan hesabınıza aktarın.",
+        "Cta": "Beat Satmaya Başla",
+        "StudioCardTitle": "Chromatik Prodüktör Ağı",
+        "StudioCardSubtitle": "Stüdyonuzu dünyaya açın. Binlerce vokalist ve içerik üreticisi yeni projeleri için beat arıyor.",
+        "ActiveSellers": "Aktif Prodüktör Satışta",
+        "PublishedTracks": "Yayında Beat & Parça",
+        "InstantDelivery": "Anında Dijital Teslimat",
+        "SpectrumTitle": "Canlı Master Çıkışı",
+        "AudioQuality": "24-Bit / 96kHz Kayıpsız"
+      },
+      "Genres": {
+        "Badge": "Müzik Tarzları",
+        "Title": "Popüler Türleri Keşfet",
+        "Subtitle": "Yeni parçanız için aradığınız ritme göre beatleri anında filtreleyin.",
+        "All": "Tüm Tarzlar",
+        "Clear": "Filtreyi Temizle"
+      },
+      "MostLiked": {
+        "Badge": "Topluluk Onaylı",
+        "Title": "En Çok Beğenilen Beatler",
+        "Desc": "Sanatçıların ve dinleyicilerin oylarıyla seçilmiş en yüksek puanlı favori enstrümantaller.",
+        "Action": "Favori Listesi",
+        "IndexTag": "// 02.COMMUNITY_GOLD",
+        "Stat": "Topluluk Oyu",
+        "RatingCount": "350K+ Aktif Değerlendirme"
+      },
+      "SoundkitsCallout": {
+        "Badge": "Ses Kitleri & Paketler",
+        "Title": "Özel Sound Kitlerini ve Sample Paketlerini Keşfet",
+        "Subtitle": "En iyi beatmakerlar tarafından hazırlanan profesyonel drum kitler, 808 baslar, synth loopları ve ses paketleri.",
+        "Button": "Ses Kitlerini Keşfet",
+        "Chip1": "Kayıpsız 24-bit WAV",
+        "Chip2": "Tüm DAW'larla Uyumlu",
+        "Chip3": "%100 Telifsiz Ticari Kullanım"
+      },
+      "Studio": {
+        "Badge": "Yaratıcı Stüdyosu",
+        "Title": "Tüm Müzik İşiniz Tek Bir Yerde",
+        "Subtitle": "Kataloğunuzu yönetin, detaylı dinlenme ve satış istatistiklerini izleyin, lisanslarınızı belirleyin ve kitlenizi büyütün.",
+        "Button": "Stüdyo Panelini Aç",
+        "Feature1": "Gelişmiş Satış ve Dinlenme Analitiği",
+        "Feature2": "Özel Fiyat ve Lisans Sözleşme Yönetimi",
+        "Feature3": "Doğrudan ve Hızlı Ödeme Altyapısı"
+      },
+      "Recent": {
+        "Badge": "Yeni Çıkanlar",
+        "Title": "Son Yüklenen Parçalar",
+        "Subtitle": "Son 24 saat içerisinde platforma yüklenen en yeni ve taze beatler.",
+        "IndexTag": "// 03.FRESH_DROPS",
+        "RealtimeBadge": "24 SAAT CANLI",
+        "SignalUptime": "99.98% KESİNTİSİZ",
+        "UptimeBadge": "CANLI AĞ AKIŞI",
+        "LiveRadarTitle": "Canlı Radar: En Yeni Beatler",
+        "LiveRadarSubtitle": "Dünya genelindeki bağımsız prodüktörlerden son 24 saat içerisinde sisteme yüklenen en taze parçalar ve enstrümantaller.",
+        "LiveRadarIndexTag": "// 03.LIVE_RADAR",
+        "LiveRadarBadge": "24H CANLI AKIŞ",
+        "LiveCount": "{count} Taze Parça",
+        "SignalActive": "%99.9 Sinyal Aktif"
+      }
     }
   },
   "user": {

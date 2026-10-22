@@ -64,3 +64,45 @@ img,
   user-select: none;
   -webkit-user-select: none;
 }
+
+// Global Typography System
+.font-display {
+  font-family: 'Outfit', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+}
+
+.font-body {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
+}
+
+.font-mono {
+  font-family: 'Space Grotesk', monospace, sans-serif !important;
+}
+
+// Global Tracking & Line Height Utilities
+.tracking-tight {
+  letter-spacing: -0.025em !important;
+}
+
+.tracking-normal {
+  letter-spacing: 0 !important;
+}
+
+.tracking-wide {
+  letter-spacing: 0.025em !important;
+}
+
+.tracking-wider {
+  letter-spacing: 0.05em !important;
+}
+
+.tracking-widest {
+  letter-spacing: 0.1em !important;
+}
+
+.line-height-relaxed {
+  line-height: 1.625 !important;
+}
+
+.cursor-pointer {
+  cursor: pointer !important;
+}
