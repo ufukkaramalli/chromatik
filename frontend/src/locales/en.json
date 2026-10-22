@@ -244,6 +244,146 @@
     "Profile": "Profile",
     "Logout": "Logout"
   },
+  "Footer": {
+    "Tagline": "The beat and soundkit platform built for producers. Discover, listen, license and get your sound heard worldwide.",
+    "Columns": {
+      "Explore": "Explore",
+      "Studio": "Studio",
+      "Help": "Help"
+    },
+    "Cta": {
+      "Badge": "For Producers",
+      "GuestTitle": "Ready to sell your beats?",
+      "GuestDesc": "Create a free account, upload your tracks and start licensing.",
+      "GuestButton": "Join for Free",
+      "AuthTitle": "Got a new track?",
+      "AuthDesc": "Upload, price and publish it from your studio panel.",
+      "AuthButton": "Open Studio Panel"
+    },
+    "Rights": "All rights reserved.",
+    "Status": "All systems operational",
+    "Help": {
+      "Support": "Support & FAQ",
+      "Contact": "Contact",
+      "LicenseGuide": "License Guide"
+    },
+    "LegalColumn": "Legal",
+    "SecurePayment": "Secure Payment",
+    "Ssl": "256-bit SSL",
+    "BackToTop": "Back to top"
+  },
+  "Legal": {
+    "Badge": "Legal Documents",
+    "LastUpdated": "Last updated: {date}",
+    "OtherDocs": "Other Documents",
+    "QuestionsTitle": "Have a question?",
+    "QuestionsDesc": "Reach out to our support team with any questions about these documents.",
+    "QuestionsButton": "Support Page",
+    "Nav": {
+      "terms": "Terms of Use",
+      "privacy": "Privacy & KVKK",
+      "license": "License Agreement",
+      "cookies": "Cookie Policy",
+      "distanceSales": "Distance Sales Agreement",
+      "refund": "Refund & Cancellation Policy"
+    },
+    "Docs": {
+      "terms": {
+        "Title": "Terms of Use",
+        "Summary": "By using the CHROMATIK platform you agree to the following terms.",
+        "Sections": [
+          { "Title": "Parties and Scope", "Body": "These terms govern the relationship between the CHROMATIK platform and every user who visits, registers, uploads content or makes a purchase." },
+          { "Title": "Description of Service", "Body": "CHROMATIK is a marketplace where producers publish and license beats and soundkits, and buyers listen to and purchase licenses for that content. The platform acts as an intermediary service provider between seller and buyer." },
+          { "Title": "Membership and Account Security", "Body": "You must provide accurate and up-to-date information to register. You are responsible for the security of your account and password; all actions performed through your account are deemed yours." },
+          { "Title": "Content Upload Rules", "Body": "You declare that you own the rights to, or have obtained the necessary permissions for, all content you upload. Content that infringes copyright, contains uncleared samples or is otherwise unlawful will be removed upon notice." },
+          { "Title": "Prohibited Use", "Body": "You may not use the platform for fraud, spam, automated scraping, unauthorized access to other accounts or any activity that disrupts the operation of the system." },
+          { "Title": "Intellectual Property", "Body": "The CHROMATIK brand, logo and interface design belong to the platform. Rights to user-uploaded content remain with the respective producer and may only be used within the scope of the purchased license." },
+          { "Title": "Limitation of Liability", "Body": "The platform is not a direct party to disputes arising from license relationships between users and cannot be held liable for indirect damages caused by service interruptions or data loss." },
+          { "Title": "Changes and Governing Law", "Body": "These terms may be updated; the current version is always published on this page. Disputes are governed by the laws of the Republic of Türkiye." }
+        ]
+      },
+      "privacy": {
+        "Title": "Privacy Policy and KVKK Notice",
+        "Summary": "Explains how your personal data is processed under the Turkish Personal Data Protection Law No. 6698 (KVKK).",
+        "Sections": [
+          { "Title": "Data Controller", "Body": "Your personal data is processed by CHROMATIK, as data controller, for the purposes described in this notice." },
+          { "Title": "Personal Data Processed", "Body": "Name, username, email address, profile image, language preference, purchase and sales history, listening statistics, IP address and browser information may be processed." },
+          { "Title": "Purposes of Processing", "Body": "Creating memberships, running purchase and licensing processes, providing sales statistics to producers, keeping the platform secure and fulfilling legal obligations." },
+          { "Title": "Legal Grounds", "Body": "Your data is processed on the basis of entering into and performing a contract, legal obligations, legitimate interest and, where required, your explicit consent." },
+          { "Title": "Transfers", "Body": "Your data may be shared only as required by the service with payment institutions, hosting providers and authorized public bodies. When a sale is completed, the buyer's username is shared with the relevant producer." },
+          { "Title": "Retention Period", "Body": "Your personal data is kept for as long as the processing purpose requires and for the statutory retention periods, after which it is deleted or anonymized." },
+          { "Title": "Your Rights", "Body": "Under Article 11 of the KVKK you have the right to learn whether your data is processed, request its correction or deletion, and object to processing. You can send your requests to the contact address on the support page." }
+        ]
+      },
+      "license": {
+        "Title": "License Agreement",
+        "Summary": "Explains the scope and usage rights of beat licenses purchased on the platform.",
+        "Sections": [
+          { "Title": "General Provisions", "Body": "Purchasing a license grants the usage rights specified for the chosen license type, not ownership of the work. Copyright remains with the producer except for Exclusive licenses." },
+          { "Title": "Basic Lease", "Body": "An untagged MP3 file is delivered. Includes non-commercial and limited commercial use, with distribution rights up to a set stream and sales limit. Non-exclusive; the beat may be licensed to others." },
+          { "Title": "Premium Lease", "Body": "High-quality WAV and MP3 files are delivered. Offers higher stream and sales limits than the Basic license. Non-exclusive." },
+          { "Title": "Unlimited Lease", "Body": "WAV, MP3 and track stems are delivered. Provides distribution rights without stream or sales limits. Non-exclusive." },
+          { "Title": "Exclusive Rights", "Body": "Exclusive usage rights to the beat transfer to the buyer and the track is removed from sale. Non-exclusive licenses granted before the exclusive sale remain valid." },
+          { "Title": "Credit and Attribution", "Body": "For every license type, the producer must be credited on every platform where the work is released. Example: Prod. by producer name." },
+          { "Title": "Prohibited Use", "Body": "Reselling the beat on its own, distributing it through another library, or registering it with content identification (Content ID) systems without the producer's permission is prohibited." }
+        ]
+      },
+      "cookies": {
+        "Title": "Cookie Policy",
+        "Summary": "Provides information about the cookies and similar technologies used on the platform.",
+        "Sections": [
+          { "Title": "What Are Cookies?", "Body": "Cookies and local storage are small pieces of data that a site stores in your browser so that it can remember you." },
+          { "Title": "Essential Cookies", "Body": "Required to keep you signed in, preserve your cart and maintain security. The platform does not work properly without them." },
+          { "Title": "Preference Cookies", "Body": "Used to remember your preferences such as language, volume and player settings." },
+          { "Title": "Analytics Cookies", "Body": "Anonymous usage statistics may be collected to understand how the platform is used and improve performance." },
+          { "Title": "Managing Cookies", "Body": "You can delete or block cookies in your browser settings. Blocking essential cookies may cause some features to stop working." }
+        ]
+      },
+      "distanceSales": {
+        "Title": "Distance Sales Agreement",
+        "Summary": "Governs digital product sales under Turkish Consumer Protection Law No. 6502 and the Distance Contracts Regulation.",
+        "Sections": [
+          { "Title": "Parties", "Body": "The seller is the producer who publishes the product on the platform; the buyer is the user who completes the purchase. CHROMATIK is the platform that mediates the sale." },
+          { "Title": "Subject of the Agreement", "Body": "The sale of the digital audio file ordered electronically by the buyer and its associated usage license, together with the rights and obligations of the parties." },
+          { "Title": "Product and Price Information", "Body": "The product name, license type, delivered file formats and total price including taxes are shown to the buyer at checkout." },
+          { "Title": "Payment and Delivery", "Body": "Payment is taken by credit or debit card through a secure payment infrastructure. Once payment is confirmed, the files and license document are delivered to the buyer's account instantly." },
+          { "Title": "Right of Withdrawal", "Body": "Under Article 15 of the Distance Contracts Regulation, there is no right of withdrawal for intangible goods delivered instantly in electronic form. The buyer accepts this by confirming the purchase." },
+          { "Title": "Dispute Resolution", "Body": "Consumer Arbitration Committees and Consumer Courts have jurisdiction within the monetary limits announced by the Ministry of Trade." }
+        ]
+      },
+      "refund": {
+        "Title": "Refund & Cancellation Policy",
+        "Summary": "Explains when refunds can be issued for digital products.",
+        "Sections": [
+          { "Title": "General Rule", "Body": "Because purchased products are digital content delivered instantly, no refunds are issued for withdrawal or change of mind once the download has taken place." },
+          { "Title": "Eligible Cases", "Body": "A refund may be requested if the delivered file is corrupted or does not match its description, if the same product was accidentally purchased more than once, or if payment was taken but delivery did not occur." },
+          { "Title": "Request Process", "Body": "Send your refund request with your order details to the contact address on the support page within 14 days of the purchase date." },
+          { "Title": "Resolution", "Body": "Approved requests are refunded to the original payment method within 14 days at the latest. The related license becomes void after the refund." },
+          { "Title": "Exclusive Sales", "Body": "Since the track is removed from the catalog after an exclusive sale, refunds are only possible if delivery failed due to a technical error." }
+        ]
+      }
+    }
+  },
+  "Support": {
+    "Badge": "Support Center",
+    "Title": "How can we help you?",
+    "Subtitle": "Find answers to frequently asked questions here, and write to us directly about anything else.",
+    "FaqTitle": "Frequently Asked Questions",
+    "Faq": [
+      { "Q": "How do I buy a beat?", "A": "Choose a license type on the track page or card, add it to your cart and proceed to checkout. Once payment is confirmed, the files are delivered to your account instantly." },
+      { "Q": "What is the difference between license types?", "A": "Basic includes MP3, Premium includes WAV and MP3, and Unlimited includes track stems with unlimited distribution rights. With an Exclusive license the track becomes yours alone and is removed from sale. See the License Agreement for details." },
+      { "Q": "Where can I download my purchases?", "A": "After checkout, your files and license document are available in the purchases section of your account and can be re-downloaded at any time." },
+      { "Q": "How can I sell as a producer?", "A": "Create a free account, upload your track from the Studio Panel, set prices for each license type and publish. You can follow your sales statistics from the same panel." },
+      { "Q": "Are my payments secure?", "A": "All payments are processed through a secure payment infrastructure encrypted with 256-bit SSL. Your card details are never stored on CHROMATIK servers." },
+      { "Q": "Can I get a refund?", "A": "Digital products are delivered instantly, so refunds are generally not issued. However, refunds are possible for corrupted files, duplicate purchases or undelivered orders. See the Refund & Cancellation Policy for details." }
+    ],
+    "ContactTitle": "Contact Us",
+    "ContactDesc": "Couldn't find your answer? Send an email to our support team.",
+    "ContactButton": "Send Email",
+    "ContactUnavailable": "Contact address coming soon.",
+    "ResponseTime": "We usually reply within 24-48 hours.",
+    "LegalTitle": "Legal Documents"
+  },
   "Dashboard": {
     "Welcome": "Welcome back, {name}",
     "Subtitle": "Here's what's happening with your store today.",

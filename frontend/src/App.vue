@@ -10,6 +10,7 @@
           <component :is="Component" />
         </transition>
       </router-view>
+      <router-view name="Footer" />
     </div>
 
     <router-view name="BottomPlayer" />
