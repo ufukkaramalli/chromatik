@@ -154,6 +154,7 @@ class ExploreController implements IController {
     private getProducers = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
         try {
             const data = await this.ExploreService.getProducers({
+                q: parseText(req.query.q),
                 sort: parseSort(req.query.sort, PRODUCER_SORTS, 'popular'),
                 ...parsePagination(req.query)
             });
@@ -171,6 +172,7 @@ class ExploreController implements IController {
      *       - Explore
      *     summary: List public soundkits
      *     parameters:
+     *       - { in: query, name: q, schema: { type: string } }
      *       - { in: query, name: priceMin, schema: { type: number } }
      *       - { in: query, name: priceMax, schema: { type: number } }
      *       - { in: query, name: sort, schema: { type: string, enum: [newest, popular, price_asc, price_desc] } }
@@ -185,6 +187,7 @@ class ExploreController implements IController {
     private getSoundkits = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
         try {
             const data = await this.ExploreService.getSoundkits({
+                q: parseText(req.query.q),
                 price: parseRange(req.query.priceMin, req.query.priceMax),
                 sort: parseSort(req.query.sort, SOUNDKIT_SORTS, 'newest'),
                 ...parsePagination(req.query)

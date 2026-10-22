@@ -1,6 +1,7 @@
 import { PipelineStage } from 'mongoose';
 import TrackModel from '.././model/track.model';
 import SoundkitModel from '.././model/soundkit.model';
+import UserModel from '.././model/user.model';
 import { TRACK_KEYS } from '.././interfaces/track.interface';
 
 export const MAX_PAGE_SIZE = 48;
@@ -36,10 +37,12 @@ export interface TrackQuery extends Pagination {
 }
 
 export interface ProducerQuery extends Pagination {
+    q?: string;
     sort: ProducerSort;
 }
 
 export interface SoundkitQuery extends Pagination {
+    q?: string;
     price: Range;
     sort: SoundkitSort;
 }
@@ -125,7 +128,13 @@ class ExploreService {
 
         if (query.q) {
             const rx = new RegExp(escapeRegex(query.q.trim()), 'i');
-            filter.$or = [{ name: rx }, { tags: rx }, { genres: rx }, { moods: rx }];
+            const matchingUsers = await UserModel.find({ name: rx }).select('_id').lean();
+            const userIds = matchingUsers.map((u) => u._id);
+            const orConditions: any[] = [{ name: rx }, { tags: rx }, { genres: rx }, { moods: rx }];
+            if (userIds.length > 0) {
+                orConditions.push({ userId: { $in: userIds } });
+            }
+            filter.$or = orConditions;
         }
 
         const [items, total] = await Promise.all([
@@ -197,7 +206,7 @@ class ExploreService {
      * Producers that have at least one public track, ranked by engagement.
      */
     public async getProducers(query: ProducerQuery): Promise<PagedResult<any>> {
-        const [result] = await TrackModel.aggregate([
+        const pipeline: any[] = [
             { $match: { status: 'public' } },
             {
                 $group: {
@@ -208,14 +217,31 @@ class ExploreService {
                     latestAt: { $max: '$createdAt' }
                 }
             },
+            { $lookup: { from: 'users', localField: '_id', foreignField: '_id', as: 'user' } },
+            { $unwind: '$user' }
+        ];
+
+        if (query.q) {
+            const rx = new RegExp(escapeRegex(query.q.trim()), 'i');
+            pipeline.push({
+                $match: {
+                    $or: [
+                        { 'user.name': rx },
+                        { 'user.slug': rx },
+                        { 'user.location': rx },
+                        { 'user.bio': rx }
+                    ]
+                }
+            });
+        }
+
+        pipeline.push(
             { $sort: PRODUCER_SORTS[query.sort] },
             {
                 $facet: {
                     items: [
                         { $skip: (query.page - 1) * query.limit },
                         { $limit: query.limit },
-                        { $lookup: { from: 'users', localField: '_id', foreignField: '_id', as: 'user' } },
-                        { $unwind: '$user' },
                         {
                             $project: {
                                 _id: '$user._id',
@@ -236,7 +262,9 @@ class ExploreService {
                     total: [{ $count: 'count' }]
                 }
             }
-        ]);
+        );
+
+        const [result] = await TrackModel.aggregate(pipeline);
 
         const total = result?.total?.[0]?.count || 0;
         return paged(result?.items || [], total, query);
@@ -248,6 +276,17 @@ class ExploreService {
     public async getSoundkits(query: SoundkitQuery): Promise<PagedResult<any>> {
         const filter: any = { status: 'public' };
         applyRange(filter, 'price', query.price);
+
+        if (query.q) {
+            const rx = new RegExp(escapeRegex(query.q.trim()), 'i');
+            const matchingUsers = await UserModel.find({ name: rx }).select('_id').lean();
+            const userIds = matchingUsers.map((u) => u._id);
+            const orConditions: any[] = [{ title: rx }, { description: rx }];
+            if (userIds.length > 0) {
+                orConditions.push({ userId: { $in: userIds } });
+            }
+            filter.$or = orConditions;
+        }
 
         if (query.sort === 'price_asc' || query.sort === 'price_desc') {
             filter.price = { ...(filter.price || {}), $gt: 0 };
