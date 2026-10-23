@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction, Router } from 'express'
-import IController from '../interfaces/controller.interface'
-import authenticated from '../middleware/authenticated.middleware'
-import cartService from '../service/cart.service'
+import IController from '../../interfaces/controller.interface'
+import authenticated from '../../middleware/authenticated.middleware'
+import cartService from '../../service/cart.service'
 
 class CartController implements IController {
   public path = '/cart'

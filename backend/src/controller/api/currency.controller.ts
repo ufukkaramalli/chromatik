@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction, Router } from 'express'
-import IController from '../interfaces/controller.interface'
-import currencyService from '../service/currency.service'
+import IController from '../../interfaces/controller.interface'
+import currencyService from '../../service/currency.service'
 
 class CurrencyController implements IController {
   public path = '/currency'

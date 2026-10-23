@@ -1,12 +1,13 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import IController from '.././interfaces/controller.interface';
-import HttpException from '.././utils/exceptions/http.exception';
-import validationMiddleware from '.././middleware/validation.middleware';
-import validate from '.././utils/validation/user.validation';
-import UserService from '.././service/user.service';
-import authenticated from '.././middleware/authenticated.middleware';
-import IUser from '.././interfaces/user.interface';
-import { upload } from '.././utils/upload';
+import IController from '../../interfaces/controller.interface';
+import HttpException from '../../utils/exceptions/http.exception';
+import validationMiddleware from '../../middleware/validation.middleware';
+import validate from '../../utils/validation/user.validation';
+import UserService from '../../service/user.service';
+import authenticated from '../../middleware/authenticated.middleware';
+import { authLimiter } from '../../middleware/rateLimit.middleware';
+import IUser from '../../interfaces/user.interface';
+import { upload } from '../../utils/upload';
 
 class UserController implements IController {
     
@@ -21,11 +22,13 @@ class UserController implements IController {
     private initialiseRoutes(): void {
         this.router.post(
             `${this.path}/register`,
+            authLimiter,
             validationMiddleware(validate.register),
             this.register
         );
         this.router.post(
             `${this.path}/login`,
+            authLimiter,
             validationMiddleware(validate.login),
             this.login
         )

@@ -32,6 +32,9 @@ importers:
       express:
         specifier: ^4.17.1
         version: 4.22.1
+      express-rate-limit:
+        specifier: ^8.7.1
+        version: 8.7.1(express@4.22.1)
       express-winston:
         specifier: ^4.2.0
         version: 4.2.0(winston@3.19.0)
@@ -1164,6 +1167,12 @@ packages:
   event-stream@3.3.4:
     resolution: {integrity: sha512-QHpkERcGsR0T7Qm3HNJSyXKEEj8AHNxkY3PK8TS2KJvQ7NiSHe3DDpwVKKtoYprL/AreyzFBeIkBIWChAqn60g==}
 
+  express-rate-limit@8.7.1:
+    resolution: {integrity: sha512-2FXbqkygil3mZiXzEtM0IjE/UBmBNot0J1GEVrJT4JbrvwOSoEtqtO+wHbiMQELWe1eNvHoYRg2dkjOid+6JkA==}
+    engines: {node: '>= 16'}
+    peerDependencies:
+      express: '>= 4.11'
+
   express-winston@4.2.0:
     resolution: {integrity: sha512-EMD74g63nVHi7pFleQw7KHCxiA1pjF5uCwbCfzGqmFxs9KvlDPIVS3cMGpULm6MshExMT9TjC3SqmRGB9kb7yw==}
     engines: {node: '>= 6'}
@@ -1372,6 +1381,10 @@ packages:
 
   ip-address@10.1.0:
     resolution: {integrity: sha512-XXADHxXmvT9+CRxhXg56LJovE+bmWnEWB78LB83VZTprKTmaC5QfruXocxzTZ2Kl0DNwKuBdlIhjL8LeY8Sf8Q==}
+    engines: {node: '>= 12'}
+
+  ip-address@10.7.4:
+    resolution: {integrity: sha512-DWBMKyeM25D70nrIiTkgQth59/G+naKOTep6huF9j+GmeK3DMD60Zvxg5d5qQnz+38AHgou6ean2LECX+lrKDg==}
     engines: {node: '>= 12'}
 
   ipaddr.js@1.9.1:
@@ -3736,6 +3749,14 @@ snapshots:
       stream-combiner: 0.0.4
       through: 2.3.8
 
+  express-rate-limit@8.7.1(express@4.22.1):
+    dependencies:
+      debug: 4.4.3
+      express: 4.22.1
+      ip-address: 10.7.4
+    transitivePeerDependencies:
+      - supports-color
+
   express-winston@4.2.0(winston@3.19.0):
     dependencies:
       chalk: 2.4.2
@@ -4006,6 +4027,8 @@ snapshots:
   inherits@2.0.4: {}
 
   ip-address@10.1.0: {}
+
+  ip-address@10.7.4: {}
 
   ipaddr.js@1.9.1: {}
 

@@ -2,14 +2,7 @@
 import dotenv from 'dotenv';
 import App from './app';
 import validateEnv from './utils/validateEnv';
-import TrackController from './controller/track.controller';
-import UserController from './controller/user.controller';
-import SoundkitController from './controller/soundkit.controller';
-import CommentController from './controller/comment.controller';
-import CurrencyController from './controller/currency.controller';
-import CartController from './controller/cart.controller';
-import ExploreController from './controller/explore.controller';
-import SitemapController from './controller/sitemap.controller';
+import ControllerRegistry from './controller';
 import logger from './utils/logger';
 
 // NODE_ENV'e göre doğru .env dosyasını yükle
@@ -28,18 +21,7 @@ logger.info(`Running in ${process.env.NODE_ENV} mode`);
 validateEnv();
 
 const app = new App(
-  // Register Controllers
-  [
-    new TrackController(),
-    new UserController(),
-    new SoundkitController(),
-    new CommentController(),
-    new CurrencyController(),
-    new CartController(),
-    new ExploreController(),
-    new SitemapController(),
-  ],
-  // Register server port number
+  new ControllerRegistry(),
   Number(process.env.PORT)
 );
 

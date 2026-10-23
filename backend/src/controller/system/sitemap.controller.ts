@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction, Router } from 'express';
-import IController from '../interfaces/controller.interface';
-import { ISitemapEntry, ISitemapCache } from '../interfaces/sitemap.interface';
-import trackModel from '../model/track.model';
-import userModel from '../model/user.model';
-import logger from '../utils/logger';
+import IController from '../../interfaces/controller.interface';
+import { ISitemapEntry, ISitemapCache } from '../../interfaces/sitemap.interface';
+import trackModel from '../../model/track.model';
+import userModel from '../../model/user.model';
+import logger from '../../utils/logger';
 
 const escapeXml = (str: string): string => {
   return str.replace(/[<>&'"]/g, (c) => {

@@ -4,17 +4,18 @@ import compression from 'compression';
 import cors from 'cors';
 import morgan from 'morgan';
 import IController from './interfaces/controller.interface';
+import IAppControllerRegistry from './interfaces/registry.interface';
+import { apiLimiter } from './middleware/rateLimit.middleware';
 import ErrorMiddleware from './middleware/error.middleware';
 import helmet from 'helmet';
 import swaggerDocs from './utils/swagger';
 import logger, { requestResponseLogger, errorLogger } from './utils/logger';
-import path from 'path';
 
 class App {
   public express: Application;
   public port: number;
 
-  constructor(controllers: IController[], port: number) {
+  constructor(registry: IAppControllerRegistry, port: number) {
     this.express = express();
     this.port = port;
 
@@ -24,7 +25,7 @@ class App {
     this.initializeSwagger(this.express, this.port);
     this.initialiseDatabaseConnection();
     this.initialiseMiddleware();
-    this.initialiseControllers(controllers);
+    this.initialiseControllers(registry);
     this.initialiseErrorHandling();
   }
 
@@ -47,18 +48,32 @@ class App {
     // Serve uploaded files statically (from central media dir)
     this.express.use('/uploads', express.static(process.env.MEDIA_DIR || '/srv/chromatik/media'));
     
+    // Trust reverse proxy (Vite / Docker / Nginx) so client IP and rate limit headers resolve accurately
+    this.express.set('trust proxy', 1);
+
     logger.info("Middleware setup complete.");
   }
 
-  private initialiseControllers(controllers: IController[]): void {
+  private initialiseControllers(registry: IAppControllerRegistry): void {
     logger.info("Setting up Controllers...");
-    controllers.forEach((controller: IController) => {
+
+    // Apply global rate limiter to the /api domain namespace
+    this.express.use('/api', apiLimiter);
+
+    // 1. Mount API domain controllers under /api
+    registry.apiControllers.forEach((controller: IController) => {
       this.express.use('/api', controller.router);
-      if (controller.path === '') {
-        this.express.use('/', controller.router);
-      }
-      logger.info(`Controller ${controller.constructor.name} initialized.`);
+      logger.info(`[API] Controller ${controller.constructor.name} mounted at /api`);
     });
+
+    // 2. Mount System / Infrastructure controllers directly at root '/'
+    // and also alias under '/api' so clients can call /api/health
+    registry.systemControllers.forEach((controller: IController) => {
+      this.express.use('/', controller.router);
+      this.express.use('/api', controller.router);
+      logger.info(`[SYSTEM] Controller ${controller.constructor.name} mounted at / and /api`);
+    });
+
     logger.info("All controllers have been set up.");
   }
 
