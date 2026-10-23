@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction, Router } from 'express';
-import IController from '../interfaces/controller.interface';
-import HttpException from '../utils/exceptions/http.exception';
+import IController from '../../interfaces/controller.interface';
+import HttpException from '../../utils/exceptions/http.exception';
 import ExploreService, {
     DEFAULT_PAGE_SIZE,
     MAX_PAGE_SIZE,
@@ -8,7 +8,7 @@ import ExploreService, {
     Range,
     SoundkitSort,
     TrackSort
-} from '../service/explore.service';
+} from '../../service/explore.service';
 
 const TRACK_SORTS: TrackSort[] = ['newest', 'popular', 'liked', 'price_asc', 'price_desc'];
 const PRODUCER_SORTS: ProducerSort[] = ['popular', 'newest', 'tracks'];

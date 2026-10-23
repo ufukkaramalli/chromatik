@@ -1,21 +1,22 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import https from 'https';
 import http from 'http';
-import IController from '.././interfaces/controller.interface';
-import HttpException from '.././utils/exceptions/http.exception';
-import validationMiddleware from '.././middleware/validation.middleware';
-import validate from '.././utils/validation/track.validation';
-import TrackService from '.././service/track.service';
-import authenticated from '.././middleware/authenticated.middleware';
-import optionalAuth from '.././middleware/optionalAuth.middleware';
-import roleMiddleware from '.././middleware/role.middleware';
-import { upload } from '../utils/upload';
+import IController from '../../interfaces/controller.interface';
+import HttpException from '../../utils/exceptions/http.exception';
+import validationMiddleware from '../../middleware/validation.middleware';
+import validate from '../../utils/validation/track.validation';
+import TrackService from '../../service/track.service';
+import authenticated from '../../middleware/authenticated.middleware';
+import optionalAuth from '../../middleware/optionalAuth.middleware';
+import roleMiddleware from '../../middleware/role.middleware';
+import { uploadLimiter } from '../../middleware/rateLimit.middleware';
+import { upload } from '../../utils/upload';
 import ffmpegStatic from 'ffmpeg-static';
 import ffmpeg from 'fluent-ffmpeg';
 import path from 'path';
 import fs from 'fs';
-import { TAG_MIX_FILTER, TAG_PATH, measureFileLoudness, measureTaggedMixLoudness } from '../utils/loudness';
-import { trimSilenceFile } from '../utils/silence';
+import { TAG_MIX_FILTER, TAG_PATH, measureFileLoudness, measureTaggedMixLoudness } from '../../utils/loudness';
+import { trimSilenceFile } from '../../utils/silence';
 
 const MEDIA_DIR = process.env.MEDIA_DIR || '/srv/chromatik/media';
 
@@ -50,6 +51,7 @@ class TrackController implements IController {
         this.router.post(
             `${this.path}`,
             [
+                uploadLimiter,
                 authenticated,
                 roleMiddleware,
                 upload.fields([

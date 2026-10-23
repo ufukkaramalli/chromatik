@@ -1,8 +1,8 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import IController from '../interfaces/controller.interface';
-import HttpException from '../utils/exceptions/http.exception';
-import authenticated from '../middleware/authenticated.middleware';
-import CommentService from '../service/comment.service';
+import IController from '../../interfaces/controller.interface';
+import HttpException from '../../utils/exceptions/http.exception';
+import authenticated from '../../middleware/authenticated.middleware';
+import CommentService from '../../service/comment.service';
 
 class CommentController implements IController {
     public path = '/comments';
