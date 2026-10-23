@@ -719,5 +719,10 @@
     "Toggle": "Toggle Theme",
     "DarkMode": "Dark Mode",
     "LightMode": "Light Mode"
+  },
+  "Connection": {
+    "WriteFailed": "Connection issue — your action couldn't be saved. Please try again shortly.",
+    "Restored": "Connection restored",
+    "Dismiss": "Dismiss"
   }
 }

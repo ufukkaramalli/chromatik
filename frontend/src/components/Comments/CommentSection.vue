@@ -308,7 +308,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/auth'
 import { usePlayer } from '@/composables/usePlayer'
-import { api } from '@/lib/axios'
+import { api, isConnectionError } from '@/lib/axios'
 import { formatTime } from '@/utils/format'
 import { getTrackId } from '@/utils/track'
 
@@ -541,10 +541,13 @@ const submitComment = async () => {
     }
   } catch (error) {
     console.error('Failed to submit comment:', error)
-    snackbar.value = {
-      show: true,
-      text: t('Comments.ErrorMsg'),
-      color: 'error'
+    // Connection problems are announced once by the global ConnectionSnackbar
+    if (!isConnectionError(error)) {
+      snackbar.value = {
+        show: true,
+        text: t('Comments.ErrorMsg'),
+        color: 'error'
+      }
     }
   } finally {
     submitting.value = false

@@ -15,6 +15,7 @@
 
     <router-view name="BottomPlayer" />
     <CartDrawer />
+    <ConnectionSnackbar />
   </v-app>
 </template>
 
@@ -26,6 +27,7 @@
 import { ref, watch, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import CartDrawer from '@/components/Cart/CartDrawer.vue'
+import ConnectionSnackbar from '@/components/ConnectionSnackbar.vue'
 import { useCartStore } from '@/stores/cartStore'
 
 const transitionName = ref('slide-left')

@@ -90,7 +90,7 @@ export const useAuthStore = defineStore('auth', {
 
     async logOut() {
       try {
-        await api.post('/user/logout')
+        await api.post('/user/logout', undefined, { skipDbRetry: true })
       } catch {}
       this._setToken(null)
       this._setUser(null)

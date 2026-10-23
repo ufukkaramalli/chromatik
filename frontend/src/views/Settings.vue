@@ -244,7 +244,7 @@
 import { ref, reactive, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/auth'
-import { api } from '@/lib/axios'
+import { api, isConnectionError } from '@/lib/axios'
 import { resolveMediaUrl } from '@/utils/url'
 
 const { t } = useI18n()
@@ -350,7 +350,8 @@ const updateProfile = async () => {
     await auth.updateSettings(profile)
     showSnackbar(t('Settings.SuccessMsg'))
   } catch (error) {
-    showSnackbar(t('Settings.ErrorMsg'), 'error')
+    // Connection problems are announced once by the global ConnectionSnackbar
+    if (!isConnectionError(error)) showSnackbar(t('Settings.ErrorMsg'), 'error')
     console.error(error)
   } finally {
     updatingProfile.value = false
@@ -367,7 +368,8 @@ const updatePassword = async () => {
     showSnackbar(t('Settings.SuccessMsg'))
     passwordForm.value.reset()
   } catch (error) {
-    showSnackbar(t('Settings.ErrorMsg'), 'error')
+    // Connection problems are announced once by the global ConnectionSnackbar
+    if (!isConnectionError(error)) showSnackbar(t('Settings.ErrorMsg'), 'error')
     console.error(error)
   } finally {
     updatingPassword.value = false
@@ -389,7 +391,8 @@ const onAvatarSelected = async (event) => {
     auth.user = { ...auth.user, photoUrl: data.photoUrl }
     showSnackbar(t('Settings.SuccessMsg'))
   } catch (error) {
-    showSnackbar(t('Settings.ErrorMsg'), 'error')
+    // Connection problems are announced once by the global ConnectionSnackbar
+    if (!isConnectionError(error)) showSnackbar(t('Settings.ErrorMsg'), 'error')
     console.error(error)
   } finally {
     uploadingAvatar.value = false

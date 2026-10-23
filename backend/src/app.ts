@@ -6,10 +6,15 @@ import morgan from 'morgan';
 import IController from './interfaces/controller.interface';
 import IAppControllerRegistry from './interfaces/registry.interface';
 import { apiLimiter } from './middleware/rateLimit.middleware';
+import dbReadinessMiddleware from './middleware/dbReadiness.middleware';
 import ErrorMiddleware from './middleware/error.middleware';
 import helmet from 'helmet';
 import swaggerDocs from './utils/swagger';
 import logger, { requestResponseLogger, errorLogger } from './utils/logger';
+
+const DB_RETRY_BASE_DELAY_MS = 1000;
+const DB_RETRY_MAX_DELAY_MS = 30000;
+const DB_SERVER_SELECTION_TIMEOUT_MS = 5000;
 
 class App {
   public express: Application;
@@ -60,6 +65,9 @@ class App {
     // Apply global rate limiter to the /api domain namespace
     this.express.use('/api', apiLimiter);
 
+    // Fail fast with 503 while MongoDB is unavailable (/health stays reachable)
+    this.express.use('/api', dbReadinessMiddleware);
+
     // 1. Mount API domain controllers under /api
     registry.apiControllers.forEach((controller: IController) => {
       this.express.use('/api', controller.router);
@@ -86,10 +94,39 @@ class App {
   }
 
   private initialiseDatabaseConnection(): void {
-    logger.info("Connecting to MongoDB...");
-    const { MONGO_URI } = process.env;
     mongoose.set('strictQuery', true);
-    mongoose.connect(`${MONGO_URI}`);
+    this.registerDatabaseEvents();
+    void this.connectWithRetry();
+  }
+
+  /**
+   * Mongoose does not retry a failed *initial* connection on its own, so we
+   * retry with exponential backoff. Once connected, the driver handles
+   * reconnection and the lifecycle events below keep the logs informative.
+   */
+  private async connectWithRetry(attempt: number = 1): Promise<void> {
+    const { MONGO_URI } = process.env;
+    logger.info(`Connecting to MongoDB... (attempt ${attempt})`);
+
+    try {
+      await mongoose.connect(`${MONGO_URI}`, {
+        serverSelectionTimeoutMS: DB_SERVER_SELECTION_TIMEOUT_MS
+      });
+    } catch (error: any) {
+      const delay = Math.min(DB_RETRY_BASE_DELAY_MS * 2 ** (attempt - 1), DB_RETRY_MAX_DELAY_MS);
+      logger.error(
+        `MongoDB connection failed (attempt ${attempt}): ${error?.message || error}. Retrying in ${delay}ms`
+      );
+      setTimeout(() => void this.connectWithRetry(attempt + 1), delay);
+    }
+  }
+
+  private registerDatabaseEvents(): void {
+    const { connection } = mongoose;
+    connection.on('connected', () => logger.info('MongoDB connected'));
+    connection.on('disconnected', () => logger.warn('MongoDB disconnected'));
+    connection.on('reconnected', () => logger.info('MongoDB reconnected'));
+    connection.on('error', (error) => logger.error(`MongoDB connection error: ${error?.message || error}`));
   }
 
   private initializeSwagger(app: Application, port: number): void {
