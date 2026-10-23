@@ -355,6 +355,24 @@
     },
     "Rights": "All rights reserved.",
     "Status": "All systems operational",
+    "StatusOperational": "All systems operational",
+    "StatusDegraded": "Degraded performance",
+    "StatusOutage": "System outage",
+    "StatusChecking": "Checking status...",
+    "SystemHealth": "System Health & Status",
+    "SystemHealthDesc": "Real-time service health, latency, and uptime metrics",
+    "ServiceApi": "API Engine",
+    "ServiceDb": "Database (MongoDB)",
+    "ServiceStorage": "Media Storage",
+    "StorageUsed": "Used",
+    "StorageFree": "free",
+    "StorageTotal": "total disk",
+    "ServiceMemory": "Memory Usage",
+    "ServiceUptime": "Uptime",
+    "RefreshCheck": "Re-check Now",
+    "Latency": "Latency",
+    "ClickForDetails": "Click for live system metrics",
+    "Close": "Close",
     "Help": {
       "Support": "Support & FAQ",
       "Contact": "Contact",
@@ -696,5 +714,10 @@
       "LICENSE_NOT_FOR_SALE": "This license type is not currently for sale.",
       "ADD_TO_CART_FAILED": "An error occurred while adding to cart."
     }
+  },
+  "Theme": {
+    "Toggle": "Toggle Theme",
+    "DarkMode": "Dark Mode",
+    "LightMode": "Light Mode"
   }
 }

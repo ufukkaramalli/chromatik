@@ -1,21 +1,24 @@
 <template>
   <v-app-bar
-    :clipped-left="display.lgAndUp"
-    app
     color="primary"
     class="pr-0"
-    v-cloak
+    flat
   >
     <!-- Left nav button -->
     <v-app-bar-nav-icon
       @click="app.themeOpts.navigation = !app.themeOpts.navigation"
     />
 
-    <!-- Title -->
+    <!-- Title / Brand Logo -->
     <v-toolbar-title class="ml-0 pl-4">
-      <span class="hidden-sm-and-down">
-        <h2 class="xxix-regular font-weight-regular">{{ app.appName }}</h2>
-      </span>
+      <router-link
+        to="/"
+        class="text-decoration-none text-white d-inline-flex align-center cursor-pointer"
+      >
+        <span class="hidden-sm-and-down">
+          <h2 class="xxix-regular font-weight-regular mb-0">{{ app.appName }}</h2>
+        </span>
+      </router-link>
     </v-toolbar-title>
 
     <v-divider vertical class="mx-3" />
@@ -55,9 +58,6 @@
       >
         <v-icon size="22">mdi-magnify</v-icon>
       </v-btn>
-
-      <v-btn rounded="0" variant="text" to="/">HOME</v-btn>
-      <v-divider vertical class="mx-1" />
 
       <!-- Currency Switcher -->
       <v-btn
@@ -108,19 +108,19 @@
             </v-btn>
           </template>
 
-          <v-list class="premium-menu rounded-lg py-2" bg-color="#1E1E1E" elevation="8">
+          <v-list class="premium-menu rounded-lg py-2" bg-color="surface" elevation="8">
             <v-list-item v-if="auth.user?.slug" :to="{ name: 'Profile', params: { userSlug: auth.user.slug } }" class="menu-item mx-2" rounded="lg">
               <template v-slot:prepend>
-                <v-icon color="grey-lighten-1" size="20" class="mr-3">mdi-account-circle-outline</v-icon>
+                <v-icon color="medium-emphasis" size="20" class="mr-3">mdi-account-circle-outline</v-icon>
               </template>
-              <v-list-item-title class="text-body-2 font-weight-medium text-grey-lighten-1">{{ $t('Navigation.Profile') }}</v-list-item-title>
+              <v-list-item-title class="text-body-2 font-weight-medium text-high-emphasis">{{ $t('Navigation.Profile') }}</v-list-item-title>
             </v-list-item>
 
             <v-list-item :to="{ name: 'Settings' }" class="menu-item mx-2" rounded="lg">
               <template v-slot:prepend>
-                <v-icon color="grey-lighten-1" size="20" class="mr-3">mdi-cog-outline</v-icon>
+                <v-icon color="medium-emphasis" size="20" class="mr-3">mdi-cog-outline</v-icon>
               </template>
-              <v-list-item-title class="text-body-2 font-weight-medium text-grey-lighten-1">{{ $t('Navigation.Settings') }}</v-list-item-title>
+              <v-list-item-title class="text-body-2 font-weight-medium text-high-emphasis">{{ $t('Navigation.Settings') }}</v-list-item-title>
             </v-list-item>
 
             <v-list-item @click.prevent="logOut" class="menu-item mx-2" rounded="lg">
@@ -189,11 +189,13 @@ const logOut = async () => {
 </script>
 
 <style scoped>
-[v-cloak] { display: none; }
+.v-app-bar {
+  background-color: rgb(var(--v-theme-primary)) !important;
+}
 
 .premium-menu {
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important;
+  border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity)) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, var(--v-shadow-strength, 0.2)) !important;
   min-width: 200px;
 }
 
@@ -202,11 +204,7 @@ const logOut = async () => {
 }
 
 .menu-item:hover {
-  background-color: rgba(255, 255, 255, 0.05);
-}
-
-.border-white-10 {
-  border-color: rgba(255, 255, 255, 0.1) !important;
+  background-color: rgba(var(--v-theme-on-surface), 0.06);
 }
 
 :deep(.cart-badge .v-badge__badge) {

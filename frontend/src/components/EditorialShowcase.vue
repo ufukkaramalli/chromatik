@@ -16,7 +16,7 @@
           class="sharp-editorial-console rounded-2xl pa-6 d-flex flex-column justify-space-between flex-grow-1 position-relative overflow-hidden"
           elevation="4"
           border
-          color="#131018"
+          color="surface"
           :style="consoleCardStyle"
         >
           <div class="console-ambient-bloom" :style="bloomStyle" aria-hidden="true"></div>
@@ -24,7 +24,7 @@
           <div class="position-relative z-1">
             <!-- Header bar (Index Tag & Header Icon) -->
             <div class="d-flex align-center justify-space-between mb-4">
-              <span class="tech-index-tag font-mono text-caption text-grey font-weight-bold">
+              <span class="tech-index-tag font-mono text-caption text-medium-emphasis font-weight-bold">
                 {{ indexTag }}
               </span>
               <v-icon size="16" :color="color">{{ headerIcon }}</v-icon>
@@ -42,12 +42,12 @@
             </v-chip>
 
             <!-- Title -->
-            <h3 class="text-h4 font-display font-weight-black text-white mb-3 tracking-tight">
+            <h3 class="text-h4 font-display font-weight-black text-high-emphasis mb-3 tracking-tight">
               {{ title }}
             </h3>
 
             <!-- Description -->
-            <p class="text-body-2 text-grey-lighten-2 mb-6 font-body line-height-relaxed">
+            <p class="text-body-2 text-medium-emphasis mb-6 font-body line-height-relaxed">
               {{ description }}
             </p>
           </div>
@@ -236,7 +236,7 @@
             </slot>
 
             <!-- Action Status Row -->
-            <div class="font-mono text-caption text-grey-lighten-1 font-weight-bold text-uppercase tracking-wider">
+            <div class="font-mono text-caption text-medium-emphasis font-weight-bold text-uppercase tracking-wider">
               <v-icon size="14" :color="color" class="mr-1">{{ actionIcon }}</v-icon>
               {{ actionText }}
             </div>
@@ -318,7 +318,10 @@
 
 <script setup>
 import { computed } from 'vue'
+import { useAppTheme } from '@/composables/useAppTheme'
 import Playlist from '@/components/Playlist.vue'
+
+const { isDark } = useAppTheme()
 
 const props = defineProps({
   id: {
@@ -433,7 +436,8 @@ const consoleCardStyle = computed(() => ({
 const bloomStyle = computed(() => {
   const hex = props.color.startsWith('#') ? props.color : '#D500F9'
   return {
-    background: `radial-gradient(circle, ${hex}40 0%, transparent 70%)`
+    background: `radial-gradient(circle, ${hex}40 0%, transparent 70%)`,
+    opacity: isDark.value ? 0.35 : 0.15
   }
 })
 
@@ -469,7 +473,7 @@ const oscilloscopeContainerStyle = computed(() => {
   const hex = props.color.startsWith('#') ? props.color : '#FF3D00'
   return {
     height: '42px',
-    backgroundColor: '#09070c',
+    backgroundColor: isDark.value ? '#09070c' : 'rgba(0, 0, 0, 0.04)',
     border: `1px solid ${hex}40`
   }
 })
@@ -499,7 +503,7 @@ const spectrogramContainerStyle = computed(() => {
   const hex = props.color.startsWith('#') ? props.color : '#D500F9'
   return {
     height: '42px',
-    backgroundColor: '#07050a',
+    backgroundColor: isDark.value ? '#07050a' : 'rgba(0, 0, 0, 0.04)',
     border: `1px solid ${hex}40`
   }
 })
@@ -537,6 +541,14 @@ const spectroFreqLabelsStyle = computed(() => ({
 <style lang="scss" scoped>
 .sharp-editorial-console {
   backdrop-filter: blur(20px);
+
+  .v-theme--light & {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: #FFFFFF !important;
+    border: 1px solid #E2E8F0 !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 8px 24px -4px rgba(0, 0, 0, 0.04) !important;
+  }
 }
 
 .console-ambient-bloom {
@@ -547,6 +559,10 @@ const spectroFreqLabelsStyle = computed(() => ({
   height: 220px;
   filter: blur(40px);
   pointer-events: none;
+
+  .v-theme--light & {
+    display: none !important;
+  }
 }
 
 .tech-index-tag {
@@ -722,7 +738,7 @@ const spectroFreqLabelsStyle = computed(() => ({
   font-size: 1.5rem;
   font-weight: 800;
   letter-spacing: -0.02em;
-  color: #ffffff;
+  color: rgb(var(--v-theme-on-surface));
 
   @media (min-width: 960px) {
     font-size: 1.75rem;
@@ -739,9 +755,9 @@ const spectroFreqLabelsStyle = computed(() => ({
   font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.85);
+  background: rgba(var(--v-theme-on-surface), 0.05);
+  border: 1px solid rgba(var(--v-border-color), 0.1);
+  color: rgba(var(--v-theme-on-surface), 0.85);
 
   .live-dot {
     width: 6px;

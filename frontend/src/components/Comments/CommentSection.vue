@@ -2,7 +2,7 @@
   <div class="comment-section">
     <!-- Header -->
     <div class="d-flex align-center justify-space-between mb-6">
-      <h3 class="text-h5 font-weight-black text-white d-flex align-center">
+      <h3 class="text-h5 font-weight-black text-high-emphasis d-flex align-center">
         <v-icon color="primary" class="mr-3">mdi-comment-multiple-outline</v-icon>
         {{ $t('Comments.Title') }}
         <v-chip size="small" color="primary" variant="flat" class="ml-3 font-weight-black">
@@ -16,10 +16,10 @@
       v-if="showWaveform && targetType === 'track'" 
       class="glass-card rounded-xl pa-5 mb-8 waveform-container position-relative overflow-hidden"
     >
-      <div class="d-flex align-center justify-space-between mb-3 text-caption text-grey-lighten-1">
+      <div class="d-flex align-center justify-space-between mb-3 text-caption text-medium-emphasis">
         <span class="d-flex align-center">
           <v-icon size="small" color="primary" class="mr-1">mdi-waveform</v-icon>
-          <span class="text-white font-weight-bold">{{ formatTime(trackCurrentTime) }}</span>
+          <span class="text-high-emphasis font-weight-bold">{{ formatTime(trackCurrentTime) }}</span>
           <span class="mx-1">/</span>
           <span>{{ formatTime(effectiveDuration) }}</span>
         </span>
@@ -71,22 +71,17 @@
           :style="{ left: getCommentPinPercent(comment.audioTimestamp) + '%' }"
           @click.stop="seekToComment(comment)"
         >
-          <v-tooltip 
-            activator="parent" 
-            location="top" 
-            offset="14"
-            content-class="waveform-comment-tooltip"
-          >
-            <div class="pin-tooltip text-left">
-              <div class="d-flex align-center justify-space-between mb-1">
-                <span class="pin-user-name mr-2">{{ comment.userId?.name }}</span>
-                <span class="pin-timestamp-badge">{{ formatTime(comment.audioTimestamp) }}</span>
+          <GlassTooltip location="top" :offset="14">
+            <div class="pin-tooltip text-left pa-1">
+              <div class="d-flex align-center justify-space-between mb-1 ga-2">
+                <span class="font-weight-bold text-high-emphasis text-caption">{{ comment.userId?.name }}</span>
+                <span class="font-mono text-caption text-primary font-weight-bold">{{ formatTime(comment.audioTimestamp) }}</span>
               </div>
-              <div class="pin-comment-text">
+              <div class="text-caption text-medium-emphasis">
                 {{ comment.content }}
               </div>
             </div>
-          </v-tooltip>
+          </GlassTooltip>
 
           <v-avatar size="24" class="pin-avatar shadow-premium">
             <v-img :src="comment.userId?.photoUrl || '/no-photo-user.jpg'" cover />
@@ -99,7 +94,7 @@
     <div class="glass-card rounded-xl pa-5 mb-8 comment-form-box">
       <div v-if="auth.authenticated" class="d-flex align-start">
         <v-avatar size="44" class="mr-4 flex-shrink-0 elevation-4">
-          <v-img :src="auth.user?.photoUrl || '/no-photo-user.jpg'" cover />
+          <v-img :src="currentUserPhoto" cover />
         </v-avatar>
 
         <div class="flex-grow-1">
@@ -158,7 +153,7 @@
           />
 
           <div class="d-flex align-center justify-space-between flex-wrap gap-2">
-            <span class="text-caption text-grey-lighten-2">
+            <span class="text-caption text-medium-emphasis">
               {{ newComment.length }}/500
             </span>
             <v-btn
@@ -179,7 +174,7 @@
 
       <!-- Guest Login Prompt -->
       <div v-else class="text-center py-4">
-        <p class="text-body-1 text-grey-lighten-1 mb-4">{{ $t('Comments.LoginPrompt') }}</p>
+        <p class="text-body-1 text-medium-emphasis mb-4">{{ $t('Comments.LoginPrompt') }}</p>
         <v-btn color="primary" rounded="pill" class="px-8 font-weight-bold" @click="goToLogin">
           <v-icon class="mr-2">mdi-login</v-icon>
           {{ $t('Comments.LoginBtn') }}
@@ -216,7 +211,7 @@
             <div>
               <div class="d-flex align-center flex-wrap gap-2">
                 <span 
-                  class="font-weight-black text-white hover-underline cursor-pointer"
+                  class="font-weight-black text-high-emphasis hover-underline cursor-pointer"
                   @click="goToUserProfile(comment.userId?.slug)"
                 >
                   {{ comment.userId?.name || 'User' }}
@@ -236,7 +231,7 @@
                 </v-chip>
               </div>
 
-              <span class="text-caption text-grey-lighten-1">
+              <span class="text-caption text-medium-emphasis">
                 {{ formatRelativeTime(comment.createdAt) }}
               </span>
             </div>
@@ -248,7 +243,7 @@
             icon 
             variant="text" 
             size="small" 
-            color="grey-lighten-1"
+            color="medium-emphasis"
             class="delete-comment-btn"
             :title="$t('Comments.Delete')"
             @click="confirmDelete(comment._id)"
@@ -258,7 +253,7 @@
         </div>
 
         <!-- Comment Content -->
-        <div class="text-body-1 text-grey-lighten-2 comment-text pl-13">
+        <div class="text-body-1 text-high-emphasis comment-text pl-13">
           {{ comment.content }}
         </div>
       </v-card>
@@ -266,22 +261,22 @@
 
     <!-- Empty State -->
     <div v-else class="glass-card rounded-xl py-12 px-6 text-center opacity-60">
-      <v-icon size="56" color="grey" class="mb-3">mdi-comment-outline</v-icon>
-      <div class="text-h6 font-weight-bold text-white mb-1">{{ $t('Comments.NoComments') }}</div>
-      <div class="text-caption text-grey-lighten-1">{{ $t('Comments.NoCommentsSub') }}</div>
+      <v-icon size="56" color="medium-emphasis" class="mb-3">mdi-comment-outline</v-icon>
+      <div class="text-h6 font-weight-bold text-high-emphasis mb-1">{{ $t('Comments.NoComments') }}</div>
+      <div class="text-caption text-medium-emphasis">{{ $t('Comments.NoCommentsSub') }}</div>
     </div>
 
     <!-- Delete Confirmation Dialog -->
     <v-dialog v-model="deleteDialog" max-width="400">
       <v-card class="glass-card rounded-xl pa-5">
-        <v-card-title class="text-h6 font-weight-black text-white pa-0 mb-3">
+        <v-card-title class="text-h6 font-weight-black text-high-emphasis pa-0 mb-3">
           {{ $t('Comments.Delete') }}
         </v-card-title>
-        <v-card-text class="pa-0 mb-6 text-body-2 text-grey-lighten-1">
+        <v-card-text class="pa-0 mb-6 text-body-2 text-medium-emphasis">
           {{ $t('Comments.DeleteConfirm') }}
         </v-card-text>
         <v-card-actions class="pa-0 d-flex justify-end gap-2">
-          <v-btn variant="text" color="grey" rounded="pill" @click="deleteDialog = false">
+          <v-btn variant="text" color="medium-emphasis" rounded="pill" @click="deleteDialog = false">
             {{ $t('Comments.Cancel') }}
           </v-btn>
           <v-btn color="error" variant="flat" rounded="pill" :loading="deleting" @click="executeDelete">
@@ -337,6 +332,7 @@ const router = useRouter()
 const route = useRoute()
 const { t } = useI18n()
 const auth = useAuthStore()
+const currentUserPhoto = computed<string>(() => (auth.user as any)?.photoUrl || '/no-photo-user.jpg')
 const { currentTrack, isPlaying, currentTime, duration, play, seek } = usePlayer()
 
 const comments = ref<any[]>([])
@@ -634,17 +630,17 @@ onMounted(() => {
 }
 
 .glass-card {
-  background: rgba(20, 20, 25, 0.6) !important;
+  background: rgba(var(--v-glass-bg, var(--v-theme-surface)), var(--v-glass-opacity, 0.75)) !important;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity, 0.08)) !important;
 }
 
 /* Waveform Container */
 .waveform-container {
-  background: rgba(14, 14, 18, 0.75) !important;
-  border-color: rgba(255, 255, 255, 0.06) !important;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  background: rgba(var(--v-glass-bg, var(--v-theme-surface)), 0.8) !important;
+  border-color: rgba(var(--v-border-color), var(--v-border-opacity, 0.08)) !important;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, var(--v-shadow-strength, 0.2));
 }
 
 .waveform-bar-wrapper {
@@ -661,7 +657,7 @@ onMounted(() => {
 
 .waveform-bar {
   flex: 1;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(var(--v-theme-on-surface), 0.18);
   border-radius: 4px;
   transition: background 0.15s ease, transform 0.15s ease;
   min-width: 2px;
@@ -682,8 +678,8 @@ onMounted(() => {
   top: 0;
   bottom: 0;
   width: 2px;
-  background: #ffffff;
-  box-shadow: 0 0 10px rgba(var(--v-theme-primary), 0.9), 0 0 4px #ffffff;
+  background: rgb(var(--v-theme-primary));
+  box-shadow: 0 0 10px rgba(var(--v-theme-primary), 0.9), 0 0 4px rgb(var(--v-theme-primary));
   pointer-events: none;
   z-index: 4;
 }
@@ -694,7 +690,7 @@ onMounted(() => {
   top: 0;
   bottom: 0;
   width: 1px;
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(var(--v-theme-on-surface), 0.6);
   pointer-events: none;
   z-index: 5;
 
@@ -703,11 +699,11 @@ onMounted(() => {
     bottom: -22px;
     transform: translateX(-50%);
     font-size: 10px;
-    background: rgba(0, 0, 0, 0.85);
+    background: rgba(var(--v-glass-bg, var(--v-theme-surface)), 0.9);
     padding: 2px 6px;
     border-radius: 4px;
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgb(var(--v-theme-on-surface));
+    border: 1px solid rgba(var(--v-border-color), 0.2);
   }
 }
 
@@ -733,14 +729,14 @@ onMounted(() => {
 
 /* Form Styles */
 .comment-form-box {
-  background: rgba(18, 18, 24, 0.7) !important;
+  background: rgba(var(--v-glass-bg, var(--v-theme-surface)), var(--v-glass-opacity, 0.75)) !important;
 }
 
 .comment-textarea :deep(.v-field) {
-  background: rgba(255, 255, 255, 0.04) !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  background: rgba(var(--v-theme-on-surface), 0.04) !important;
+  border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity, 0.08)) !important;
   border-radius: 12px !important;
-  color: #fff !important;
+  color: rgb(var(--v-theme-on-surface)) !important;
   transition: all 0.2s ease;
 
   &:hover, &.v-field--focused {
@@ -752,11 +748,11 @@ onMounted(() => {
 /* Comment Cards */
 .comment-card {
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  border-color: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(var(--v-border-color), var(--v-border-opacity, 0.06)) !important;
 
   &:hover {
-    border-color: rgba(255, 255, 255, 0.12) !important;
-    background: rgba(25, 25, 32, 0.7) !important;
+    border-color: rgba(var(--v-border-color), 0.18) !important;
+    background: rgba(var(--v-theme-on-surface), 0.04) !important;
   }
 
   &.highlighted-comment {
@@ -784,7 +780,7 @@ onMounted(() => {
 @keyframes commentSuccessPulse {
   0% {
     border-color: rgba(var(--v-theme-primary), 0.85) !important;
-    box-shadow: 0 0 24px rgba(var(--v-theme-primary), 0.4), 0 8px 30px rgba(0, 0, 0, 0.5) !important;
+    box-shadow: 0 0 24px rgba(var(--v-theme-primary), 0.4), 0 8px 30px rgba(0, 0, 0, var(--v-shadow-strength, 0.3)) !important;
     background: rgba(var(--v-theme-primary), 0.12) !important;
   }
   60% {
@@ -793,9 +789,9 @@ onMounted(() => {
     background: rgba(var(--v-theme-primary), 0.06) !important;
   }
   100% {
-    border-color: rgba(255, 255, 255, 0.08) !important;
+    border-color: rgba(var(--v-border-color), var(--v-border-opacity, 0.08)) !important;
     box-shadow: none !important;
-    background: rgba(20, 20, 25, 0.6) !important;
+    background: rgba(var(--v-glass-bg, var(--v-theme-surface)), var(--v-glass-opacity, 0.75)) !important;
   }
 }
 

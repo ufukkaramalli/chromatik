@@ -1,6 +1,6 @@
 <template>
   <v-footer
-    color="#0b0810"
+    color="surface"
     class="app-footer d-block position-relative overflow-hidden"
     :style="footerOffsetStyle"
   >
@@ -22,7 +22,7 @@
             <span class="xxix-regular text-h4 text-primary">CHROMATIK</span>
           </router-link>
 
-          <p class="text-body-2 text-grey-lighten-1 mt-3 mb-5" style="max-width: 380px; line-height: 1.7;">
+          <p class="text-body-2 text-medium-emphasis mt-3 mb-5" style="max-width: 380px; line-height: 1.7;">
             {{ $t('Footer.Tagline') }}
           </p>
 
@@ -37,7 +37,7 @@
               icon
               size="small"
               variant="tonal"
-              color="grey-lighten-1"
+              color="medium-emphasis"
               :aria-label="social.label"
             >
               <v-icon size="18">{{ social.icon }}</v-icon>
@@ -68,7 +68,7 @@
               :href="link.href"
               :prepend-icon="link.icon"
               rounded="lg"
-              class="px-2 text-grey-lighten-1"
+              class="px-2 text-medium-emphasis"
               min-height="34"
               exact
             >
@@ -81,7 +81,7 @@
       </v-row>
 
       <!-- CTA band -->
-      <v-card rounded="xl" border color="#140f1a" class="pa-5 pa-md-6 mt-8" elevation="0">
+      <v-card rounded="xl" border color="surface-light" class="pa-5 pa-md-6 mt-8" elevation="0">
         <div class="d-flex flex-column flex-md-row align-md-center justify-space-between ga-4">
           <div>
             <v-chip
@@ -93,10 +93,10 @@
             >
               {{ $t('Footer.Cta.Badge') }}
             </v-chip>
-            <div class="text-subtitle-1 font-weight-bold text-white">
+            <div class="text-subtitle-1 font-weight-bold text-high-emphasis">
               {{ authenticated ? $t('Footer.Cta.AuthTitle') : $t('Footer.Cta.GuestTitle') }}
             </div>
-            <div class="text-body-2 text-grey-lighten-1">
+            <div class="text-body-2 text-medium-emphasis">
               {{ authenticated ? $t('Footer.Cta.AuthDesc') : $t('Footer.Cta.GuestDesc') }}
             </div>
           </div>
@@ -133,7 +133,7 @@
             size="small"
             variant="outlined"
             label
-            class="font-mono font-weight-black text-grey-lighten-2"
+            class="font-mono font-weight-black text-medium-emphasis"
             prepend-icon="mdi-credit-card-outline"
           >
             {{ brand }}
@@ -152,18 +152,35 @@
 
         <div class="d-flex align-center flex-wrap justify-center ga-2">
           <v-chip
+            id="footer-system-status-chip"
             size="small"
             variant="outlined"
-            color="success"
-            class="font-mono text-caption"
+            :color="statusColor"
+            class="font-mono text-caption cursor-pointer"
+            @click="healthDialogOpen = true"
           >
-            <v-badge dot inline color="success" class="mr-2 footer-status-dot" />
-            {{ $t('Footer.Status') }}
+            <v-badge dot inline :color="statusColor" class="mr-2 footer-status-dot" />
+            {{ statusLabel }}
+            <GlassTooltip location="top">
+              <div class="d-flex flex-column ga-1 text-left">
+                <span class="font-weight-bold">{{ statusLabel }}</span>
+                <span v-if="dbLatency !== null" class="text-caption text-medium-emphasis">
+                  MongoDB: {{ dbLatency }}ms • {{ $t('Footer.ServiceUptime') }}: {{ uptimeFormatted }}
+                </span>
+                <span v-if="storageUsed" class="text-caption text-medium-emphasis">
+                  {{ $t('Footer.ServiceStorage') }}: <strong class="text-white">{{ storageUsed }}</strong>
+                  <span v-if="storageDiskFree" class="text-grey-lighten-1"> ({{ storageDiskFree }} {{ $t('Footer.StorageFree') }})</span>
+                </span>
+                <span class="text-caption text-primary font-weight-bold">
+                  {{ $t('Footer.ClickForDetails') }}
+                </span>
+              </div>
+            </GlassTooltip>
           </v-chip>
           <v-chip
             size="small"
             variant="outlined"
-            class="font-mono text-caption text-grey-lighten-1"
+            class="font-mono text-caption text-medium-emphasis"
             prepend-icon="mdi-source-branch"
           >
             v{{ appVersion }}
@@ -171,6 +188,196 @@
         </div>
       </div>
     </v-container>
+
+    <!-- System Health & Status Dialog -->
+    <v-dialog v-model="healthDialogOpen" max-width="540">
+      <v-card
+        rounded="xl"
+        border
+        color="surface"
+        elevation="24"
+        class="pa-6"
+      >
+        <div class="d-flex align-center justify-space-between mb-4">
+          <div class="d-flex align-center ga-3">
+            <v-avatar size="38" :color="statusColor" variant="tonal">
+              <v-icon size="20">
+                {{ statusColor === 'success' ? 'mdi-check-circle' : statusColor === 'warning' ? 'mdi-alert-circle' : 'mdi-close-circle' }}
+              </v-icon>
+            </v-avatar>
+            <div>
+              <div class="text-h6 font-weight-black text-high-emphasis">
+                {{ $t('Footer.SystemHealth') }}
+              </div>
+              <div class="text-caption text-medium-emphasis">
+                {{ $t('Footer.SystemHealthDesc') }}
+              </div>
+            </div>
+          </div>
+          <v-btn
+            icon="mdi-close"
+            variant="text"
+            size="small"
+            density="comfortable"
+            color="medium-emphasis"
+            @click="healthDialogOpen = false"
+          />
+        </div>
+
+        <v-divider class="mb-4 border-opacity-25" />
+
+        <!-- Services status list -->
+        <div class="d-flex flex-column ga-3">
+          <!-- API Engine -->
+          <v-sheet
+            rounded="lg"
+            border
+            color="surface-light"
+            class="pa-3 d-flex align-center justify-space-between"
+          >
+            <div class="d-flex align-center ga-3">
+              <v-icon color="primary" size="22">mdi-server</v-icon>
+              <div>
+                <div class="text-body-2 font-weight-bold text-high-emphasis">
+                  {{ $t('Footer.ServiceApi') }}
+                </div>
+                <div class="text-caption text-medium-emphasis">
+                  Node.js {{ health?.services?.api?.nodeVersion || '' }} • {{ $t('Footer.ServiceUptime') }}: {{ uptimeFormatted }}
+                </div>
+              </div>
+            </div>
+            <v-chip
+              size="x-small"
+              variant="tonal"
+              :color="health?.services?.api?.status === 'up' ? 'success' : 'error'"
+              class="font-mono text-uppercase font-weight-bold"
+            >
+              {{ health?.services?.api?.status === 'up' ? 'ONLINE' : 'OFFLINE' }}
+            </v-chip>
+          </v-sheet>
+
+          <!-- MongoDB Database -->
+          <v-sheet
+            rounded="lg"
+            border
+            color="surface-light"
+            class="pa-3 d-flex align-center justify-space-between"
+          >
+            <div class="d-flex align-center ga-3">
+              <v-icon color="success" size="22">mdi-database-check</v-icon>
+              <div>
+                <div class="text-body-2 font-weight-bold text-high-emphasis">
+                  {{ $t('Footer.ServiceDb') }}
+                </div>
+                <div class="text-caption text-medium-emphasis">
+                  {{ $t('Footer.Latency') }}: <strong class="text-high-emphasis">{{ dbLatency !== null ? `${dbLatency} ms` : '—' }}</strong> • State: {{ health?.services?.database?.state || 'connected' }}
+                </div>
+              </div>
+            </div>
+            <v-chip
+              size="x-small"
+              variant="tonal"
+              :color="health?.services?.database?.status === 'up' ? 'success' : health?.services?.database?.status === 'degraded' ? 'warning' : 'error'"
+              class="font-mono text-uppercase font-weight-bold"
+            >
+              {{ health?.services?.database?.status === 'up' ? 'HEALTHY' : health?.services?.database?.status === 'degraded' ? 'SLOW' : 'DOWN' }}
+            </v-chip>
+          </v-sheet>
+
+          <!-- Storage -->
+          <v-sheet
+            rounded="lg"
+            border
+            color="surface-light"
+            class="pa-3 d-flex align-center justify-space-between"
+          >
+            <div class="d-flex align-center ga-3">
+              <v-icon color="secondary" size="22">mdi-folder-music</v-icon>
+              <div>
+                <div class="text-body-2 font-weight-bold text-high-emphasis">
+                  {{ $t('Footer.ServiceStorage') }}
+                </div>
+                <div class="text-caption text-medium-emphasis">
+                  <span>{{ $t('Footer.StorageUsed') }}: <strong class="text-high-emphasis">{{ health?.services?.storage?.usedFormatted || '—' }}</strong></span>
+                  <span v-if="health?.services?.storage?.disk?.freeFormatted">
+                    • {{ health.services.storage.disk.freeFormatted }} {{ $t('Footer.StorageFree') }} ({{ health.services.storage.disk.totalFormatted }} {{ $t('Footer.StorageTotal') }})
+                  </span>
+                  <div class="text-caption text-grey text-truncate" style="max-width: 320px;">
+                    {{ health?.services?.storage?.path || '' }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <v-chip
+              size="x-small"
+              variant="tonal"
+              :color="health?.services?.storage?.status === 'up' ? 'secondary' : 'warning'"
+              class="font-mono text-uppercase font-weight-bold"
+            >
+              {{ health?.services?.storage?.usedFormatted || (health?.services?.storage?.status === 'up' ? 'READY' : 'DEGRADED') }}
+            </v-chip>
+          </v-sheet>
+
+          <!-- Memory Usage -->
+          <v-sheet
+            v-if="health?.services?.memory"
+            rounded="lg"
+            border
+            color="surface-light"
+            class="pa-3 d-flex align-center justify-space-between"
+          >
+            <div class="d-flex align-center ga-3">
+              <v-icon color="info" size="22">mdi-memory</v-icon>
+              <div>
+                <div class="text-body-2 font-weight-bold text-high-emphasis">
+                  {{ $t('Footer.ServiceMemory') }}
+                </div>
+                <div class="text-caption text-medium-emphasis">
+                  Heap: {{ health.services.memory.heapUsedMb }} MB / {{ health.services.memory.heapTotalMb }} MB (RSS: {{ health.services.memory.rssMb }} MB)
+                </div>
+              </div>
+            </div>
+            <v-chip
+              size="x-small"
+              variant="tonal"
+              color="info"
+              class="font-mono font-weight-bold"
+            >
+              {{ health.services.memory.heapUsedMb }} MB
+            </v-chip>
+          </v-sheet>
+        </div>
+
+        <div class="d-flex align-center justify-space-between mt-6">
+          <span class="font-mono text-caption text-grey">
+            {{ health?.timestamp ? new Date(health.timestamp).toLocaleTimeString() : '' }}
+          </span>
+          <div class="d-flex ga-2">
+            <v-btn
+              variant="tonal"
+              color="primary"
+              size="small"
+              rounded="pill"
+              class="text-none font-weight-bold px-4"
+              :loading="healthLoading"
+              prepend-icon="mdi-refresh"
+              @click="fetchHealth"
+            >
+              {{ $t('Footer.RefreshCheck') }}
+            </v-btn>
+            <v-btn
+              variant="outlined"
+              size="small"
+              rounded="pill"
+              class="text-none font-weight-bold px-4"
+              @click="healthDialogOpen = false"
+            >
+              {{ $t('Footer.Close') }}
+            </v-btn>
+          </div>
+        </div>
+      </v-card>
+    </v-dialog>
 
     <!-- Floating back-to-top button -->
     <v-fab-transition>
@@ -198,6 +405,7 @@ import { storeToRefs } from 'pinia'
 import { useLayout } from 'vuetify'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/auth'
+import { api } from '@/lib/axios'
 import LaserDivider from '@/components/LaserDivider.vue'
 import { LEGAL_DOCS, SUPPORT_EMAIL } from '@/constants/legal'
 import { version as appVersion } from '../../package.json'
@@ -276,6 +484,69 @@ const linkColumns = computed(() => {
   ]
 })
 
+// --- System Health Check ---
+const health = ref(null)
+const healthLoading = ref(false)
+const healthDialogOpen = ref(false)
+let healthInterval = null
+
+const fetchHealth = async () => {
+  healthLoading.value = true
+  try {
+    const { data } = await api.get('/health')
+    health.value = data
+  } catch (err) {
+    health.value = {
+      status: 'outage',
+      timestamp: new Date().toISOString(),
+      uptimeSeconds: 0,
+      services: {
+        api: { status: 'down', message: 'API unreachable' },
+        database: { status: 'down', message: 'Connection failed' },
+        storage: { status: 'down' }
+      }
+    }
+  } finally {
+    healthLoading.value = false
+  }
+}
+
+const statusColor = computed(() => {
+  if (!health.value) return 'grey'
+  if (health.value.status === 'operational') return 'success'
+  if (health.value.status === 'degraded') return 'warning'
+  return 'error'
+})
+
+const statusLabel = computed(() => {
+  if (!health.value) return t('Footer.StatusChecking')
+  if (health.value.status === 'operational') return t('Footer.StatusOperational')
+  if (health.value.status === 'degraded') return t('Footer.StatusDegraded')
+  return t('Footer.StatusOutage')
+})
+
+const dbLatency = computed(() => {
+  return health.value?.services?.database?.latencyMs ?? null
+})
+
+const uptimeFormatted = computed(() => {
+  const sec = health.value?.uptimeSeconds || 0
+  const d = Math.floor(sec / 86400)
+  const h = Math.floor((sec % 86400) / 3600)
+  const m = Math.floor((sec % 3600) / 60)
+  if (d > 0) return `${d}d ${h}h ${m}m`
+  if (h > 0) return `${h}h ${m}m`
+  return `${m}m`
+})
+
+const storageUsed = computed(() => {
+  return health.value?.services?.storage?.usedFormatted ?? null
+})
+
+const storageDiskFree = computed(() => {
+  return health.value?.services?.storage?.disk?.freeFormatted ?? null
+})
+
 // --- Back to top ---
 const showBackToTop = ref(false)
 const onScroll = () => {
@@ -295,8 +566,14 @@ const backToTopStyle = computed(() => {
 onMounted(() => {
   onScroll()
   window.addEventListener('scroll', onScroll, { passive: true })
+  fetchHealth()
+  healthInterval = setInterval(fetchHealth, 60000)
 })
-onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
+
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', onScroll)
+  if (healthInterval) clearInterval(healthInterval)
+})
 </script>
 
 <style lang="scss" scoped>

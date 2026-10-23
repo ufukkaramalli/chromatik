@@ -4,7 +4,7 @@
     :to="{ name: 'Profile', params: { userSlug: producer.slug } }"
     rounded="xl"
     border
-    color="#121018"
+    color="surface"
     elevation="0"
     hover
     class="producer-card pa-5 h-100 d-flex flex-column align-center text-center"
@@ -14,10 +14,10 @@
       <v-img :src="avatarUrl" :alt="producer.name" cover />
     </v-avatar>
 
-    <div class="text-subtitle-1 font-weight-bold text-white text-truncate w-100">
+    <div class="text-subtitle-1 font-weight-bold text-high-emphasis text-truncate w-100">
       {{ producer.name }}
     </div>
-    <div class="text-caption text-grey d-flex align-center justify-center mb-4" style="min-height: 20px;">
+    <div class="text-caption text-medium-emphasis d-flex align-center justify-center mb-4" style="min-height: 20px;">
       <template v-if="producer.location">
         <v-icon size="14" class="mr-1">mdi-map-marker-outline</v-icon>
         <span class="text-truncate">{{ producer.location }}</span>

@@ -1,20 +1,20 @@
 <template>
-  <div class="cart-summary pa-4 border-t border-white-10">
+  <div class="cart-summary pa-4 border-t ck-border-subtle">
     <!-- Currency Notice -->
-    <div class="text-tiny text-grey mb-3 d-flex align-center">
-      <v-icon size="14" color="grey" class="mr-1">mdi-information-outline</v-icon>
+    <div class="text-tiny text-medium-emphasis mb-3 d-flex align-center">
+      <v-icon size="14" color="medium-emphasis" class="mr-1">mdi-information-outline</v-icon>
       <span>{{ $t('Cart.CurrencyNotice', { source: currencyStore.sourceLabel }) }}</span>
     </div>
 
     <!-- Subtotal & Total Row -->
     <div class="d-flex align-center justify-space-between mb-2">
-      <span class="text-body-2 text-grey">{{ $t('Cart.Subtotal') }}</span>
-      <span class="text-subtitle-1 font-weight-bold text-white">
+      <span class="text-body-2 text-medium-emphasis">{{ $t('Cart.Subtotal') }}</span>
+      <span class="text-subtitle-1 font-weight-bold text-high-emphasis">
         {{ cartStore.formattedTotal }}
       </span>
     </div>
 
-    <div v-if="currencyStore.activeCurrency === 'TRY'" class="d-flex align-center justify-space-between mb-3 text-caption text-grey">
+    <div v-if="currencyStore.activeCurrency === 'TRY'" class="d-flex align-center justify-space-between mb-3 text-caption text-medium-emphasis">
       <span>{{ $t('Cart.UsdEquivalent') }}</span>
       <span>${{ cartStore.totalUsd }}</span>
     </div>
@@ -38,7 +38,7 @@
       <v-btn
         variant="text"
         size="x-small"
-        color="grey"
+        color="medium-emphasis"
         @click="cartStore.clearCart"
       >
         {{ $t('Cart.Clear') }}
@@ -65,16 +65,13 @@ function handleCheckout() {
 
 <style scoped>
 .cart-summary {
-  background: rgba(18, 18, 18, 0.95);
+  background: rgba(var(--v-glass-bg, var(--v-theme-surface)), var(--v-glass-opacity, 0.95));
   backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .text-tiny {
   font-size: 0.72rem;
   line-height: 1.2;
-}
-
-.border-white-10 {
-  border-color: rgba(255, 255, 255, 0.08) !important;
 }
 </style>

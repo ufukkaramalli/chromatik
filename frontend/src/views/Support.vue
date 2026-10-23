@@ -1,5 +1,5 @@
 <template>
-  <v-main class="bg-black support-page">
+  <v-main class="support-page">
     <v-container class="py-10 py-md-14 px-3 px-sm-6" style="max-width: 1240px;">
       <!-- Hero -->
       <div class="text-center mb-10 mb-md-14">
@@ -12,10 +12,10 @@
         >
           {{ $t('Support.Badge') }}
         </v-chip>
-        <h1 class="text-h4 text-md-h3 font-weight-black text-white mb-3">
+        <h1 class="text-h4 text-md-h3 font-weight-black text-high-emphasis mb-3">
           {{ $t('Support.Title') }}
         </h1>
-        <p class="text-body-1 text-grey-lighten-1 mx-auto mb-0" style="max-width: 640px;">
+        <p class="text-body-1 text-medium-emphasis mx-auto mb-0" style="max-width: 640px;">
           {{ $t('Support.Subtitle') }}
         </p>
       </div>
@@ -31,14 +31,14 @@
               v-for="(item, i) in faq"
               :id="`faq-${i + 1}`"
               :key="i"
-              bg-color="#121018"
+              bg-color="surface"
               class="border"
             >
-              <v-expansion-panel-title class="font-weight-bold text-white">
+              <v-expansion-panel-title class="font-weight-bold text-high-emphasis">
                 <v-icon size="18" color="primary" class="mr-3">mdi-help-circle-outline</v-icon>
                 {{ rt(item.Q) }}
               </v-expansion-panel-title>
-              <v-expansion-panel-text class="text-body-2 text-grey-lighten-1" style="line-height: 1.8;">
+              <v-expansion-panel-text class="text-body-2 text-medium-emphasis" style="line-height: 1.8;">
                 {{ rt(item.A) }}
               </v-expansion-panel-text>
             </v-expansion-panel>
@@ -47,14 +47,14 @@
 
         <!-- Contact + legal -->
         <v-col cols="12" md="4">
-          <v-card rounded="xl" border color="#121018" class="pa-6 mb-4" elevation="0">
+          <v-card rounded="xl" border color="surface" class="pa-6 mb-4" elevation="0">
             <v-avatar color="primary" variant="tonal" size="44" class="mb-3">
               <v-icon>mdi-email-fast-outline</v-icon>
             </v-avatar>
-            <div class="text-h6 font-weight-bold text-white mb-1">
+            <div class="text-h6 font-weight-bold text-high-emphasis mb-1">
               {{ $t('Support.ContactTitle') }}
             </div>
-            <p class="text-body-2 text-grey-lighten-1 mb-4">
+            <p class="text-body-2 text-medium-emphasis mb-4">
               {{ $t('Support.ContactDesc') }}
             </p>
 
@@ -70,7 +70,7 @@
               >
                 {{ $t('Support.ContactButton') }}
               </v-btn>
-              <div class="font-mono text-caption text-grey-lighten-1 text-center mb-3">
+              <div class="font-mono text-caption text-medium-emphasis text-center mb-3">
                 {{ SUPPORT_EMAIL }}
               </div>
             </template>
@@ -90,7 +90,7 @@
             </div>
           </v-card>
 
-          <v-card rounded="xl" border color="#121018" class="pa-2" elevation="0">
+          <v-card rounded="xl" border color="surface" class="pa-2" elevation="0">
             <div class="font-mono text-caption text-primary font-weight-bold text-uppercase px-3 pt-2 pb-1">
               {{ $t('Support.LegalTitle') }}
             </div>

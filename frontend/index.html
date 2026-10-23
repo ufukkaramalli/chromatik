@@ -8,6 +8,18 @@
     <meta name="theme-color" content="#09070F" />
     <meta property="og:site_name" content="Chromatik" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <script>
+      (function() {
+        try {
+          var t = localStorage.getItem('theme');
+          var isDark = t !== 'light';
+          document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+          document.documentElement.style.backgroundColor = isDark ? '#09070F' : '#F8FAFC';
+          var m = document.querySelector('meta[name="theme-color"]');
+          if (m) m.setAttribute('content', isDark ? '#09070F' : '#F8FAFC');
+        } catch (e) {}
+      })();
+    </script>
     <!-- Google Fonts: Outfit, Inter, Plus Jakarta Sans, Space Grotesk -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

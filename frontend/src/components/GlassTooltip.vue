@@ -109,4 +109,27 @@ defineProps({
     line-height: 1.45;
   }
 }
+
+.v-theme--light {
+  &.v-overlay__content.v-overlay__content-glass-tooltip,
+  .v-overlay__content.v-overlay__content-glass-tooltip,
+  &.v-overlay__content.player-settings-tooltip,
+  .v-overlay__content.player-settings-tooltip {
+    background: rgba(255, 255, 255, 0.96) !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.12) !important;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12), 0 0 12px rgba(var(--v-theme-primary), 0.1) !important;
+    color: #0f172a !important;
+
+    .glass-tooltip-wrapper,
+    .tooltip-body,
+    .glass-tooltip-text {
+      color: #0f172a !important;
+    }
+
+    span.text-white {
+      color: #0f172a !important;
+    }
+  }
+}
 </style>

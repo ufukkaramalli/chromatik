@@ -3,7 +3,7 @@
     :id="`soundkit-card-${kit._id || kit.id}`"
     rounded="xl"
     border
-    color="#121018"
+    color="surface"
     elevation="0"
     class="soundkit-card h-100 d-flex flex-column"
   >
@@ -24,18 +24,18 @@
     </v-img>
 
     <v-card-text class="pa-4 d-flex flex-column flex-grow-1">
-      <div class="text-subtitle-1 font-weight-bold text-white text-truncate">{{ kit.title }}</div>
+      <div class="text-subtitle-1 font-weight-bold text-high-emphasis text-truncate">{{ kit.title }}</div>
       <router-link
         v-if="kit.user?.slug"
         :to="{ name: 'Profile', params: { userSlug: kit.user.slug } }"
-        class="text-caption text-grey-lighten-1 text-decoration-none text-truncate"
+        class="text-caption text-medium-emphasis text-decoration-none text-truncate"
       >
         {{ kit.user.name }}
       </router-link>
-      <p v-if="kit.description" class="text-caption text-grey mt-2 mb-0 soundkit-desc">
+      <p v-if="kit.description" class="text-caption text-medium-emphasis mt-2 mb-0 soundkit-desc">
         {{ kit.description }}
       </p>
-      <div class="d-flex align-center text-caption text-grey mt-auto pt-3">
+      <div class="d-flex align-center text-caption text-medium-emphasis mt-auto pt-3">
         <v-icon size="14" class="mr-1">mdi-eye-outline</v-icon>
         {{ formatCompactNumber(kit.views) }}
       </div>

@@ -12,7 +12,7 @@
       <div
         v-for="copy in repeat"
         :key="copy"
-        class="marquee-content d-flex align-center ga-8 py-3 px-4 font-mono text-caption font-weight-bold text-uppercase tracking-widest text-grey-lighten-1"
+        class="marquee-content d-flex align-center ga-8 py-3 px-4 font-mono text-caption font-weight-bold text-uppercase tracking-widest text-medium-emphasis"
         :aria-hidden="copy > 1 ? 'true' : undefined"
       >
         <slot>
@@ -20,11 +20,11 @@
             v-for="(item, idx) in normalizedItems"
             :key="idx"
             class="d-flex align-center"
-            :class="item.primary ? 'text-primary' : 'text-white'"
+            :class="item.primary ? 'text-primary' : 'text-high-emphasis'"
           >
             <v-icon
               :size="item.iconSize || 12"
-              :color="item.primary ? 'primary' : 'grey-darken-1'"
+              :color="item.primary ? 'primary' : 'medium-emphasis'"
               class="mr-2"
             >
               {{ item.icon || 'mdi-rhombus' }}
@@ -93,9 +93,10 @@ const normalizedItems = computed(() => {
 
 <style lang="scss" scoped>
 .kinetic-laser-strip {
-  background: rgba(16, 14, 20, 0.55);
-  border-color: rgba(255, 82, 82, 0.25) !important;
+  background: rgba(var(--v-glass-bg, var(--v-theme-surface)), 0.65);
+  border-color: rgba(var(--v-theme-primary), 0.25) !important;
   backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   user-select: none;
 }
 

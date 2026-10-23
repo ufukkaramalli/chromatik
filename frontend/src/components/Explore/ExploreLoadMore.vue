@@ -14,7 +14,7 @@
     >
       {{ $t('Explore.LoadMore') }}
     </v-btn>
-    <div class="font-mono text-caption text-grey">
+    <div class="font-mono text-caption text-medium-emphasis">
       {{ $t('Explore.Showing', { shown, total }) }}
     </div>
   </div>

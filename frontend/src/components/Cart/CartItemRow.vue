@@ -18,10 +18,10 @@
       </div>
 
       <div class="item-meta overflow-hidden">
-        <div class="text-subtitle-2 font-weight-bold text-truncate text-white">
+        <div class="text-subtitle-2 font-weight-bold text-truncate text-high-emphasis">
           {{ item.name }}
         </div>
-        <div class="text-caption text-grey text-truncate">
+        <div class="text-caption text-medium-emphasis text-truncate">
           {{ item.artist.name }}
         </div>
 
@@ -52,10 +52,10 @@
     <!-- Price & Actions -->
     <div class="d-flex align-center flex-shrink-0">
       <div class="text-right mr-3">
-        <div class="font-weight-black text-white text-subtitle-2">
+        <div class="font-weight-black text-high-emphasis text-subtitle-2">
           {{ currencyStore.formatPrice(item.priceUsd) }}
         </div>
-        <div v-if="currencyStore.activeCurrency === 'TRY'" class="text-tiny text-grey">
+        <div v-if="currencyStore.activeCurrency === 'TRY'" class="text-tiny text-medium-emphasis">
           ${{ item.priceUsd }}
         </div>
       </div>
@@ -64,7 +64,7 @@
         icon="mdi-trash-can-outline"
         variant="text"
         size="x-small"
-        color="grey"
+        color="medium-emphasis"
         class="hover-danger"
         :title="$t('Cart.Remove')"
         @click="cartStore.removeItem(item.id)"
@@ -106,26 +106,26 @@ function formatLicenseName(type?: TrackLicenseType): string {
 
 <style scoped>
 .cart-item-row {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(var(--v-theme-on-surface), 0.04);
+  border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity, 0.08));
   transition: all 0.2s ease;
 }
 
 .cart-item-row:hover {
-  background: rgba(255, 255, 255, 0.07);
-  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(var(--v-theme-on-surface), 0.08);
+  border-color: rgba(var(--v-border-color), 0.2);
 }
 
 .item-art-wrapper {
   width: 48px;
   height: 48px;
-  background: #181818;
+  background: rgba(var(--v-theme-on-surface), 0.06);
 }
 
 .art-fallback {
   width: 48px;
   height: 48px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(var(--v-theme-on-surface), 0.06);
 }
 
 .text-tiny {

@@ -1,5 +1,5 @@
 <template>
-  <v-main class="bg-black explore-page">
+  <v-main class="explore-page">
     <!-- Ambient glow (decorative) -->
     <div class="explore-glow" aria-hidden="true"></div>
 
@@ -15,10 +15,10 @@
         >
           {{ $t('Explore.Badge') }}
         </v-chip>
-        <h1 class="text-h4 text-md-h3 font-weight-black text-white mb-3">
+        <h1 class="text-h4 text-md-h3 font-weight-black text-high-emphasis mb-3">
           {{ $t('Explore.Title') }}
         </h1>
-        <p class="text-body-1 text-grey-lighten-1 mx-auto mb-0" style="max-width: 680px;">
+        <p class="text-body-1 text-medium-emphasis mx-auto mb-0" style="max-width: 680px;">
           {{ $t('Explore.Subtitle') }}
         </p>
       </header>
@@ -54,7 +54,7 @@
               <v-card
                 rounded="xl"
                 border
-                color="#121018"
+                color="surface"
                 elevation="0"
                 class="pa-5 explore-sidebar"
               >
@@ -91,7 +91,7 @@
                   />
                 </v-btn>
 
-                <div class="text-body-2 text-grey-lighten-1">
+                <div class="text-body-2 text-medium-emphasis">
                   <template v-if="tracks.state.loaded">
                     {{ $t('Explore.Tracks.Results', { count: tracks.state.total }) }}
                   </template>
@@ -219,7 +219,7 @@
         <!-- ============ PRODUCERS ============ -->
         <v-window-item value="producers">
           <div class="d-flex flex-wrap align-center ga-3 mb-5">
-            <div class="text-body-2 text-grey-lighten-1">
+            <div class="text-body-2 text-medium-emphasis">
               <template v-if="producers.state.loaded">
                 {{ $t('Explore.Producers.Results', { count: producers.state.total }) }}
               </template>
@@ -288,7 +288,7 @@
         <!-- ============ SOUNDKITS ============ -->
         <v-window-item value="soundkits">
           <div class="d-flex flex-wrap align-center ga-3 mb-5">
-            <div class="text-body-2 text-grey-lighten-1">
+            <div class="text-body-2 text-medium-emphasis">
               <template v-if="soundkits.state.loaded">
                 {{ $t('Explore.Soundkits.Results', { count: soundkits.state.total }) }}
               </template>
@@ -358,7 +358,7 @@
 
     <!-- Mobile filters -->
     <v-bottom-sheet v-model="filterSheet" scrollable>
-      <v-card rounded="t-xl" color="#121018">
+      <v-card rounded="t-xl" color="surface">
         <v-card-text class="pa-5">
           <ExploreFilters
             v-model="state.filters"
@@ -775,6 +775,6 @@ const soundkitSortItems = computed(() => [
   max-height: calc(100vh - 110px);
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+  scrollbar-color: rgba(var(--v-theme-on-surface), 0.15) transparent;
 }
 </style>

@@ -3,14 +3,14 @@
     <v-container fluid class="py-8 px-6">
       <v-row>
         <v-col cols="12" md="10" lg="8" class="mx-auto">
-          <h1 class="text-h4 font-weight-bold mb-6 text-white">{{ $t('Settings.Title') }}</h1>
+          <h1 class="text-h4 font-weight-bold mb-6 text-high-emphasis">{{ $t('Settings.Title') }}</h1>
 
           <v-row>
             <!-- Profile Picture Settings -->
             <v-col cols="12" md="4">
-              <v-card theme="dark" class="bg-grey-darken-4 rounded-lg border-white-10 text-center py-8 px-4 h-100">
+              <v-card class="bg-surface rounded-lg border text-center py-8 px-4 h-100">
                 <h3 class="text-h6 font-weight-bold mb-6">{{ $t('Settings.ProfilePicture') }}</h3>
-                <v-avatar size="150" color="grey-darken-3" class="mb-6 elevation-4">
+                <v-avatar size="150" color="surface-light" class="mb-6 elevation-4">
                   <v-img :src="getApiUrl(user?.photoUrl)" cover></v-img>
                 </v-avatar>
                 
@@ -40,7 +40,7 @@
             <!-- Profile Info Settings -->
             <v-col cols="12" md="8">
               <!-- General Info Form -->
-              <v-card theme="dark" class="bg-grey-darken-4 rounded-lg border-white-10 pa-6 mb-6">
+              <v-card class="bg-surface rounded-lg border pa-6 mb-6">
                 <h3 class="text-h6 font-weight-bold mb-4">{{ $t('Settings.PublicProfile') }}</h3>
                 <v-form ref="profileForm" @submit.prevent="updateProfile">
                   <v-row>
@@ -49,7 +49,7 @@
                         v-model="profile.name"
                         :label="$t('Settings.Name')"
                         variant="outlined"
-                        bg-color="black"
+                        bg-color="surface-light"
                         :rules="[rules.required]"
                       ></v-text-field>
                     </v-col>
@@ -58,7 +58,7 @@
                         v-model="profile.slug"
                         :label="$t('Settings.Username')"
                         variant="outlined"
-                        bg-color="black"
+                        bg-color="surface-light"
                         :rules="[rules.required, rules.noSpace]"
                       ></v-text-field>
                     </v-col>
@@ -67,7 +67,7 @@
                         v-model="profile.email"
                         :label="$t('Settings.Email')"
                         variant="outlined"
-                        bg-color="black"
+                        bg-color="surface-light"
                         :rules="[rules.required, rules.email]"
                       ></v-text-field>
                     </v-col>
@@ -80,7 +80,7 @@
                           { title: 'Türkçe', value: 'tr' }
                         ]"
                         variant="outlined"
-                        bg-color="black"
+                        bg-color="surface-light"
                       ></v-select>
                     </v-col>
                     <v-col cols="12" sm="6">
@@ -88,7 +88,7 @@
                         v-model="profile.location"
                         :label="$t('Settings.Location')"
                         variant="outlined"
-                        bg-color="black"
+                        bg-color="surface-light"
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6">
@@ -97,7 +97,7 @@
                         :label="$t('Settings.DateOfBirth')"
                         type="date"
                         variant="outlined"
-                        bg-color="black"
+                        bg-color="surface-light"
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12">
@@ -105,7 +105,7 @@
                         v-model="profile.bio"
                         :label="$t('Settings.Bio')"
                         variant="outlined"
-                        bg-color="black"
+                        bg-color="surface-light"
                         rows="3"
                       ></v-textarea>
                     </v-col>
@@ -136,7 +136,7 @@
                             :label="$t('Settings.Instagram')"
                             prepend-inner-icon="mdi-instagram"
                             variant="outlined"
-                            bg-color="black"
+                            bg-color="surface-light"
                             hide-details
                           ></v-text-field>
                         </v-col>
@@ -146,7 +146,7 @@
                             :label="$t('Settings.Twitter')"
                             prepend-inner-icon="mdi-twitter"
                             variant="outlined"
-                            bg-color="black"
+                            bg-color="surface-light"
                             hide-details
                           ></v-text-field>
                         </v-col>
@@ -156,7 +156,7 @@
                             :label="$t('Settings.YouTube')"
                             prepend-inner-icon="mdi-youtube"
                             variant="outlined"
-                            bg-color="black"
+                            bg-color="surface-light"
                             hide-details
                           ></v-text-field>
                         </v-col>
@@ -166,7 +166,7 @@
                             :label="$t('Settings.SoundCloud')"
                             prepend-inner-icon="mdi-soundcloud"
                             variant="outlined"
-                            bg-color="black"
+                            bg-color="surface-light"
                             hide-details
                           ></v-text-field>
                         </v-col>
@@ -188,7 +188,7 @@
               </v-card>
 
               <!-- Password Form -->
-              <v-card theme="dark" class="bg-grey-darken-4 rounded-lg border-white-10 pa-6">
+              <v-card class="bg-surface rounded-lg border pa-6">
                 <h3 class="text-h6 font-weight-bold mb-4">{{ $t('Settings.ChangePassword') }}</h3>
                 <v-form ref="passwordForm" @submit.prevent="updatePassword">
                   <v-row>
@@ -198,7 +198,7 @@
                         :label="$t('Settings.NewPassword')"
                         type="password"
                         variant="outlined"
-                        bg-color="black"
+                        bg-color="surface-light"
                         :rules="[rules.counterMin]"
                       ></v-text-field>
                     </v-col>
@@ -208,7 +208,7 @@
                         :label="$t('Settings.ConfirmPassword')"
                         type="password"
                         variant="outlined"
-                        bg-color="black"
+                        bg-color="surface-light"
                         :rules="[rules.passwordMatch]"
                       ></v-text-field>
                     </v-col>
@@ -216,7 +216,7 @@
                   <div class="text-right mt-4">
                     <v-btn 
                       type="submit" 
-                      color="white" 
+                      color="primary" 
                       variant="outlined" 
                       class="rounded-pill px-8 text-none"
                       :loading="updatingPassword"
@@ -403,6 +403,6 @@ const onAvatarSelected = async (event) => {
   gap: 12px;
 }
 .border-white-10 {
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity)) !important;
 }
 </style>

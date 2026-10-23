@@ -8,7 +8,7 @@
   >
     <v-card v-if="track" class="license-modal-card glass-premium pa-0 overflow-hidden rounded-xl">
       <!-- Header with Track Info -->
-      <div class="modal-header pa-5 border-b border-white-10 d-flex align-center justify-space-between">
+      <div class="modal-header pa-5 border-b ck-border-subtle d-flex align-center justify-space-between">
         <div class="d-flex align-center overflow-hidden mr-3">
           <v-img
             v-if="track.art"
@@ -22,10 +22,10 @@
             <div class="text-caption text-primary font-weight-bold text-uppercase">
               {{ $t('Cart.Licenses.ChooseLicense') }}
             </div>
-            <div class="text-h6 font-weight-black text-white text-truncate">
+            <div class="text-h6 font-weight-black text-high-emphasis text-truncate">
               {{ track.name }}
             </div>
-            <div class="text-caption text-grey text-truncate">
+            <div class="text-caption text-medium-emphasis text-truncate">
               {{ track.user?.name }}
               <span v-if="track.bpm" class="ml-2">• {{ track.bpm }} BPM</span>
               <span v-if="track.key" class="ml-1">• {{ track.key }}</span>
@@ -37,7 +37,7 @@
           icon="mdi-close"
           variant="text"
           size="small"
-          color="grey"
+          color="medium-emphasis"
           @click="$emit('update:modelValue', false)"
         />
       </div>
@@ -53,20 +53,20 @@
           >
             <div class="mr-4">
               <div class="d-flex align-center mb-1">
-                <span class="text-subtitle-1 font-weight-black text-white mr-2">
+                <span class="text-subtitle-1 font-weight-black text-high-emphasis mr-2">
                   {{ $t('Cart.Licenses.Basic') }}
                 </span>
                 <v-chip size="x-small" color="primary" variant="tonal" class="font-weight-bold">
                   MP3
                 </v-chip>
               </div>
-              <div class="text-caption text-grey">
+              <div class="text-caption text-medium-emphasis">
                 {{ $t('Cart.Licenses.BasicDesc') }}
               </div>
             </div>
 
             <div class="text-right flex-shrink-0">
-              <div class="text-h6 font-weight-black text-white mb-2">
+              <div class="text-h6 font-weight-black text-high-emphasis mb-2">
                 {{ currencyStore.formatPrice(track.priceBasic) }}
               </div>
               <v-btn
@@ -90,20 +90,20 @@
           >
             <div class="mr-4">
               <div class="d-flex align-center mb-1">
-                <span class="text-subtitle-1 font-weight-black text-white mr-2">
+                <span class="text-subtitle-1 font-weight-black text-high-emphasis mr-2">
                   {{ $t('Cart.Licenses.Premium') }}
                 </span>
                 <v-chip size="x-small" color="cyan" variant="tonal" class="font-weight-bold">
                   WAV + MP3
                 </v-chip>
               </div>
-              <div class="text-caption text-grey">
+              <div class="text-caption text-medium-emphasis">
                 {{ $t('Cart.Licenses.PremiumDesc') }}
               </div>
             </div>
 
             <div class="text-right flex-shrink-0">
-              <div class="text-h6 font-weight-black text-white mb-2">
+              <div class="text-h6 font-weight-black text-high-emphasis mb-2">
                 {{ currencyStore.formatPrice(track.pricePremium) }}
               </div>
               <v-btn
@@ -127,20 +127,20 @@
           >
             <div class="mr-4">
               <div class="d-flex align-center mb-1">
-                <span class="text-subtitle-1 font-weight-black text-white mr-2">
+                <span class="text-subtitle-1 font-weight-black text-high-emphasis mr-2">
                   {{ $t('Cart.Licenses.Unlimited') }}
                 </span>
                 <v-chip size="x-small" color="purple" variant="tonal" class="font-weight-bold">
                   STEMS + WAV + MP3
                 </v-chip>
               </div>
-              <div class="text-caption text-grey">
+              <div class="text-caption text-medium-emphasis">
                 {{ $t('Cart.Licenses.UnlimitedDesc') }}
               </div>
             </div>
 
             <div class="text-right flex-shrink-0">
-              <div class="text-h6 font-weight-black text-white mb-2">
+              <div class="text-h6 font-weight-black text-high-emphasis mb-2">
                 {{ currencyStore.formatPrice(track.priceUnlimited) }}
               </div>
               <v-btn
@@ -172,7 +172,7 @@
                   OWNERSHIP
                 </v-chip>
               </div>
-              <div class="text-caption text-grey-lighten-1">
+              <div class="text-caption text-medium-emphasis">
                 {{ $t('Cart.Licenses.ExclusiveDesc') }}
               </div>
             </div>
@@ -230,25 +230,26 @@ async function selectLicense(license: TrackLicenseType) {
 
 <style scoped>
 .license-modal-card {
-  background: rgba(22, 22, 26, 0.96) !important;
+  background: rgba(var(--v-glass-bg, var(--v-theme-surface)), 0.96) !important;
   backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity, 0.12));
 }
 
 .license-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(var(--v-theme-on-surface), 0.04);
+  border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity, 0.08));
   transition: all 0.2s ease;
 }
 
 .license-card:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(var(--v-theme-on-surface), 0.08);
+  border-color: rgba(var(--v-border-color), 0.2);
   transform: translateY(-1px);
 }
 
 .exclusive-tier {
-  background: linear-gradient(135deg, rgba(255, 179, 0, 0.08), rgba(255, 255, 255, 0.02));
+  background: linear-gradient(135deg, rgba(255, 179, 0, 0.08), rgba(var(--v-theme-on-surface), 0.02));
   border-color: rgba(255, 179, 0, 0.25);
 }
 
@@ -259,10 +260,6 @@ async function selectLicense(license: TrackLicenseType) {
 .is-in-cart {
   border-color: rgba(var(--v-theme-primary), 0.5);
   background: rgba(var(--v-theme-primary), 0.08);
-}
-
-.border-white-10 {
-  border-color: rgba(255, 255, 255, 0.08) !important;
 }
 
 .gap-3 {

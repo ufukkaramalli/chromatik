@@ -112,11 +112,11 @@ const items = computed(() => {
 
 <style scoped lang="scss">
 .premium-nav {
-  background: rgba(18, 18, 18, 0.7) !important;
+  background: rgba(var(--v-glass-bg, var(--v-theme-surface)), var(--v-glass-opacity, 0.85)) !important;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
-  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.5) !important;
+  border-right: 1px solid rgba(var(--v-border-color), var(--v-border-opacity, 0.08)) !important;
+  box-shadow: 4px 0 24px rgba(0, 0, 0, var(--v-shadow-strength, 0.15)) !important;
 }
 
 .user-profile-section {
@@ -136,20 +136,20 @@ const items = computed(() => {
 }
 
 .nav-item {
-  color: rgba(255, 255, 255, 0.7) !important;
+  color: rgba(var(--v-theme-on-surface), 0.72) !important;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.05) !important;
-    color: white !important;
+    background-color: rgba(var(--v-theme-on-surface), 0.06) !important;
+    color: rgba(var(--v-theme-on-surface), 1) !important;
     transform: translateX(4px);
   }
 
   &.active-nav-item {
-    background: linear-gradient(90deg, rgba(211, 47, 47, 0.15), transparent) !important;
-    color: var(--v-primary-base) !important;
+    background: linear-gradient(90deg, rgba(var(--v-theme-primary), 0.15), transparent) !important;
+    color: rgb(var(--v-theme-primary)) !important;
     font-weight: bold;
 
     &::before {
@@ -159,13 +159,13 @@ const items = computed(() => {
       top: 15%;
       height: 70%;
       width: 4px;
-      background-color: var(--v-primary-base);
+      background-color: rgb(var(--v-theme-primary));
       border-radius: 0 4px 4px 0;
-      box-shadow: 2px 0 10px rgba(211, 47, 47, 0.5);
+      box-shadow: 2px 0 10px rgba(var(--v-theme-primary), 0.5);
     }
     
     .v-icon {
-      color: var(--v-primary-base) !important;
+      color: rgb(var(--v-theme-primary)) !important;
     }
   }
 }
@@ -174,12 +174,12 @@ const items = computed(() => {
   text-transform: none;
   font-weight: 600;
   letter-spacing: 0.3px;
-  background-color: rgba(255, 255, 255, 0.03) !important;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background-color: rgba(var(--v-theme-on-surface), 0.04) !important;
+  border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity, 0.08));
 
   &:hover {
-    background-color: rgba(211, 47, 47, 0.1) !important;
-    border-color: rgba(211, 47, 47, 0.3);
+    background-color: rgba(var(--v-theme-primary), 0.12) !important;
+    border-color: rgba(var(--v-theme-primary), 0.35);
   }
 }
 

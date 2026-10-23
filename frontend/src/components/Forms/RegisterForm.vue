@@ -143,10 +143,10 @@
           <v-card-text class="text-center py-6">
             <p class="text-caption text-medium-emphasis mb-4">{{ $t('Register.headers.SocialRegister') || 'Or register with' }}</p>
             <div class="d-flex justify-center gap-4">
-              <v-btn icon variant="outlined" size="small" color="white" class="social-icon"><v-icon>mdi-google</v-icon></v-btn>
-              <v-btn icon variant="outlined" size="small" color="white" class="social-icon"><v-icon>mdi-apple</v-icon></v-btn>
-              <v-btn icon variant="outlined" size="small" color="white" class="social-icon"><v-icon>mdi-twitter</v-icon></v-btn>
-              <v-btn icon variant="outlined" size="small" color="white" class="social-icon"><v-icon>mdi-facebook</v-icon></v-btn>
+              <v-btn icon variant="outlined" size="small" color="medium-emphasis" class="social-icon"><v-icon>mdi-google</v-icon></v-btn>
+              <v-btn icon variant="outlined" size="small" color="medium-emphasis" class="social-icon"><v-icon>mdi-apple</v-icon></v-btn>
+              <v-btn icon variant="outlined" size="small" color="medium-emphasis" class="social-icon"><v-icon>mdi-twitter</v-icon></v-btn>
+              <v-btn icon variant="outlined" size="small" color="medium-emphasis" class="social-icon"><v-icon>mdi-facebook</v-icon></v-btn>
             </div>
           </v-card-text>
 
@@ -260,22 +260,22 @@ const submit = async () => {
 <style scoped lang="scss">
 
 .registration-card {
-  background: rgba(33, 33, 33, 0.8) !important;
+  background: rgba(var(--v-glass-bg, var(--v-theme-surface)), var(--v-glass-opacity, 0.85)) !important;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity, 0.1)) !important;
   border-radius: 16px !important;
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45) !important;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, var(--v-shadow-strength, 0.25)) !important;
   }
 }
 
 .v-toolbar {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(var(--v-border-color), var(--v-border-opacity, 0.05));
 }
 
 .register-btn {
@@ -288,17 +288,17 @@ const submit = async () => {
 
   &:not(:disabled):hover {
     transform: scale(1.02);
-    box-shadow: 0 6px 20px rgba(211, 47, 47, 0.4) !important;
+    box-shadow: 0 6px 20px rgba(var(--v-theme-primary), 0.4) !important;
   }
 }
 
 .social-icon {
   transition: all 0.3s ease;
-  border-color: rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(var(--v-border-color), var(--v-border-opacity, 0.2)) !important;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.1) !important;
-    border-color: var(--v-primary-base) !important;
+    background: rgba(var(--v-theme-on-surface), 0.08) !important;
+    border-color: rgb(var(--v-theme-primary)) !important;
     transform: scale(1.1);
   }
 }
@@ -317,7 +317,7 @@ const submit = async () => {
 
 // Custom styling for filled inputs to match glass aesthetic
 :deep(.v-field--variant-filled) {
-  background-color: rgba(255, 255, 255, 0.03) !important;
+  background-color: rgba(var(--v-theme-on-surface), 0.04) !important;
   border-radius: 10px !important;
 
   .v-field__outline {
@@ -325,11 +325,11 @@ const submit = async () => {
   }
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.06) !important;
+    background-color: rgba(var(--v-theme-on-surface), 0.07) !important;
   }
 
   &.v-field--focused {
-    background-color: rgba(255, 255, 255, 0.08) !important;
+    background-color: rgba(var(--v-theme-on-surface), 0.09) !important;
     .v-field__overlay {
       background-color: transparent !important;
     }

@@ -1,5 +1,5 @@
 <template>
-  <v-main class="bg-black search-page">
+  <v-main class="search-page">
     <!-- Ambient glow (decorative) -->
     <div class="search-glow" aria-hidden="true"></div>
 
@@ -16,7 +16,7 @@
           {{ $t('Search.Badge') }}
         </v-chip>
 
-        <h1 class="text-h4 text-md-h3 font-weight-black text-white mb-4">
+        <h1 class="text-h4 text-md-h3 font-weight-black text-high-emphasis mb-4">
           <template v-if="cleanQuery">
             {{ $t('Search.TitleWithQuery', { query: cleanQuery }) }}
           </template>
@@ -46,7 +46,7 @@
               :to="{ name: 'Explore', query: { q: cleanQuery } }"
               variant="text"
               size="small"
-              class="text-none font-weight-bold mr-1 d-none d-sm-flex text-grey-lighten-1"
+              class="text-none font-weight-bold mr-1 d-none d-sm-flex text-medium-emphasis"
               prepend-icon="mdi-tune-variant"
             >
               {{ $t('Search.AdvancedFilters') }}
@@ -76,13 +76,13 @@
         v-if="!cleanQuery"
         rounded="xl"
         border
-        color="#121018"
+        color="surface"
         class="pa-8 pa-md-12 text-center mx-auto my-6"
         style="max-width: 800px;"
       >
         <v-icon size="64" color="primary" class="mb-4">mdi-compass-outline</v-icon>
-        <div class="text-h5 font-weight-bold text-white mb-2">{{ $t('Search.InitialPromptTitle') }}</div>
-        <div class="text-body-2 text-grey-lighten-1 mx-auto mb-6" style="max-width: 520px;">
+        <div class="text-h5 font-weight-bold text-high-emphasis mb-2">{{ $t('Search.InitialPromptTitle') }}</div>
+        <div class="text-body-2 text-medium-emphasis mx-auto mb-6" style="max-width: 520px;">
           {{ $t('Search.InitialPromptDesc') }}
         </div>
         <div class="d-flex justify-center ga-3 flex-wrap">
@@ -180,7 +180,7 @@
                 <div class="d-flex align-center justify-space-between mb-4">
                   <div class="d-flex align-center ga-2">
                     <v-icon color="primary">mdi-music-note-outline</v-icon>
-                    <h2 class="text-h6 font-weight-bold text-white mb-0">{{ $t('Search.Sections.TopTracks') }}</h2>
+                    <h2 class="text-h6 font-weight-bold text-high-emphasis mb-0">{{ $t('Search.Sections.TopTracks') }}</h2>
                     <v-chip size="x-small" variant="tonal" color="primary">{{ tracks.state.total }}</v-chip>
                   </div>
                   <v-btn
@@ -214,7 +214,7 @@
                 <div class="d-flex align-center justify-space-between mb-4">
                   <div class="d-flex align-center ga-2">
                     <v-icon color="primary">mdi-account-music-outline</v-icon>
-                    <h2 class="text-h6 font-weight-bold text-white mb-0">{{ $t('Search.Sections.Producers') }}</h2>
+                    <h2 class="text-h6 font-weight-bold text-high-emphasis mb-0">{{ $t('Search.Sections.Producers') }}</h2>
                     <v-chip size="x-small" variant="tonal" color="primary">{{ producers.state.total }}</v-chip>
                   </div>
                   <v-btn
@@ -249,7 +249,7 @@
                 <div class="d-flex align-center justify-space-between mb-4">
                   <div class="d-flex align-center ga-2">
                     <v-icon color="primary">mdi-folder-music-outline</v-icon>
-                    <h2 class="text-h6 font-weight-bold text-white mb-0">{{ $t('Search.Sections.Soundkits') }}</h2>
+                    <h2 class="text-h6 font-weight-bold text-high-emphasis mb-0">{{ $t('Search.Sections.Soundkits') }}</h2>
                     <v-chip size="x-small" variant="tonal" color="primary">{{ soundkits.state.total }}</v-chip>
                   </div>
                   <v-btn
@@ -284,7 +284,7 @@
           <!-- ============ TRACKS TAB ============ -->
           <v-window-item value="tracks">
             <div class="d-flex flex-wrap align-center ga-3 mb-5">
-              <div class="text-body-2 text-grey-lighten-1">
+              <div class="text-body-2 text-medium-emphasis">
                 <template v-if="tracks.state.loaded">
                   {{ $t('Explore.Tracks.Results', { count: tracks.state.total }) }}
                 </template>
@@ -352,7 +352,7 @@
           <!-- ============ PRODUCERS TAB ============ -->
           <v-window-item value="producers">
             <div class="d-flex flex-wrap align-center ga-3 mb-5">
-              <div class="text-body-2 text-grey-lighten-1">
+              <div class="text-body-2 text-medium-emphasis">
                 <template v-if="producers.state.loaded">
                   {{ $t('Explore.Producers.Results', { count: producers.state.total }) }}
                 </template>
@@ -421,7 +421,7 @@
           <!-- ============ SOUNDKITS TAB ============ -->
           <v-window-item value="soundkits">
             <div class="d-flex flex-wrap align-center ga-3 mb-5">
-              <div class="text-body-2 text-grey-lighten-1">
+              <div class="text-body-2 text-medium-emphasis">
                 <template v-if="soundkits.state.loaded">
                   {{ $t('Explore.Soundkits.Results', { count: soundkits.state.total }) }}
                 </template>
@@ -770,6 +770,10 @@ const soundkitSortItems = computed(() => [
 .search-main-field :deep(.v-field) {
   box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.12);
   transition: box-shadow 0.25s ease;
+
+  .v-theme--light & {
+    box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  }
 }
 .search-main-field :deep(.v-field--focused) {
   box-shadow: 0 12px 40px -8px rgba(var(--v-theme-primary), 0.35), 0 0 0 1.5px rgba(var(--v-theme-primary), 0.8) !important;
