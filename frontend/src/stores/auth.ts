@@ -1,20 +1,41 @@
 import { defineStore } from 'pinia'
 import { api } from '@/lib/axios'
-import { i18n } from '@/i18n' // kullanıcı dili gelirse güncellemek istersen
+import { i18n } from '@/i18n'
+
+export interface AuthUser {
+  _id: string
+  slug: string
+  name?: string
+  email?: string
+  avatar?: string
+  role?: string
+  language?: string
+  [key: string]: unknown
+}
+
+export interface UserSettings {
+  language?: string
+  [key: string]: unknown
+}
+
+export interface AuthState {
+  token: string | null
+  user: AuthUser | null
+}
 
 export const useAuthStore = defineStore('auth', {
-  state: () => ({
+  state: (): AuthState => ({
     token: null,
     user: null
   }),
 
   getters: {
-    authenticated: (s) => !!s.token && !!s.user,
-    user$: (s) => s.user
+    authenticated: (s): boolean => Boolean(s.token && s.user),
+    user$: (s): AuthUser | null => s.user
   },
 
   actions: {
-    _setToken(token) {
+    _setToken(token: string | null) {
       this.token = token
       if (token) {
         localStorage.setItem('token', token)
@@ -25,40 +46,39 @@ export const useAuthStore = defineStore('auth', {
       }
     },
 
-    _setUser(data) {
+    _setUser(data: AuthUser | null) {
       this.user = data
       if (data?.language) {
-        if (typeof i18n.global.locale === 'string') {
-          i18n.global.locale = data.language
-        } else {
-          i18n.global.locale.value = data.language
+        const globalLocale = i18n.global.locale as unknown
+        if (typeof globalLocale === 'string') {
+          (i18n.global as any).locale = data.language
+        } else if (globalLocale && typeof globalLocale === 'object' && 'value' in globalLocale) {
+          (globalLocale as { value: string }).value = data.language
         }
         localStorage.setItem('locale', data.language)
       }
     },
 
-    async updateSettings(settings) {
+    async updateSettings(settings: UserSettings) {
       const res = await api.put('/user/settings', settings)
       this._setUser(res.data.user)
       return res
     },
 
-    async logIn(credentials) {
+    async logIn(credentials: Record<string, unknown>) {
       const res = await api.post('/user/login', credentials)
       return this.attempt(res.data.token)
     },
 
-    async attempt(token) {
+    async attempt(token?: string | null) {
       if (token) this._setToken(token)
       if (!this.token) return
       try {
         const res = await api.get('/user')
         this._setUser(res.data.user)
-      } catch (e) {
+      } catch {
         this._setToken(null)
         this._setUser(null)
-        // Hata üst katmana gerekiyorsa fırlatabilirsin:
-        // throw e
       }
     },
 
@@ -69,7 +89,9 @@ export const useAuthStore = defineStore('auth', {
     },
 
     async logOut() {
-      try { await api.post('/user/logout') } catch {}
+      try {
+        await api.post('/user/logout')
+      } catch {}
       this._setToken(null)
       this._setUser(null)
     }

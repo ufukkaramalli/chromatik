@@ -1,4 +1,4 @@
-// src/main.js
+// src/main.ts
 import { createApp } from 'vue'
 import App from './App.vue'
 import vuetify from './plugins/vuetify'
@@ -9,11 +9,7 @@ import VueResizeText from 'vue-resize-text'
 import '@/scss/main.scss'
 import '@mdi/font/css/materialdesignicons.css'
 
-// ❌ Vuex ve subscriber artık yok
-// import store from './store'
-// import '@/store/subscriber'
-
-// ✅ Pinia
+// Pinia
 import { pinia } from '@/stores'
 
 import { api } from '@/lib/axios'
@@ -23,7 +19,7 @@ import GlassTooltip from '@/components/GlassTooltip.vue'
 
 const app = createApp(App)
 app.component('GlassTooltip', GlassTooltip)
-app.config.globalProperties.$api = api // (opsiyonel)
+app.config.globalProperties.$api = api
 app.config.globalProperties.$formatCompactNumber = formatCompactNumber
 
 app

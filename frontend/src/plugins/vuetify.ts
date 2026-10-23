@@ -1,4 +1,4 @@
-// src/plugins/vuetify.js
+// src/plugins/vuetify.ts
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import { md3 } from 'vuetify/blueprints'
