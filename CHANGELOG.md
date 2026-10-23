@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://www.conventionalcommits.org/) for commit guidelines.
 
+## [0.5.0](https://github.com/ufukkaramalli/chromatik/compare/v0.4.1...v0.5.0) (2026-10-23)
+
+### ✨ Features
+
+* **backend:** implement database readiness gating, request retry, and outage auto-recovery ([d6ce7f9](https://github.com/ufukkaramalli/chromatik/commit/d6ce7f91a873b3b0a9044af568ba3f6badad2327))
+* **backend:** modularize controllers, implement tiered rate limiting and health monitoring ([7889827](https://github.com/ufukkaramalli/chromatik/commit/7889827a6583e337fe0899ec34fdf0fca73c0ff9))
+* **frontend:** implement comprehensive dual-theme system, health status UI, and visual polish ([e8b87b1](https://github.com/ufukkaramalli/chromatik/commit/e8b87b1121b4b9d02c32a107c011ae6515dcc0f8))
+* **seo:** implement semantic routing, meta tags, and dynamic sitemap generator ([d7e79ee](https://github.com/ufukkaramalli/chromatik/commit/d7e79ee5d71d06b132d5188756807a7af1290aef))
+
+### ♻️ Code Refactoring
+
+* **frontend:** migrate main entry, router, plugins, and core modules to typescript ([e9c4275](https://github.com/ufukkaramalli/chromatik/commit/e9c427558052109823646bf2148eafcb1ef4b877))
+
 ## [0.4.1](https://github.com/ufukkaramalli/chromatik/compare/v0.4.0...v0.4.1) (2026-10-23)
 
 ### 🐛 Bug Fixes
