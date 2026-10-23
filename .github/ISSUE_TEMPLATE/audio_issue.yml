@@ -1,0 +1,107 @@
+name: "🎛️ Audio Engine & DSP Issue"
+description: "Report audio distortion, latency, pitch shifting, LUFS normalization, BPM detection, or playback issues"
+title: "[Audio DSP]: "
+labels: ["bug", "audio-dsp", "needs-triage"]
+assignees:
+  - ufukkaramalli
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### 🎛️ Audio Engine & Web Audio DSP Issue
+        Chromatik features studio-grade in-browser audio processing (Signalsmith Stretch WASM, -9 LUFS normalizer, look-ahead brickwall limiter, smart automix, and dual-band BPM detection). 
+        Please provide details about your audio device, browser, and track format to help diagnose real-time audio issues.
+
+  - type: dropdown
+    id: subsystem
+    attributes:
+      label: Audio Subsystem
+      description: Which audio engine subsystem is affected?
+      options:
+        - "Signalsmith Stretch Pitch Shifter (WASM / Key Transposition)"
+        - "Loudness Normalizer (-9 LUFS) & Brickwall Limiter (AudioWorklet)"
+        - "Dual-Band Auto-BPM Detection (Client / Server DSP)"
+        - "Smart Automix Engine (Crossfade / Bass Swap / BPM Morphing)"
+        - "Hybrid Silence Trimming / CDJ-Style Auto-Cue"
+        - "Playback Engine (Howler / Web Audio API / AudioContext State)"
+        - "Visualizer (Oscilloscope / Spectrum / Waveform)"
+        - "Bluetooth / Hardware Audio Output Switching"
+        - "Other Audio / DSP Issue"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Issue Description
+      description: Describe what you hear or experience (e.g. clicks/pops, crackling distortion, pitch artifacts, tempo drift, latency, audio stuttering, audio cut-out).
+      placeholder: "When transposing a 140 BPM track by +3 semitones with loudness normalization enabled, periodic clicking occurs..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: Exact steps to reproduce the auditory defect.
+      placeholder: |
+        1. Open track '...'
+        2. Set playback speed to 1.1x and pitch to +2 st
+        3. Enable Loudness Normalization
+        4. Listen for audio glitches at the drop
+    validations:
+      required: true
+
+  - type: input
+    id: track-spec
+    attributes:
+      label: Audio Track Details
+      description: What is the format and specifications of the track being tested?
+      placeholder: "e.g. 44.1kHz 24-bit WAV / 320kbps MP3 / Stereo / File size: 45MB"
+    validations:
+      required: false
+
+  - type: input
+    id: audio-setup
+    attributes:
+      label: Audio Hardware & Setup
+      description: Details about your audio output device and interface.
+      placeholder: "e.g. Focusrite Scarlett 2i2 USB (48kHz), AirPods Pro 2 (Bluetooth AAC), Built-in Realtek High Definition Audio"
+    validations:
+      required: false
+
+  - type: input
+    id: environment
+    attributes:
+      label: OS & Browser
+      description: Web Audio API and AudioWorklet implementations differ across engines.
+      placeholder: "e.g. macOS Sonoma 14.5 + Chrome 130 / Windows 11 + Edge 130 / iPhone 15 iOS 18 + Safari"
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Web Audio / Console Logs
+      description: Paste any Web Audio API warnings or errors (e.g. `AudioContext was not allowed to start`, `AudioWorkletNode underrun`, memory allocation errors).
+      render: shell
+    validations:
+      required: false
+
+  - type: textarea
+    id: media
+    attributes:
+      label: Audio Recording / Screen Capture
+      description: Attach an audio recording or video snippet with audio demonstrating the glitch or issue.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: I verified that the issue is not caused by external audio device overdrive or system master volume clipping.
+          required: true
+        - label: I searched existing issues to ensure this is not already documented.
+          required: true

@@ -1,0 +1,112 @@
+name: "🐛 Bug Report"
+description: "Report a bug or unexpected behavior in Chromatik (UI, API, Auth, Database, etc.)"
+title: "[Bug]: "
+labels: ["bug", "needs-triage"]
+assignees:
+  - ufukkaramalli
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### 🐛 Bug Report
+        Thank you for reporting an issue! Please provide as much detailed context as possible to help us reproduce and resolve it quickly.
+        *(If your issue is related to audio playback, pitch shifting, latency, or DSP audio processing, please use the **Audio Engine & DSP Issue** template instead).*
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Affected Component
+      description: Select the area of Chromatik where this issue occurs.
+      options:
+        - "Frontend (UI / Layout / Vuetify / Visuals)"
+        - "Backend (Node.js / Express API)"
+        - "Authentication & Authorization (JWT / Sessions)"
+        - "File Uploads & Cloud / Local Storage"
+        - "Database (MongoDB / Mongoose)"
+        - "Docker / Dev Environment / Scripts"
+        - "Other"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of what the bug is.
+      placeholder: "When opening the track details modal, the UI freezes or fails to fetch..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: Step-by-step instructions to reproduce the behavior.
+      placeholder: |
+        1. Go to '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        4. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What you expected to happen instead.
+      placeholder: "The modal should smoothly open and display the track waveform..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually occurred.
+      placeholder: "An unhandled rejection occurred and the spinner keeps spinning indefinitely..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots or Screen Recordings
+      description: Drag and drop screenshots or screen recordings (GIF/MP4) here to help visualize the issue.
+    validations:
+      required: false
+
+  - type: input
+    id: os
+    attributes:
+      label: Operating System
+      placeholder: "e.g. Windows 11, macOS Sequoia 15.1, Ubuntu 24.04, iOS 18, Android 15"
+    validations:
+      required: true
+
+  - type: input
+    id: browser
+    attributes:
+      label: Browser & Version
+      placeholder: "e.g. Google Chrome 130.0, Safari 18.0, Firefox 132.0, Microsoft Edge"
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Console Logs / Error Output
+      description: Paste any browser developer console errors (F12) or backend terminal logs here.
+      render: shell
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: I have searched existing issues and verified this is not a duplicate.
+          required: true
+        - label: I have reproduced this on the latest `main` or release version.
+          required: false
