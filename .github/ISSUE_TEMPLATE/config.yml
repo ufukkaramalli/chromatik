@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: "💬 Community Questions & Discussions"
+    url: "https://github.com/ufukkaramalli/chromatik/discussions"
+    about: "Ask general questions, discuss ideas, or connect with other creators and developers."
+  - name: "🔒 Security Vulnerability Report"
+    url: "https://github.com/ufukkaramalli/chromatik/security/advisories/new"
+    about: "Please report potential security vulnerabilities privately and responsibly."
+  - name: "⚡ Chromatik Documentation"
+    url: "https://github.com/ufukkaramalli/chromatik#readme"
+    about: "Explore the comprehensive platform architecture and local setup guide."
