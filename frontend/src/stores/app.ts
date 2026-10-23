@@ -89,7 +89,8 @@ export const useAppStore = defineStore('app', {
     },
 
     async GET_TRACK_PAGE(payload: unknown) {
-      const res = await api.post('/track/find-track', { data: payload })
+      // Read-only POST: safe to hold & replay during a backend/DB outage
+      const res = await api.post('/track/find-track', { data: payload }, { idempotent: true })
       return res
     }
   }

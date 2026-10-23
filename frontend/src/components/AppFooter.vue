@@ -405,7 +405,8 @@ import { storeToRefs } from 'pinia'
 import { useLayout } from 'vuetify'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/auth'
-import { api } from '@/lib/axios'
+import { useSystemStore } from '@/stores/systemStore'
+import { checkHealth } from '@/lib/backendGate'
 import LaserDivider from '@/components/LaserDivider.vue'
 import { LEGAL_DOCS, SUPPORT_EMAIL } from '@/constants/legal'
 import { version as appVersion } from '../../package.json'
@@ -485,7 +486,9 @@ const linkColumns = computed(() => {
 })
 
 // --- System Health Check ---
-const health = ref(null)
+// Shared with the backend gate: any request that detects an outage updates the chip instantly.
+const system = useSystemStore()
+const { health } = storeToRefs(system)
 const healthLoading = ref(false)
 const healthDialogOpen = ref(false)
 let healthInterval = null
@@ -493,19 +496,7 @@ let healthInterval = null
 const fetchHealth = async () => {
   healthLoading.value = true
   try {
-    const { data } = await api.get('/health')
-    health.value = data
-  } catch (err) {
-    health.value = {
-      status: 'outage',
-      timestamp: new Date().toISOString(),
-      uptimeSeconds: 0,
-      services: {
-        api: { status: 'down', message: 'API unreachable' },
-        database: { status: 'down', message: 'Connection failed' },
-        storage: { status: 'down' }
-      }
-    }
+    await checkHealth()
   } finally {
     healthLoading.value = false
   }

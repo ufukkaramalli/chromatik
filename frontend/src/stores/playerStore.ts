@@ -116,7 +116,7 @@ export const usePlayerStore = defineStore('player', {
       
       // Attempt to increment play count via API
       if (targetId) {
-        api.post('/track/play-increase', { id: targetId }).catch(() => {})
+        api.post('/track/play-increase', { id: targetId }, { skipDbRetry: true }).catch(() => {})
       }
 
       await engine.loadAndPlay(normalizedTrack)

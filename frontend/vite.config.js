@@ -26,7 +26,17 @@ export default defineConfig(({ mode }) => {
       proxy: {
         '/api': {
           target: backendUrl,
-          changeOrigin: true
+          changeOrigin: true,
+          // Mirror production reverse-proxy behaviour: backend down => 502 (not Vite's generic 500),
+          // so the frontend backend gate can hold & retry idempotent requests.
+          configure: (proxy) => {
+            proxy.on('error', (_err, _req, res) => {
+              if (res && typeof res.writeHead === 'function' && !res.headersSent && !res.writableEnded) {
+                res.writeHead(502, { 'Content-Type': 'application/json' })
+                res.end(JSON.stringify({ status: 502, message: 'Backend unreachable' }))
+              }
+            })
+          }
         },
         '/sitemap.xml': {
           target: backendUrl,

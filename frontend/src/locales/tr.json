@@ -719,5 +719,10 @@
     "Toggle": "Temayı Değiştir",
     "DarkMode": "Karanlık Mod",
     "LightMode": "Aydınlık Mod"
+  },
+  "Connection": {
+    "WriteFailed": "Bağlantı sorunu yaşanıyor, işleminiz kaydedilemedi. Lütfen birazdan tekrar deneyin.",
+    "Restored": "Bağlantı yeniden kuruldu",
+    "Dismiss": "Kapat"
   }
 }

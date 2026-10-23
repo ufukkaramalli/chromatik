@@ -208,7 +208,7 @@ import FlowField from '@/components/FlowField.vue'
 import GlitchTitle from '@/components/GlitchTitle.vue'
 import PillarField from '@/components/PillarField.vue'
 import WaveField from '@/components/WaveField.vue'
-import axios from 'axios'
+import { api, isConnectionError } from '@/lib/axios'
 import { computed, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
@@ -311,18 +311,21 @@ const formattedTotalReleases = computed(() => {
 })
 
 const fetchProfile = async () => {
+  loading.value = true
   try {
-    loading.value = true
     const slug = route.params.userSlug
-    const response = await axios.get(`/api/user/profile/${slug}`)
+    // Shared api instance: during a backend/DB outage this request is held and replayed,
+    // so the loader stays visible instead of falling through to "Profile not found".
+    const response = await api.get(`/user/profile/${slug}`)
     if (response.data.profile) {
       profile.value = response.data.profile
     }
   } catch (error) {
     console.error("Failed to fetch profile:", error)
-  } finally {
-    loading.value = false
+    // Never present a connection problem as a missing profile.
+    if (isConnectionError(error)) return
   }
+  loading.value = false
 }
 
 onMounted(() => {

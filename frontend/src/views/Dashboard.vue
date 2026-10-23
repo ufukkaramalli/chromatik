@@ -401,7 +401,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/auth'
-import { api } from '@/lib/axios'
+import { api, isConnectionError } from '@/lib/axios'
 import UploadTrackModal from '@/components/Forms/UploadTrackModal.vue'
 import { resolveMediaUrl } from '@/utils/url'
 
@@ -478,7 +478,8 @@ const executeDelete = async () => {
     showSnackbar(t('Dashboard.TrackDeletedSuccess'));
   } catch (error) {
     console.error("Failed to delete track", error);
-    showSnackbar(t('Dashboard.TrackDeletedError'), 'error');
+    // Connection problems are announced once by the global ConnectionSnackbar
+    if (!isConnectionError(error)) showSnackbar(t('Dashboard.TrackDeletedError'), 'error');
   } finally {
     isDeleting.value = null;
     showDeleteConfirm.value = false;
