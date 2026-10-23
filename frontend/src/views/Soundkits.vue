@@ -4,7 +4,7 @@
       <v-row v-if="authenticated">
         <!-- Soundkits varsa -->
         <template v-if="Soundkits && Soundkits.length > 0">
-          <v-col cols="12" class="secondary darken-2 rounded-lg">
+          <v-col cols="12" class="bg-surface border rounded-lg">
             SOUNDKITS
           </v-col>
         </template>
@@ -14,7 +14,7 @@
           <v-col
             cols="12"
             md="8"
-            class="secondary darken-2 rounded-lg text-center"
+            class="bg-surface border rounded-lg text-center"
             offset="0"
             offset-md="2"
           >

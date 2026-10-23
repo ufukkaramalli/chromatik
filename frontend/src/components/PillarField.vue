@@ -4,10 +4,14 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { useAppTheme } from '@/composables/useAppTheme'
+
+const { isDark } = useAppTheme()
 
 // Theme colors (Vuetify theme): dark crimson -> primary reds only
 // Palette: warm theme reds up front, cool blue/purple receding into the distance
 const DARK = '10,2,5'
+const LIGHT_SURFACE = '248,250,252'
 const COLORS = ['154,0,7', '211,47,47', '255,82,82']
 const BLUE = '100,90,235'
 const BLUE_LIGHT = '155,145,255'
@@ -109,20 +113,22 @@ const onMove = (e) => {
 
 // Backlight glow behind the far pillars so they read as silhouettes
 const drawBacklight = (time) => {
+  const dark = isDark.value
+  const clearColor = dark ? DARK : LIGHT_SURFACE
   ctx.globalCompositeOperation = 'source-over'
   const cx = width * (0.55 + Math.sin(time * 0.1) * 0.05)
   // Cool blue light far back, upper right (like light through a doorway)
   const bgl = ctx.createRadialGradient(width * 0.78, height * 0.25, 0, width * 0.78, height * 0.25, Math.max(width, height) * 0.7)
-  bgl.addColorStop(0, `rgba(${BLUE_LIGHT},0.35)`)
-  bgl.addColorStop(0.5, `rgba(${PURPLE},0.14)`)
-  bgl.addColorStop(1, 'rgba(10,2,5,0)')
+  bgl.addColorStop(0, dark ? `rgba(${BLUE_LIGHT},0.35)` : `rgba(${BLUE},0.18)`)
+  bgl.addColorStop(0.5, dark ? `rgba(${PURPLE},0.14)` : `rgba(${PURPLE},0.08)`)
+  bgl.addColorStop(1, `rgba(${clearColor},0)`)
   ctx.fillStyle = bgl
   ctx.fillRect(0, 0, width, height)
   // Warm pink glow rising from the floor
   const g = ctx.createRadialGradient(cx, height * 0.9, 0, cx, height * 0.9, Math.max(width, height) * 0.8)
-  g.addColorStop(0, 'rgba(255,82,82,0.3)')
-  g.addColorStop(0.45, `rgba(${PURPLE},0.14)`)
-  g.addColorStop(1, 'rgba(10,2,5,0)')
+  g.addColorStop(0, dark ? 'rgba(255,82,82,0.3)' : 'rgba(211,47,47,0.18)')
+  g.addColorStop(0.45, dark ? `rgba(${PURPLE},0.14)` : `rgba(${PURPLE},0.08)`)
+  g.addColorStop(1, `rgba(${clearColor},0)`)
   ctx.fillStyle = g
   ctx.fillRect(0, 0, width, height)
 }
@@ -146,14 +152,17 @@ const drawPillar = (p, pz, time, parallax, vx, yoff) => {
   ctx.translate(0, yoff * Math.pow(pz, 1.3))
 
   ctx.globalCompositeOperation = 'source-over'
+  const dark = isDark.value
+  const darkTone = dark ? DARK : '220,225,235'
+  const purpleDarkTone = dark ? PURPLE_DARK : '180,185,205'
   const rim = rimFor(pz)
   const base =
     pz < 0.45
-      ? (p.red ? BLUE : PURPLE_DARK)
+      ? (p.red ? BLUE : purpleDarkTone)
       : pz < 0.75
-        ? (p.red ? PURPLE : DARK)
-        : (p.red ? COLORS[p.tone] : DARK)
-  const sideBase = pz < 0.75 ? PURPLE_DARK : DARK
+        ? (p.red ? PURPLE : darkTone)
+        : (p.red ? COLORS[p.tone] : darkTone)
+  const sideBase = pz < 0.75 ? purpleDarkTone : darkTone
   const bright = 1 - far * 0.55 // atmospheric perspective
 
   // Front face: horizontal shading, lit from the foggy floor
@@ -180,8 +189,8 @@ const drawPillar = (p, pz, time, parallax, vx, yoff) => {
 
   // Vertical vignette: dark at the top, glowing at the base (fog light bouncing up)
   const vg = ctx.createLinearGradient(0, y0, 0, height)
-  vg.addColorStop(0, `rgba(${DARK},${(0.75 * bright).toFixed(3)})`)
-  vg.addColorStop(0.55, `rgba(${DARK},0)`)
+  vg.addColorStop(0, `rgba(${darkTone},${(0.75 * bright).toFixed(3)})`)
+  vg.addColorStop(0.55, `rgba(${darkTone},0)`)
   vg.addColorStop(1, `rgba(${rim},${(0.5 * bright).toFixed(3)})`)
   ctx.fillStyle = vg
   ctx.fillRect(Math.min(left, sideX), y0, w + side, h)
@@ -196,7 +205,7 @@ const drawPillar = (p, pz, time, parallax, vx, yoff) => {
   const bg = ctx.createRadialGradient(x, height, 0, x, height, w * 1.4)
   bg.addColorStop(0, `rgba(${rim},${(0.35 * bright).toFixed(3)})`)
   bg.addColorStop(1, `rgba(${rim},0)`)
-  ctx.globalCompositeOperation = 'lighter'
+  ctx.globalCompositeOperation = dark ? 'lighter' : 'source-over'
   ctx.fillStyle = bg
   ctx.fillRect(x - w * 1.4, height - w * 1.4, w * 2.8, w * 1.4)
 
@@ -204,7 +213,8 @@ const drawPillar = (p, pz, time, parallax, vx, yoff) => {
 }
 
 const drawFog = (bandIndex, time, dolly, yoff) => {
-  ctx.globalCompositeOperation = 'lighter'
+  const dark = isDark.value
+  ctx.globalCompositeOperation = dark ? 'lighter' : 'source-over'
   for (const f of fog) {
     if (f.band !== bandIndex) continue
     // Fog drifts sideways and parts around the cursor (near fog reacts more)
@@ -226,7 +236,8 @@ const drawFog = (bandIndex, time, dolly, yoff) => {
     // Z axis: dolly makes near fog swell as the camera pushes forward
     const rr = f.r * (1 + dolly * 1.4 * f.depth)
     const g = ctx.createRadialGradient(0, 0, 0, 0, 0, rr)
-    g.addColorStop(0, `rgba(${f.color},${(0.16 + f.depth * 0.26).toFixed(3)})`)
+    const alphaFactor = dark ? 1 : 0.65
+    g.addColorStop(0, `rgba(${f.color},${((0.16 + f.depth * 0.26) * alphaFactor).toFixed(3)})`)
     g.addColorStop(1, `rgba(${f.color},0)`)
     ctx.fillStyle = g
     ctx.fillRect(-rr, -rr, rr * 2, rr * 2)

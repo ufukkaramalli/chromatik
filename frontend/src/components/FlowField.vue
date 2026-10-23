@@ -4,9 +4,13 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { useAppTheme } from '@/composables/useAppTheme'
 
-// Theme colors (Vuetify theme): primary shades only
-const COLORS = ['211,47,47', '255,82,82', '154,0,7']
+const { isDark } = useAppTheme()
+
+// Theme colors: Dark mode uses neon primary shades, light mode uses deep crimson shades for high contrast
+const DARK_COLORS = ['211,47,47', '255,82,82', '154,0,7']
+const LIGHT_COLORS = ['211,47,47', '180,20,30', '154,0,7']
 const CELL = 38
 
 const canvasRef = ref(null)
@@ -46,8 +50,11 @@ const onMove = (e) => {
 const draw = (ms) => {
   if (!running || !isVisible) return
   const time = ms * 0.001
+  const dark = isDark.value
+  const colors = dark ? DARK_COLORS : LIGHT_COLORS
+
   ctx.clearRect(0, 0, width, height)
-  ctx.globalCompositeOperation = 'lighter'
+  ctx.globalCompositeOperation = dark ? 'lighter' : 'source-over'
 
   mouse.sx += (mouse.x - mouse.sx) * 0.1
   mouse.sy += (mouse.y - mouse.sy) * 0.1
@@ -83,12 +90,13 @@ const draw = (ms) => {
       // Bars thin out as they tilt, thick when horizontal (like the reference)
       const thickness = 1.5 + 9 * Math.cos(a) * Math.cos(a)
       const len = CELL * 0.82
-      const alpha = 0.25 + 0.55 * Math.cos(a) * Math.cos(a) + influence * 0.2
+      const baseAlpha = dark ? 0.25 : 0.38
+      const alpha = baseAlpha + 0.55 * Math.cos(a) * Math.cos(a) + influence * 0.2
 
       ctx.save()
       ctx.translate(x, y)
       ctx.rotate(a)
-      ctx.fillStyle = `rgba(${COLORS[(r + c) % COLORS.length]},${Math.min(alpha, 1).toFixed(3)})`
+      ctx.fillStyle = `rgba(${colors[(r + c) % colors.length]},${Math.min(alpha, 1).toFixed(3)})`
       ctx.fillRect(-len / 2, -thickness / 2, len, thickness)
       ctx.restore()
     }

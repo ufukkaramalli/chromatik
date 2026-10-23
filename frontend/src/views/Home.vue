@@ -1,5 +1,5 @@
 <template>
-  <v-main v-cloak class="landing-page">
+  <v-main class="landing-page">
     <!-- Ambient Dynamic Background Lighting Atmosphere -->
     <div class="landing-ambient-bg" aria-hidden="true">
       <div class="ambient-glow glow-top-left"></div>
@@ -30,7 +30,7 @@
               <span class="pulse-beacon mr-2" aria-hidden="true"></span>
               <span>{{ $t('Home.Landing.Hero.Badge') }}</span>
               <span class="mx-2 text-grey-darken-1">•</span>
-              <span class="text-grey-lighten-1">{{ $t('Home.Landing.Hero.LiveEngine') }}</span>
+              <span class="text-medium-emphasis">{{ $t('Home.Landing.Hero.LiveEngine') }}</span>
             </v-chip>
 
             <!-- Monumental Headline with Outfit & Glitch -->
@@ -38,12 +38,12 @@
               <GlitchTitle
                 :text="$t('Home.Landing.Hero.Title')"
                 tag="h1"
-                className="hero-headline text-white font-display mb-0"
+                className="hero-headline text-high-emphasis font-display mb-0"
               />
             </div>
 
             <!-- Subtitle with Plus Jakarta Sans -->
-            <p class="text-body-1 text-grey-lighten-2 hero-narrative font-body mb-6" style="max-width: 640px;">
+            <p class="text-body-1 text-medium-emphasis hero-narrative font-body mb-6" style="max-width: 640px;">
               {{ $t('Home.Landing.Hero.Subtitle') }}
             </p>
 
@@ -111,7 +111,7 @@
               <div class="spotlight-ambient-glow" aria-hidden="true"></div>
 
               <!-- Hardware Frame (v-card) -->
-              <v-card class="rounded-2xl pa-4 position-relative z-1" elevation="8" border color="#121018">
+              <v-card class="rounded-2xl pa-4 position-relative z-1" elevation="8" border color="surface">
                 <!-- Header Status (Track of the Day Badge & Midnight Countdown) -->
                 <div class="d-flex align-center justify-space-between pb-3 mb-3 border-b">
                   <SpotlightBadge />
@@ -130,17 +130,17 @@
                 <v-row dense class="text-center font-mono">
                   <v-col cols="4">
                     <v-sheet rounded="lg" border class="pa-2 bg-surface-light border-opacity-25">
-                      <div class="text-caption text-grey-lighten-2 text-uppercase font-weight-medium mb-1" style="font-size: 0.68rem !important;">
+                      <div class="text-caption text-medium-emphasis text-uppercase font-weight-medium mb-1" style="font-size: 0.68rem !important;">
                         {{ $t('Home.Landing.Hero.Tempo') }}
                       </div>
-                      <div class="text-caption font-weight-bold text-white text-truncate">
+                      <div class="text-caption font-weight-bold text-high-emphasis text-truncate">
                         {{ featuredTrack?.bpm ? `${featuredTrack.bpm} BPM` : $t('Home.Landing.Hero.DefaultBpm') }}
                       </div>
                     </v-sheet>
                   </v-col>
                   <v-col cols="4">
                     <v-sheet rounded="lg" border class="pa-2 bg-surface-light border-opacity-25">
-                      <div class="text-caption text-grey-lighten-2 text-uppercase font-weight-medium mb-1" style="font-size: 0.68rem !important;">
+                      <div class="text-caption text-medium-emphasis text-uppercase font-weight-medium mb-1" style="font-size: 0.68rem !important;">
                         {{ $t('Home.Landing.Hero.Key') }}
                       </div>
                       <div class="text-caption font-weight-bold text-primary text-truncate">
@@ -150,10 +150,10 @@
                   </v-col>
                   <v-col cols="4">
                     <v-sheet rounded="lg" border class="pa-2 bg-surface-light border-opacity-25">
-                      <div class="text-caption text-grey-lighten-2 text-uppercase font-weight-medium mb-1" style="font-size: 0.68rem !important;">
+                      <div class="text-caption text-medium-emphasis text-uppercase font-weight-medium mb-1" style="font-size: 0.68rem !important;">
                         {{ $t('Home.Landing.Hero.Style') }}
                       </div>
-                      <div class="text-caption font-weight-bold text-white text-truncate">
+                      <div class="text-caption font-weight-bold text-high-emphasis text-truncate">
                         {{ (featuredTrack?.genres && featuredTrack.genres[0]) || $t('Home.Landing.Hero.DefaultStyle') }}
                       </div>
                     </v-sheet>
@@ -190,10 +190,10 @@
           >
             {{ $t('Home.Landing.Genres.Badge') }}
           </v-chip>
-          <h2 class="text-h3 font-display font-weight-black text-white mb-2 tracking-tight">
+          <h2 class="text-h3 font-display font-weight-black text-high-emphasis mb-2 tracking-tight">
             {{ $t('Home.Landing.Genres.Title') }}
           </h2>
-          <p class="text-body-1 font-body text-grey-lighten-2 mb-0" style="max-width: 640px; line-height: 1.6;">
+          <p class="text-body-1 font-body text-medium-emphasis mb-0" style="max-width: 640px; line-height: 1.6;">
             {{ $t('Home.Landing.Genres.Subtitle') }}
           </p>
         </div>
@@ -209,7 +209,7 @@
             class="flex-grow-1"
           >
             <v-card
-              color="#131018"
+              color="surface"
               rounded="2xl"
               class="genre-cyber-card pa-5 d-flex flex-column justify-space-between h-100 position-relative overflow-hidden cursor-pointer"
               elevation="4"
@@ -237,13 +237,13 @@
                   <v-icon size="22" :style="{ color: genre.color }">{{ genre.icon }}</v-icon>
                 </v-avatar>
                 <div class="genre-arrow-wrap">
-                  <v-icon size="16" class="text-grey-lighten-1 genre-arrow">mdi-arrow-top-right</v-icon>
+                  <v-icon size="16" class="text-medium-emphasis genre-arrow">mdi-arrow-top-right</v-icon>
                 </div>
               </div>
 
               <!-- Bottom: Genre Name & Spec / Sound Characteristic -->
               <div class="position-relative z-1">
-                <h3 class="text-body-1 font-display font-weight-black text-white mb-1 tracking-tight">
+                <h3 class="text-body-1 font-display font-weight-black text-high-emphasis mb-1 tracking-tight">
                   {{ genre.name }}
                 </h3>
                 <div
@@ -279,11 +279,11 @@
               {{ $t('Home.Landing.ProducerCareer.Badge') }}
             </v-chip>
 
-            <h2 class="text-h3 font-display font-weight-black text-white mb-4 tracking-tight">
+            <h2 class="text-h3 font-display font-weight-black text-high-emphasis mb-4 tracking-tight">
               {{ $t('Home.Landing.ProducerCareer.Title') }}
             </h2>
 
-            <p class="text-body-1 font-body text-grey-lighten-2 mb-8 line-height-relaxed" style="max-width: 640px;">
+            <p class="text-body-1 font-body text-medium-emphasis mb-8 line-height-relaxed" style="max-width: 640px;">
               {{ $t('Home.Landing.ProducerCareer.Subtitle') }}
             </p>
 
@@ -293,10 +293,10 @@
                   <v-icon size="16">mdi-check-bold</v-icon>
                 </v-avatar>
                 <div>
-                  <h3 class="text-body-1 font-display font-weight-bold text-white mb-1">
+                  <h3 class="text-body-1 font-display font-weight-bold text-high-emphasis mb-1">
                     {{ $t(`Home.Landing.ProducerCareer.Point${n}Title`) }}
                   </h3>
-                  <p class="text-body-2 font-body text-grey-lighten-2 mb-0">
+                  <p class="text-body-2 font-body text-medium-emphasis mb-0">
                     {{ $t(`Home.Landing.ProducerCareer.Point${n}Desc`) }}
                   </p>
                 </div>
@@ -306,14 +306,14 @@
 
           <!-- Right Column: Studio Showcase Card (v-card) -->
           <v-col cols="12" lg="5">
-            <v-card class="producer-studio-card rounded-3xl pa-7 pa-md-8 position-relative overflow-hidden" elevation="8" border color="#131018">
+            <v-card class="producer-studio-card rounded-3xl pa-7 pa-md-8 position-relative overflow-hidden" elevation="8" border color="surface">
               <div class="studio-card-glow" aria-hidden="true"></div>
 
               <div class="position-relative z-1">
                 <div class="d-flex align-center justify-space-between pb-4 mb-6 border-b">
                   <div class="d-flex align-center ga-3">
                     <span class="studio-live-beacon flex-shrink-0"></span>
-                    <span class="font-mono text-caption font-weight-bold text-white tracking-widest text-uppercase">
+                    <span class="font-mono text-caption font-weight-bold text-high-emphasis tracking-widest text-uppercase">
                       {{ $t('Home.Landing.ProducerCareer.StudioCardTitle') }}
                     </span>
                   </div>
@@ -321,23 +321,23 @@
                 </div>
 
                 <div class="mb-6">
-                  <p class="text-body-2 font-body text-grey-lighten-2 mb-6 line-height-relaxed">
+                  <p class="text-body-2 font-body text-medium-emphasis mb-6 line-height-relaxed">
                     {{ $t('Home.Landing.ProducerCareer.StudioCardSubtitle') }}
                   </p>
 
                   <!-- Live Metrics Row using v-sheet -->
                   <div class="d-flex flex-column flex-sm-row ga-3">
-                    <v-sheet rounded="xl" border class="pa-4 flex-grow-1 bg-surface-light border-opacity-25">
-                      <div class="font-mono text-caption text-grey-lighten-2 text-uppercase mb-1">
+                    <v-sheet rounded="xl" border class="studio-metric pa-4 flex-grow-1 bg-surface-light border-opacity-25">
+                      <div class="font-mono text-caption text-medium-emphasis text-uppercase mb-1">
                         {{ $t('Home.Landing.ProducerCareer.ActiveSellers') }}
                       </div>
-                      <div class="text-h5 font-display font-weight-black text-white">
+                      <div class="text-h5 font-display font-weight-black text-high-emphasis">
                         {{ producerMetricsCount }}
                       </div>
                     </v-sheet>
 
-                    <v-sheet rounded="xl" border class="pa-4 flex-grow-1 bg-surface-light border-opacity-25">
-                      <div class="font-mono text-caption text-grey-lighten-2 text-uppercase mb-1">
+                    <v-sheet rounded="xl" border class="studio-metric studio-metric--accent pa-4 flex-grow-1 bg-surface-light border-opacity-25">
+                      <div class="font-mono text-caption text-medium-emphasis text-uppercase mb-1">
                         {{ $t('Home.Landing.ProducerCareer.PublishedTracks') }}
                       </div>
                       <div class="text-h5 font-display font-weight-black text-primary">
@@ -350,7 +350,7 @@
                 <!-- Sound Wave Preview Graphic -->
                 <div class="pt-4 border-t">
                   <div class="d-flex align-center justify-space-between mb-2">
-                    <div class="d-flex align-center font-mono text-caption text-grey-lighten-1 font-weight-bold" style="font-size: 0.68rem !important; letter-spacing: 0.08em;">
+                    <div class="d-flex align-center font-mono text-caption text-medium-emphasis font-weight-bold" style="font-size: 0.68rem !important; letter-spacing: 0.08em;">
                       <v-icon size="13" color="#ff5252" class="mr-1">mdi-waveform</v-icon>
                       {{ $t('Home.Landing.ProducerCareer.SpectrumTitle') }}
                     </div>
@@ -381,7 +381,7 @@
     <!-- ============================================================== -->
     <!-- 4. IMMERSIVE MID-PAGE CREATOR CALLOUT BANNER                  -->
     <!-- ============================================================== -->
-    <v-card rounded="0" class="soft-bloom-callout pa-8 pa-md-14 position-relative overflow-hidden mb-16 mb-md-24" elevation="8" border="t b" color="#17111b">
+    <v-card rounded="0" class="soft-bloom-callout pa-8 pa-md-14 position-relative overflow-hidden mb-16 mb-md-24" elevation="8" border="t b" color="surface">
       <v-container class="py-6 py-sm-10 px-3 px-sm-6" style="max-width: 1480px;">
       <div class="callout-bloom-halo" aria-hidden="true"></div>
 
@@ -391,11 +391,11 @@
             {{ $t('Home.Landing.Studio.Badge') }}
           </v-chip>
 
-          <h2 class="text-h3 font-display font-weight-black text-white mb-4 tracking-tight">
+          <h2 class="text-h3 font-display font-weight-black text-high-emphasis mb-4 tracking-tight">
             {{ $t('Home.Landing.Studio.Title') }}
           </h2>
 
-          <p class="text-body-1 font-body text-grey-lighten-2 mb-6" style="max-width: 680px; line-height: 1.7;">
+          <p class="text-body-1 font-body text-medium-emphasis mb-6" style="max-width: 680px; line-height: 1.7;">
             {{ $t('Home.Landing.Studio.Subtitle') }}
           </p>
 
@@ -474,7 +474,7 @@
       class="live-radar-stage pa-8 pa-md-14 position-relative overflow-hidden mb-12 mb-md-16"
       elevation="8"
       border="t b"
-      color="#0e0a13"
+      color="surface"
     >
       <div class="radar-ambient-glow" aria-hidden="true"></div>
       <div class="radar-ambient-sweep" aria-hidden="true"></div>
@@ -499,11 +499,11 @@
               </v-chip>
             </div>
 
-            <h2 class="text-h3 font-display font-weight-black text-white mb-2 tracking-tight">
+            <h2 class="text-h3 font-display font-weight-black text-high-emphasis mb-2 tracking-tight">
               {{ $t('Home.Landing.Recent.LiveRadarTitle') }}
             </h2>
 
-            <p class="text-body-1 font-body text-grey-lighten-2 mb-0" style="max-width: 680px; line-height: 1.6;">
+            <p class="text-body-1 font-body text-medium-emphasis mb-0" style="max-width: 680px; line-height: 1.6;">
               {{ $t('Home.Landing.Recent.LiveRadarSubtitle') }}
             </p>
           </div>
@@ -832,8 +832,10 @@ onMounted(() => {
 .landing-page {
   min-height: 100vh;
   position: relative;
-  background-color: #0c0b10;
+  background-color: rgb(var(--v-theme-background));
+  color: rgb(var(--v-theme-on-background));
   font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 /* Ambient dynamic background lighting */
@@ -843,6 +845,10 @@ onMounted(() => {
   pointer-events: none;
   z-index: 0;
   overflow: hidden;
+
+  .v-theme--light & {
+    display: none !important;
+  }
 
   .ambient-glow {
     position: absolute;
@@ -897,6 +903,14 @@ onMounted(() => {
   -webkit-backdrop-filter: blur(28px);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
   min-height: 460px;
+
+  .v-theme--light & {
+    background: #f8fafc !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: none !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+  }
 }
 
 .hero-canvas {
@@ -906,6 +920,10 @@ onMounted(() => {
   height: 100%;
   opacity: 0.68;
   pointer-events: none;
+
+  .v-theme--light & {
+    opacity: 0.92;
+  }
 }
 
 .hero-vignette {
@@ -914,27 +932,12 @@ onMounted(() => {
   background: radial-gradient(circle at 75% 35%, rgba(211, 47, 47, 0.18) 0%, transparent 65%),
               linear-gradient(180deg, transparent 40%, rgba(12, 11, 16, 0.95) 100%);
   pointer-events: none;
-}
 
-.pulse-beacon {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: #ff5252;
-  box-shadow: 0 0 10px #ff5252;
-  animation: beacon-pulse 2s infinite ease-in-out;
-}
-
-@keyframes beacon-pulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.4);
-    opacity: 0.45;
+  .v-theme--light & {
+    background: linear-gradient(180deg, transparent 80%, rgba(248, 250, 252, 0.9) 100%);
   }
 }
+
 
 .hero-headline {
   font-size: clamp(2.4rem, 4.2vw, 4.4rem) !important;
@@ -942,6 +945,11 @@ onMounted(() => {
   letter-spacing: -0.025em !important;
   line-height: 1.12 !important;
   text-shadow: 0 0 35px rgba(255, 82, 82, 0.25);
+
+  .v-theme--light & {
+    text-shadow: none;
+    color: #0f172a !important;
+  }
 }
 
 .hero-narrative {
@@ -949,6 +957,10 @@ onMounted(() => {
   line-height: 1.72 !important;
   color: rgba(255, 255, 255, 0.82) !important;
   letter-spacing: 0.01em;
+
+  .v-theme--light & {
+    color: #475569 !important;
+  }
 }
 
 /* Spotlight Glow */
@@ -959,6 +971,10 @@ onMounted(() => {
   filter: blur(24px);
   border-radius: 28px;
   pointer-events: none;
+
+  .v-theme--light & {
+    display: none !important;
+  }
 }
 
 
@@ -973,12 +989,44 @@ onMounted(() => {
     background: radial-gradient(circle, rgba(0, 230, 118, 0.08) 0%, rgba(255, 82, 82, 0.08) 50%, transparent 75%);
     filter: blur(100px);
     pointer-events: none;
+
+    .v-theme--light & {
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.16) 0%, rgba(211, 47, 47, 0.12) 50%, transparent 75%);
+      filter: blur(90px);
+    }
   }
 }
 
 .producer-studio-card {
   border-top: 2.5px solid rgba(255, 82, 82, 0.7) !important;
   backdrop-filter: blur(28px);
+
+  .v-theme--light & {
+    background:
+      linear-gradient(160deg, #FFF1F2 0%, #FFFFFF 42%, #FFFFFF 70%, #F0FDF4 100%) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border: 1px solid #FECDD3 !important;
+    border-top: 2.5px solid #D32F2F !important;
+    box-shadow:
+      0 1px 3px rgba(15, 23, 42, 0.04),
+      0 18px 40px -12px rgba(211, 47, 47, 0.18) !important;
+
+    .studio-card-glow {
+      background: radial-gradient(circle, rgba(244, 63, 94, 0.22) 0%, transparent 70%);
+      filter: blur(36px);
+    }
+
+    .studio-metric {
+      background: rgba(255, 255, 255, 0.75) !important;
+      border-color: #E2E8F0 !important;
+    }
+
+    .studio-metric--accent {
+      background: linear-gradient(135deg, #FFF1F2 0%, #FFE4E6 100%) !important;
+      border-color: #FECDD3 !important;
+    }
+  }
 
   .studio-card-glow {
     position: absolute;
@@ -1004,6 +1052,10 @@ onMounted(() => {
     background: linear-gradient(180deg, #ff5252 0%, rgba(255, 82, 82, 0.2) 100%);
     transform-origin: bottom;
     animation: studio-sound-bounce 1.5s ease-in-out infinite alternate;
+
+    .v-theme--light & {
+      background: linear-gradient(180deg, #E11D48 0%, #F43F5E 45%, rgba(244, 63, 94, 0.18) 100%);
+    }
   }
 }
 
@@ -1018,19 +1070,23 @@ onMounted(() => {
   }
 }
 
-.studio-live-beacon {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #00E676;
-  box-shadow: 0 0 8px #00E676;
-  animation: beacon-pulse 2s infinite ease-in-out;
-}
 
 /* Soft Bloom Callout Banner */
 .soft-bloom-callout {
   border-color: rgba(255, 82, 82, 0.3) !important;
   backdrop-filter: blur(28px);
+
+  .v-theme--light & {
+    background: #FFFFFF !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border: 1px solid #E2E8F0 !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 8px 24px -4px rgba(0, 0, 0, 0.04) !important;
+
+    .callout-bloom-halo {
+      display: none !important;
+    }
+  }
 
   .callout-bloom-halo {
     position: absolute;
@@ -1044,12 +1100,31 @@ onMounted(() => {
   }
 }
 
-/* Popular Genres Cyber Cards */
+/* Popular Genres Cyber Cards - Standardized Design Tokens & Unified Logic */
 .genre-cyber-card {
+  /* Dark Theme Tokens (Default) */
+  --genre-card-bg: rgb(var(--v-theme-surface));
+  --genre-card-border: rgba(var(--v-border-color), var(--v-border-opacity));
+  --genre-card-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 16px color-mix(in srgb, var(--genre-color) 15%, transparent);
+  --genre-card-hover-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 28px color-mix(in srgb, var(--genre-color) 48%, transparent);
+  --genre-bloom-opacity: 0.35;
+  --genre-bloom-hover-opacity: 0.9;
+
+  /* Light Theme Tokens */
+  .v-theme--light & {
+    --genre-card-bg: #FFFFFF;
+    --genre-card-border: #E2E8F0;
+    --genre-card-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 6px 16px -2px rgba(15, 23, 42, 0.04);
+    --genre-card-hover-shadow: 0 14px 30px -4px rgba(15, 23, 42, 0.08), 0 0 24px color-mix(in srgb, var(--genre-color) 38%, transparent);
+    --genre-bloom-opacity: 0.55;
+    --genre-bloom-hover-opacity: 0.95;
+  }
+
   min-height: 155px;
-  background-color: #131018 !important;
-  border-color: rgba(255, 255, 255, 0.08) !important;
+  background-color: var(--genre-card-bg) !important;
+  border: 1px solid var(--genre-card-border) !important;
   border-top: 2.5px solid var(--genre-color) !important;
+  box-shadow: var(--genre-card-shadow) !important;
   transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
               border-color 0.28s ease,
               box-shadow 0.28s ease;
@@ -1061,7 +1136,7 @@ onMounted(() => {
     width: 140px;
     height: 140px;
     filter: blur(28px);
-    opacity: 0.35;
+    opacity: var(--genre-bloom-opacity);
     pointer-events: none;
     transition: opacity 0.3s ease, transform 0.3s ease;
   }
@@ -1073,11 +1148,11 @@ onMounted(() => {
   &:hover {
     transform: translateY(-4px);
     border-color: var(--genre-color) !important;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7), 0 0 20px rgba(var(--v-theme-primary), 0.15) !important;
+    box-shadow: var(--genre-card-hover-shadow) !important;
 
     .genre-card-bloom {
-      opacity: 0.9;
-      transform: scale(1.25);
+      opacity: var(--genre-bloom-hover-opacity);
+      transform: scale(1.3);
     }
 
     .genre-arrow {
@@ -1091,6 +1166,25 @@ onMounted(() => {
 .live-radar-stage {
   border-color: rgba(255, 82, 82, 0.25) !important;
   backdrop-filter: blur(28px);
+
+  .v-theme--light & {
+    background:
+      linear-gradient(rgba(211, 47, 47, 0.035) 1px, transparent 1px) 0 0 / 100% 40px,
+      linear-gradient(90deg, rgba(211, 47, 47, 0.035) 1px, transparent 1px) 0 0 / 40px 100%,
+      linear-gradient(120deg, #FFF1F2 0%, #FFFFFF 38%, #FFFFFF 62%, #FAF5FF 100%) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border-color: #FECDD3 !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 18px 40px -16px rgba(211, 47, 47, 0.14) !important;
+
+    .radar-ambient-glow {
+      background: radial-gradient(circle, rgba(244, 63, 94, 0.18) 0%, transparent 70%);
+    }
+
+    .radar-ambient-sweep {
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.14) 0%, transparent 70%);
+    }
+  }
 
   .radar-ambient-glow {
     position: absolute;
@@ -1120,7 +1214,7 @@ onMounted(() => {
 .playlist-section-title {
   font-size: 1.35rem;
   font-weight: 800;
-  color: #ffffff;
+  color: rgb(var(--v-theme-on-surface));
   letter-spacing: -0.02em;
   margin: 0;
   line-height: 1.25;
@@ -1140,9 +1234,9 @@ onMounted(() => {
   font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.85);
+  background: rgba(var(--v-theme-on-surface), 0.05);
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.1);
+  color: rgba(var(--v-theme-on-surface), 0.85);
 
   .live-dot {
     width: 6px;

@@ -25,7 +25,7 @@
         <!-- Title & Subtitle / Badge -->
         <div :class="align === 'right' ? 'd-flex flex-column align-end' : ''">
           <slot name="title">
-            <h2 v-if="title" class="horizon-title font-display text-truncate text-white">{{ title }}</h2>
+            <h2 v-if="title" class="horizon-title font-display text-truncate text-high-emphasis">{{ title }}</h2>
           </slot>
 
           <div
@@ -37,7 +37,7 @@
                 v-if="subtitle"
                 size="x-small"
                 variant="outlined"
-                class="font-mono text-caption text-grey-lighten-1 px-3"
+                class="font-mono text-caption text-medium-emphasis px-3"
                 rounded="pill"
               >
                 <span class="pulse-beacon mr-1" aria-hidden="true"></span>
@@ -63,15 +63,14 @@
     <!-- Empty State -->
     <v-sheet
       v-if="!isTracksLoading && (!tracks || tracks.length === 0)"
-      color="transparent"
       rounded="xl"
       border
       class="text-center py-12 px-4"
     >
       <v-avatar size="54" color="surface-variant" variant="tonal" class="mb-3">
-        <v-icon size="28" color="grey-lighten-1">mdi-music-note-off</v-icon>
+        <v-icon size="28" color="medium-emphasis">mdi-music-note-off</v-icon>
       </v-avatar>
-      <div class="text-body-2 font-mono text-grey-lighten-1">
+      <div class="text-body-2 font-mono text-medium-emphasis">
         {{ $t('players.NoTracks') }}
       </div>
     </v-sheet>
@@ -308,10 +307,10 @@ watch(() => props.tracks, () => {
   height: 46px !important;
   min-width: 46px !important;
   border-radius: 50% !important;
-  background: rgba(26, 20, 38, 0.96) !important;
-  border: 1.5px solid rgba(255, 255, 255, 0.35) !important;
-  color: #ffffff !important;
-  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.85), 0 0 1px rgba(255, 255, 255, 0.6) !important;
+  background: rgba(var(--v-glass-bg, var(--v-theme-surface)), 0.96) !important;
+  border: 1.5px solid rgba(var(--v-border-color), var(--v-border-opacity, 0.25)) !important;
+  color: rgb(var(--v-theme-on-surface)) !important;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, var(--v-shadow-strength, 0.4)), 0 0 1px rgba(var(--v-theme-on-surface), 0.2) !important;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   cursor: pointer !important;
@@ -320,7 +319,7 @@ watch(() => props.tracks, () => {
 
   :deep(.v-icon) {
     font-size: 28px !important;
-    color: #ffffff !important;
+    color: rgb(var(--v-theme-on-surface)) !important;
   }
 
   &.nav-prev {
@@ -337,7 +336,7 @@ watch(() => props.tracks, () => {
     border-color: #ffffff !important;
     color: #ffffff !important;
     transform: translateY(-50%) scale(1.12) !important;
-    box-shadow: 0 0 24px var(--btn-accent, rgba(255, 82, 82, 0.8)), 0 10px 28px rgba(0, 0, 0, 0.9) !important;
+    box-shadow: 0 0 24px var(--btn-accent, rgba(255, 82, 82, 0.8)), 0 10px 28px rgba(0, 0, 0, 0.4) !important;
 
     :deep(.v-icon) {
       color: #ffffff !important;
@@ -373,10 +372,10 @@ watch(() => props.tracks, () => {
     left: 0;
     background: linear-gradient(
       to right,
-      #0c0b10 0%,
-      rgba(12, 11, 16, 0.94) 22%,
-      rgba(12, 11, 16, 0.72) 48%,
-      rgba(12, 11, 16, 0.32) 75%,
+      rgb(var(--v-theme-background)) 0%,
+      rgba(var(--v-theme-background), 0.94) 22%,
+      rgba(var(--v-theme-background), 0.72) 48%,
+      rgba(var(--v-theme-background), 0.32) 75%,
       transparent 100%
     );
   }
@@ -385,10 +384,10 @@ watch(() => props.tracks, () => {
     right: 0;
     background: linear-gradient(
       to left,
-      #0c0b10 0%,
-      rgba(12, 11, 16, 0.94) 22%,
-      rgba(12, 11, 16, 0.72) 48%,
-      rgba(12, 11, 16, 0.32) 75%,
+      rgb(var(--v-theme-background)) 0%,
+      rgba(var(--v-theme-background), 0.94) 22%,
+      rgba(var(--v-theme-background), 0.72) 48%,
+      rgba(var(--v-theme-background), 0.32) 75%,
       transparent 100%
     );
   }
@@ -430,7 +429,7 @@ watch(() => props.tracks, () => {
 /* Laser Scroll Progress Rail */
 .horizon-progress-track {
   height: 2px;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(var(--v-theme-on-surface), 0.08);
   border-radius: 9999px;
   overflow: hidden;
   position: relative;

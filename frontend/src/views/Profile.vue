@@ -1,12 +1,12 @@
 <template>
-  <v-main class="bg-black profile-page" v-cloak>
+  <v-main class="profile-page">
     <div v-if="loading" class="d-flex align-center justify-center fill-height">
       <v-progress-circular size="64" width="6" color="primary" indeterminate></v-progress-circular>
     </div>
 
     <div v-else-if="!profile" class="d-flex flex-column align-center justify-center fill-height opacity-50">
       <v-icon size="80" color="grey" class="mb-4">mdi-account-off</v-icon>
-      <h2 class="text-h4 font-weight-black text-white">{{ $t('Profile.NotFound') }}</h2>
+      <h2 class="text-h4 font-weight-black text-high-emphasis">{{ $t('Profile.NotFound') }}</h2>
     </div>
 
     <div v-else>
@@ -32,15 +32,15 @@
                 <GlitchTitle 
                   :text="profile.name" 
                   tag="h1" 
-                  className="text-h2 font-weight-black text-white mb-2 profile-title text-uppercase" 
+                  className="text-h2 font-weight-black text-high-emphasis mb-2 profile-title text-uppercase" 
                   :theme="profile.profileTheme" 
                 />
                 <!-- Bio -->
-                <p class="text-body-1 text-white-70 mb-4 profile-bio" v-if="profile.bio">
+                <p class="text-body-1 text-medium-emphasis mb-4 profile-bio" v-if="profile.bio">
                   {{ profile.bio }}
                 </p>
                 <!-- Meta Info -->
-                <div class="text-subtitle-1 text-grey-lighten-3 mb-8 d-flex align-center flex-wrap profile-meta" style="gap: 24px;">
+                <div class="text-subtitle-1 text-medium-emphasis mb-8 d-flex align-center flex-wrap profile-meta" style="gap: 24px;">
                   <span v-if="profile.location" class="d-flex align-center">
                     <v-icon size="small" class="mr-2 text-primary">mdi-map-marker</v-icon>{{ profile.location }}
                   </span>
@@ -51,17 +51,17 @@
                 
                 <!-- Social Links -->
                 <div class="d-flex mb-8" style="gap: 16px;" v-if="profile.socialLinks">
-                  <v-btn v-if="profile.socialLinks.instagram" icon variant="flat" color="white-10" :href="profile.socialLinks.instagram" target="_blank" class="social-btn">
-                    <v-icon color="white">mdi-instagram</v-icon>
+                  <v-btn v-if="profile.socialLinks.instagram" icon variant="tonal" :href="profile.socialLinks.instagram" target="_blank" class="social-btn">
+                    <v-icon>mdi-instagram</v-icon>
                   </v-btn>
-                  <v-btn v-if="profile.socialLinks.twitter" icon variant="flat" color="white-10" :href="profile.socialLinks.twitter" target="_blank" class="social-btn">
-                    <v-icon color="white">mdi-twitter</v-icon>
+                  <v-btn v-if="profile.socialLinks.twitter" icon variant="tonal" :href="profile.socialLinks.twitter" target="_blank" class="social-btn">
+                    <v-icon>mdi-twitter</v-icon>
                   </v-btn>
-                  <v-btn v-if="profile.socialLinks.youtube" icon variant="flat" color="white-10" :href="profile.socialLinks.youtube" target="_blank" class="social-btn">
-                    <v-icon color="white">mdi-youtube</v-icon>
+                  <v-btn v-if="profile.socialLinks.youtube" icon variant="tonal" :href="profile.socialLinks.youtube" target="_blank" class="social-btn">
+                    <v-icon>mdi-youtube</v-icon>
                   </v-btn>
-                  <v-btn v-if="profile.socialLinks.soundcloud" icon variant="flat" color="white-10" :href="profile.socialLinks.soundcloud" target="_blank" class="social-btn">
-                    <v-icon color="white">mdi-soundcloud</v-icon>
+                  <v-btn v-if="profile.socialLinks.soundcloud" icon variant="tonal" :href="profile.socialLinks.soundcloud" target="_blank" class="social-btn">
+                    <v-icon>mdi-soundcloud</v-icon>
                   </v-btn>
                 </div>
                 <!-- Follow & Message Buttons -->
@@ -70,7 +70,7 @@
                     <v-icon class="mr-3">mdi-account-plus</v-icon>
                     {{ $t('Profile.Follow') }}
                   </v-btn>
-                  <v-btn color="white" variant="outlined" rounded="pill" size="large" class="px-8 font-weight-bold glass-btn letter-spacing-1">
+                  <v-btn variant="outlined" rounded="pill" size="large" class="px-8 font-weight-bold glass-btn letter-spacing-1">
                     <v-icon class="mr-3">mdi-message-text</v-icon>
                     {{ $t('Profile.Message') }}
                   </v-btn>
@@ -84,8 +84,8 @@
                       <v-icon size="20" color="primary">mdi-account-group</v-icon>
                     </div>
                     <div class="stat-content">
-                      <div class="stat-value font-weight-black text-white">{{ formattedFollowers }}</div>
-                      <div class="stat-label text-caption text-uppercase text-grey-lighten-1">{{ $t('Profile.Followers') }}</div>
+                      <div class="stat-value font-weight-black text-high-emphasis">{{ formattedFollowers }}</div>
+                      <div class="stat-label text-caption text-uppercase text-medium-emphasis">{{ $t('Profile.Followers') }}</div>
                     </div>
                   </div>
 
@@ -97,8 +97,8 @@
                       <v-icon size="20" color="primary">mdi-headphones</v-icon>
                     </div>
                     <div class="stat-content">
-                      <div class="stat-value font-weight-black text-white">{{ formattedTotalPlays }}</div>
-                      <div class="stat-label text-caption text-uppercase text-grey-lighten-1">{{ $t('Profile.TotalPlays') }}</div>
+                      <div class="stat-value font-weight-black text-high-emphasis">{{ formattedTotalPlays }}</div>
+                      <div class="stat-label text-caption text-uppercase text-medium-emphasis">{{ $t('Profile.TotalPlays') }}</div>
                     </div>
                   </div>
 
@@ -110,8 +110,8 @@
                       <v-icon size="20" color="primary">mdi-disc</v-icon>
                     </div>
                     <div class="stat-content">
-                      <div class="stat-value font-weight-black text-white">{{ formattedTotalReleases }}</div>
-                      <div class="stat-label text-caption text-uppercase text-grey-lighten-1">{{ $t('Profile.Releases') }}</div>
+                      <div class="stat-value font-weight-black text-high-emphasis">{{ formattedTotalReleases }}</div>
+                      <div class="stat-label text-caption text-uppercase text-medium-emphasis">{{ $t('Profile.Releases') }}</div>
                     </div>
                   </div>
                 </div>
@@ -122,25 +122,25 @@
       </div>
 
       <!-- Main Content Container -->
-      <v-container class="mt-4 content-container px-6 px-md-12">
+      <v-container class="mt-4 content-container px-6 px-md-12" style="max-width: 1480px;">
         <v-row>
           <v-col cols="12">
             <v-tabs 
               v-model="activeTab" 
               color="primary" 
               bg-color="transparent" 
-              class="mb-6 font-weight-bold border-b border-white-10"
+              class="mb-6 font-weight-bold border-b ck-border-subtle"
               slider-color="primary"
             >
               <v-tab value="tracks" class="text-none text-subtitle-1 px-8" rounded="0">
                 <v-icon start class="mr-2">mdi-album</v-icon>
                 {{ $t('Profile.Tracks') }}
-                <v-chip size="x-small" color="white" variant="outlined" class="ml-2 font-weight-black">{{ profile.tracks?.length || 0 }}</v-chip>
+                <v-chip size="x-small" variant="outlined" class="ml-2 font-weight-black">{{ profile.tracks?.length || 0 }}</v-chip>
               </v-tab>
               <v-tab value="soundkits" class="text-none text-subtitle-1 px-8" rounded="0">
                 <v-icon start class="mr-2">mdi-folder-music</v-icon>
                 {{ $t('Profile.Soundkits') }}
-                <v-chip size="x-small" color="white" variant="outlined" class="ml-2 font-weight-black">{{ profile.soundkits?.length || 0 }}</v-chip>
+                <v-chip size="x-small" variant="outlined" class="ml-2 font-weight-black">{{ profile.soundkits?.length || 0 }}</v-chip>
               </v-tab>
             </v-tabs>
 
@@ -182,8 +182,8 @@
                         </div>
                       </div>
                       <v-card-text class="pa-4 text-center">
-                        <div class="text-h6 font-weight-black text-white text-truncate mb-1">{{ kit.title }}</div>
-                        <div class="text-caption text-grey-lighten-1 text-truncate">{{ kit.description || 'Soundkit' }}</div>
+                        <div class="text-h6 font-weight-black text-high-emphasis text-truncate mb-1">{{ kit.title }}</div>
+                        <div class="text-caption text-medium-emphasis text-truncate">{{ kit.description || 'Soundkit' }}</div>
                       </v-card-text>
                     </v-card>
                   </v-col>
@@ -338,6 +338,11 @@ onMounted(() => {
   min-height: 480px;
   background: #050508; /* Very dark base */
   border-bottom: 1px solid rgba(255,255,255,0.05);
+
+  .v-theme--light & {
+    background: #f8fafc;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
 }
 
 /* Aggressive Wavy Background on the Left (Abstract Sine Waves) */
@@ -374,9 +379,13 @@ onMounted(() => {
   clip-path: polygon(25% 0, 100% 0, 100% 100%, 0 100%);
 }
 
-/* Dark gradient overlay (fades from left to right to blend with black background) */
+/* Dark gradient overlay (fades from left to right to blend with background) */
 .profile-hero-overlay {
   background: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 60%, rgba(0,0,0,0) 100%);
+
+  .v-theme--light & {
+    background: linear-gradient(to right, rgba(248,250,252,0.85) 0%, rgba(248,250,252,0.3) 60%, rgba(248,250,252,0) 100%);
+  }
 }
 
 .profile-title {
@@ -413,6 +422,11 @@ onMounted(() => {
   /* Fade out smoothly over the extra padding on the right */
   -webkit-mask-image: linear-gradient(to right, black calc(100% - 100px), transparent 100%);
   mask-image: linear-gradient(to right, black calc(100% - 100px), transparent 100%);
+
+  .v-theme--light & {
+    background: rgba(255, 255, 255, 0.7);
+    background-image: linear-gradient(135deg, rgba(0,0,0,0.03) 0%, rgba(0,0,0,0) 100%);
+  }
 }
 
 .profile-meta {
@@ -449,6 +463,12 @@ onMounted(() => {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.05) !important;
+
+  .v-theme--light & {
+    background: rgba(255, 255, 255, 0.9) !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  }
 }
 .profile-card-col {
   position: relative;
@@ -470,6 +490,10 @@ onMounted(() => {
   box-shadow: 0 15px 30px rgba(0,0,0,0.5), 0 0 15px rgba(var(--v-theme-primary), 0.2) !important;
   border-color: rgba(var(--v-theme-primary), 0.5) !important;
   z-index: 10;
+
+  .v-theme--light & {
+    box-shadow: 0 15px 30px rgba(0,0,0,0.08), 0 0 15px rgba(var(--v-theme-primary), 0.2) !important;
+  }
 }
 .track-image-wrapper {
   position: relative;
@@ -525,6 +549,12 @@ onMounted(() => {
   gap: 16px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+  .v-theme--light & {
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  }
 }
 
 .profile-stats-strip:hover {
@@ -574,6 +604,10 @@ onMounted(() => {
   width: 1px;
   height: 30px;
   background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.15), transparent);
+
+  .v-theme--light & {
+    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.12), transparent);
+  }
 }
 
 @media (max-width: 600px) {

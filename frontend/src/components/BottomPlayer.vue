@@ -15,19 +15,19 @@
           
           <!-- Left: Track Info -->
           <v-col cols="3" class="d-flex align-center pr-4">
-            <v-avatar size="56" class="rounded-lg elevation-8 mr-4 flex-shrink-0 cover-avatar">
+            <v-avatar size="56" class="rounded-lg elevation-8 mr-4 flex-shrink-0 cover-avatar ck-art-backing">
               <v-img :src="current?.art ?? ''" alt="Cover" cover draggable="false" />
             </v-avatar>
             <div class="d-flex flex-column overflow-hidden">
-              <span class="text-subtitle-2 font-weight-bold text-truncate text-white line-height-1">
+              <span class="text-subtitle-2 font-weight-bold text-truncate text-high-emphasis line-height-1">
                 <router-link
-                  class="routerLink text-decoration-none text-white hover-primary"
+                  class="routerLink text-decoration-none text-high-emphasis hover-primary"
                   :to="{ name: 'TrackPage', params: { userSlug: current?.user?.slug, trackSlug: current?.name } }"
                 >
                   {{ current?.name }}
                 </router-link>
               </span>
-              <span class="text-caption opacity-60 text-white text-truncate" v-if="current?.user">
+              <span class="text-caption text-medium-emphasis text-truncate" v-if="current?.user">
                 {{ current?.user.name }}
               </span>
             </div>
@@ -39,7 +39,7 @@
             <span class="time-text">{{ formatTime(currentTime) }}</span>
 
             <div class="controls-group d-flex align-center px-4 mx-4">
-              <v-btn icon variant="plain" size="x-small" @click="toggleShuffle" :color="shuffle ? 'primary' : 'rgba(255,255,255,0.4)'" class="mx-1">
+              <v-btn icon variant="plain" size="x-small" @click="toggleShuffle" :color="shuffle ? 'primary' : 'medium-emphasis'" class="mx-1">
                 <v-icon size="20">mdi-shuffle</v-icon>
               </v-btn>
 
@@ -54,7 +54,7 @@
                 size="52"
                 @click="toggle"
               >
-                <v-progress-circular v-if="isLoading || isBuffering" indeterminate size="24" width="2" color="white" />
+                <v-progress-circular v-if="isLoading || isBuffering" indeterminate size="24" width="2" color="currentColor" />
                 <v-icon size="32" v-else>{{ playing ? 'mdi-pause' : 'mdi-play' }}</v-icon>
               </v-btn>
 
@@ -62,7 +62,7 @@
                 <v-icon size="28">mdi-skip-next</v-icon>
               </v-btn>
 
-              <v-btn icon variant="plain" size="x-small" @click="cycleRepeat" :color="repeatMode !== 'off' ? 'primary' : 'rgba(255,255,255,0.4)'" class="mx-1">
+              <v-btn icon variant="plain" size="x-small" @click="cycleRepeat" :color="repeatMode !== 'off' ? 'primary' : 'medium-emphasis'" class="mx-1">
                 <v-icon size="20">{{ repeatMode === 'one' ? 'mdi-repeat-once' : 'mdi-repeat' }}</v-icon>
               </v-btn>
             </div>
@@ -83,7 +83,7 @@
                 hide-details
                 density="compact"
                 color="primary"
-                track-color="rgba(255,255,255,0.1)"
+                track-color="rgba(var(--v-theme-on-surface), 0.12)"
               />
             </div>
 
@@ -102,10 +102,10 @@
               </template>
               <v-card class="settings-menu pa-4 elevation-24" width="340">
                 <!-- Header -->
-                <div class="d-flex align-center justify-space-between mb-3 pb-2 border-b border-white-10">
+                <div class="d-flex align-center justify-space-between mb-3 pb-2 border-b ck-border-subtle">
                   <div class="d-flex align-center">
                     <v-icon class="mr-2" color="primary" size="20">mdi-tune</v-icon>
-                    <span class="text-subtitle-2 font-weight-bold">{{ $t('Player.Settings.Title') }}</span>
+                    <span class="text-subtitle-2 font-weight-bold text-high-emphasis">{{ $t('Player.Settings.Title') }}</span>
                   </div>
                   <v-btn
                     v-if="hasActiveModifiers"
@@ -151,7 +151,7 @@
                     max="1.5"
                     step="0.05"
                     color="primary"
-                    track-color="rgba(255,255,255,0.1)"
+                    track-color="rgba(var(--v-theme-on-surface), 0.12)"
                     hide-details
                     density="compact"
                     class="mt-1"
@@ -164,7 +164,7 @@
                       :key="preset"
                       size="x-small"
                       :variant="Math.abs(playbackRate - preset) < 0.02 ? 'flat' : 'tonal'"
-                      :color="Math.abs(playbackRate - preset) < 0.02 ? 'primary' : 'rgba(255,255,255,0.1)'"
+                      :color="Math.abs(playbackRate - preset) < 0.02 ? 'primary' : undefined"
                       class="px-2 cursor-pointer font-weight-bold"
                       @click="playbackRate = preset"
                     >
@@ -173,7 +173,7 @@
                   </div>
                 </div>
 
-                <v-divider class="my-3 border-white-10" />
+                <v-divider class="my-3 ck-border-subtle" />
 
                 <!-- 2. Pitch Shift Control -->
                 <div class="setting-item mb-4">
@@ -207,7 +207,6 @@
                       icon="mdi-minus"
                       variant="tonal"
                       size="x-small"
-                      color="rgba(255,255,255,0.2)"
                       class="mr-2"
                       @click="adjustPitch(-1)"
                       :disabled="pitchSemitones <= PITCH_MIN_SEMITONES"
@@ -218,7 +217,7 @@
                       :max="PITCH_MAX_SEMITONES"
                       step="1"
                       color="primary"
-                      track-color="rgba(255,255,255,0.1)"
+                      track-color="rgba(var(--v-theme-on-surface), 0.12)"
                       hide-details
                       density="compact"
                       class="flex-grow-1"
@@ -227,7 +226,6 @@
                       icon="mdi-plus"
                       variant="tonal"
                       size="x-small"
-                      color="rgba(255,255,255,0.2)"
                       class="ml-2"
                       @click="adjustPitch(1)"
                       :disabled="pitchSemitones >= PITCH_MAX_SEMITONES"
@@ -235,7 +233,7 @@
                   </div>
                 </div>
 
-                <v-divider class="my-3 border-white-10" />
+                <v-divider class="my-3 ck-border-subtle" />
 
                 <!-- 3. Smart Automix (Apple Music Style Crossfade) -->
                 <div class="setting-item">
@@ -250,7 +248,7 @@
                   </div>
                 </div>
 
-                <v-divider class="my-3 border-white-10" />
+                <v-divider class="my-3 ck-border-subtle" />
 
                 <!-- 4. Loudness Normalization -->
                 <div class="setting-item">
@@ -442,10 +440,10 @@ watch(crossfadeEnabled, (enabled) => {
 }
 
 .glass-bg {
-  background: rgba(10, 10, 10, 0.8) !important;
+  background: rgba(var(--v-glass-bg, var(--v-theme-surface)), var(--v-glass-opacity, 0.85)) !important;
   backdrop-filter: blur(32px) saturate(180%);
   -webkit-backdrop-filter: blur(32px) saturate(180%);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(var(--v-border-color), var(--v-border-opacity, 0.08));
   position: relative;
   border-radius: 0 !important;
 }
@@ -473,14 +471,14 @@ watch(crossfadeEnabled, (enabled) => {
   position: absolute;
   width: 100%;
   height: 4px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(var(--v-theme-on-surface), 0.08);
   transition: height 0.2s ease;
 }
 
 .seeker-buffer {
   position: absolute;
   height: 4px;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(var(--v-theme-on-surface), 0.18);
   transition: width 0.3s ease, height 0.2s ease;
   pointer-events: none;
 }
@@ -488,7 +486,7 @@ watch(crossfadeEnabled, (enabled) => {
 .seeker-progress {
   position: absolute;
   height: 4px;
-  background: white;
+  background: rgb(var(--v-theme-on-surface));
   transition: height 0.2s ease;
   pointer-events: none;
 }
@@ -498,9 +496,9 @@ watch(crossfadeEnabled, (enabled) => {
   top: 50%;
   width: 14px;
   height: 14px;
-  background: white;
+  background: rgb(var(--v-theme-on-surface));
   border-radius: 50%;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  box-shadow: 0 0 10px rgba(0,0,0, var(--v-shadow-strength, 0.3));
   transform: translate(-50%, -50%) scale(0);
   opacity: 0;
   transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s ease;
@@ -508,16 +506,16 @@ watch(crossfadeEnabled, (enabled) => {
 }
 
 .controls-group {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(var(--v-theme-on-surface), 0.04);
   border-radius: 40px;
   padding: 4px 12px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity, 0.08));
 }
 
 .time-text {
   font-size: 13px;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(var(--v-theme-on-surface), 0.55);
   font-family: 'Inter', sans-serif;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.5px;
@@ -526,34 +524,30 @@ watch(crossfadeEnabled, (enabled) => {
 }
 
 .control-btn {
-  color: rgba(255, 255, 255, 0.5) !important;
+  color: rgba(var(--v-theme-on-surface), 0.6) !important;
   &:hover:not(:disabled) {
-    color: white !important;
+    color: rgb(var(--v-theme-on-surface)) !important;
     transform: translateY(-2px);
   }
 }
 
 .play-btn {
-  background: #fff !important;
-  color: #000 !important;
+  background: rgb(var(--v-theme-primary)) !important;
+  color: #ffffff !important;
   &:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    transform: scale(1.08);
+    box-shadow: 0 0 24px rgba(var(--v-theme-primary), 0.45) !important;
   }
 }
 
 .settings-menu {
-  background: rgba(18, 18, 24, 0.96) !important;
+  background: rgba(var(--v-glass-bg, var(--v-theme-surface)), 0.96) !important;
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity, 0.12));
   border-radius: 16px;
-  color: white;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6) !important;
-}
-
-.border-white-10 {
-  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: rgb(var(--v-theme-on-surface));
+  box-shadow: 0 16px 40px rgba(0, 0, 0, var(--v-shadow-strength, 0.2)) !important;
 }
 
 .active-modifiers-glow {

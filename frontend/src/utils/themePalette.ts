@@ -22,6 +22,16 @@ export const THEME_PALETTES: Record<ArtistTheme, ThemePalette> = {
   pillars: { accent: '50, 150, 255', accent2: '140, 55, 200', deep: '10, 90, 220' }
 }
 
-export function getThemePalette(theme?: string | null): ThemePalette {
-  return THEME_PALETTES[theme as ArtistTheme] ?? THEME_PALETTES.ribbons
+export const LIGHT_THEME_PALETTES: Record<ArtistTheme, ThemePalette> = {
+  // WaveField: High-contrast reds for light surface
+  ribbons: { accent: '211, 47, 47', accent2: '180, 20, 30', deep: '120, 10, 20' },
+  // FlowField: Contrast crimson and slate accents instead of invisible white
+  flowfield: { accent: '211, 47, 47', accent2: '180, 20, 30', deep: '120, 10, 20' },
+  // Pillars: Deeper sapphire, violet and cobalt for crisp light visibility
+  pillars: { accent: '30, 120, 240', accent2: '120, 40, 180', deep: '10, 60, 180' }
+}
+
+export function getThemePalette(theme?: string | null, isDark = true): ThemePalette {
+  const map = isDark ? THEME_PALETTES : LIGHT_THEME_PALETTES
+  return map[theme as ArtistTheme] ?? map.ribbons
 }

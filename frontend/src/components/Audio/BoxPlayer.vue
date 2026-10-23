@@ -40,13 +40,13 @@
         @pointermove="onArtPointerMove"
         @pointerleave="onArtPointerLeave"
       >
-        <div class="art-stage">
+        <div class="art-stage ck-art-backing">
           <v-img
             v-if="hasArt"
             :src="displayTrack?.art"
             :alt="$t('Player.Card.CoverAlt', { name: trackName, artist: artistName })"
             width="100%"
-            class="rounded-lg track-art shadow-premium"
+            class="track-art"
             aspect-ratio="1"
             cover
             draggable="false"
@@ -55,7 +55,7 @@
           <!-- Fallback when the track has no (or a broken) cover -->
           <div
             v-else
-            class="art-fallback rounded-lg shadow-premium"
+            class="art-fallback"
             role="img"
             :aria-label="$t('Player.Card.CoverAlt', { name: trackName, artist: artistName })"
           >
@@ -133,11 +133,11 @@
       <!-- Bottom: Info (Clean Metadata) -->
       <div class="info-section">
         <div class="track-meta text-center">
-          <div class="text-truncate font-weight-bold text-white cursor-pointer">
+          <div class="text-truncate font-weight-bold text-high-emphasis cursor-pointer">
             <span class="hover-underline">{{ trackName }}</span>
           </div>
           <div 
-            class="text-truncate text-caption text-white opacity-60 cursor-pointer"
+            class="text-truncate text-caption text-medium-emphasis cursor-pointer"
             @click.stop="goToProfile"
           >
             <span class="hover-underline">{{ artistName }}</span>
@@ -161,6 +161,7 @@ import { useI18n } from 'vue-i18n'
 import { usePlayer } from '@/composables/usePlayer'
 import { useTrackLike, type LikeChange } from '@/composables/useTrackLike'
 import { useCurrencyStore } from '@/stores/currencyStore'
+import { useAppTheme } from '@/composables/useAppTheme'
 import LicenseSelectorModal from '@/components/Cart/LicenseSelectorModal.vue'
 import type { TrackLike } from '@/types/audio'
 import { getTrackId } from '@/utils/track'
@@ -225,9 +226,11 @@ const artFailed = ref(false)
 watch(() => displayTrack.value?.art, () => { artFailed.value = false })
 const hasArt = computed(() => Boolean(displayTrack.value?.art) && !artFailed.value)
 
+const { isDark } = useAppTheme()
+
 // --- Theme (CSS variables consumed by the scoped styles) ---
 const themeStyle = computed(() => {
-  const palette = getThemePalette(props.theme ?? displayTrack.value?.user?.profileTheme)
+  const palette = getThemePalette(props.theme ?? displayTrack.value?.user?.profileTheme, isDark.value)
   const style: Record<string, string> = {
     '--bp-accent': palette.accent,
     '--bp-accent2': palette.accent2,
@@ -368,6 +371,24 @@ $ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
   -webkit-backdrop-filter: blur(16px);
   border: 0 !important;
   border-radius: 16px;
+
+  .v-theme--light & {
+    background:
+      linear-gradient(
+        160deg,
+        rgba(var(--bp-accent), 0.10) 0%,
+        rgba(255, 255, 255, 0.88) 40%,
+        rgba(255, 255, 255, 0.94) 70%,
+        rgba(var(--bp-deep), 0.08) 100%
+      ) !important;
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 0 !important;
+    box-shadow:
+      0 2px 6px rgba(15, 23, 42, 0.04),
+      0 10px 24px -4px rgba(15, 23, 42, 0.06),
+      inset 0 1px 0 rgba(255, 255, 255, 0.85) !important;
+  }
 }
 
 /* ---------- Border: theme gradient hairline, neon sweep on hover ---------- */
@@ -375,25 +396,39 @@ $ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  padding: 1px;
+  padding: 1.2px;
   pointer-events: none;
   z-index: 3;
-  background: linear-gradient(
-    150deg,
-    rgba(var(--bp-accent), 0.45),
-    rgba(var(--bp-deep), 0.08) 40%,
-    rgba(var(--bp-deep), 0.08) 60%,
-    rgba(var(--bp-accent2), 0.3)
-  );
-  // Punch out the middle => only a 1px gradient ring remains
+  // Punch out the middle => only a 1.2px gradient ring remains
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.35s ease;
 
+  // Static hairline (idle)
+  &:not(&--spin) {
+    background: linear-gradient(
+      150deg,
+      rgba(var(--bp-accent), 0.45),
+      rgba(var(--bp-deep), 0.08) 40%,
+      rgba(var(--bp-deep), 0.08) 60%,
+      rgba(var(--bp-accent2), 0.3)
+    );
+
+    .v-theme--light & {
+      background: linear-gradient(
+        150deg,
+        rgba(var(--bp-accent), 0.45) 0%,
+        #CBD5E1 35%,
+        #E2E8F0 65%,
+        rgba(var(--bp-accent2), 0.35) 100%
+      );
+    }
+  }
+
+  // Spinning neon beam (hover)
   &--spin {
-    padding: 1.5px;
     opacity: 0;
     background: conic-gradient(
       from var(--bp-angle),
@@ -402,9 +437,20 @@ $ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
       rgba(var(--bp-accent), 1) 75%,
       rgba(var(--bp-accent2), 0.9) 84%,
       transparent 94%
-    );
+    ) !important;
     animation: bp-spin 3.2s linear infinite;
     animation-play-state: paused;
+
+    .v-theme--light & {
+      background: conic-gradient(
+        from var(--bp-angle),
+        transparent 0 45%,
+        rgba(var(--bp-deep), 0.85) 60%,
+        rgba(var(--bp-accent), 1) 76%,
+        rgba(var(--bp-accent2), 0.95) 88%,
+        transparent 95%
+      ) !important;
+    }
   }
 }
 
@@ -431,8 +477,8 @@ $ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 
   &.is-active {
     .art-overlay { opacity: 1; }
-    .shadow-premium {
-      box-shadow: 0 0 30px rgba(var(--bp-accent), 0.4);
+    .art-stage {
+      box-shadow: 0 0 24px rgba(var(--bp-accent), 0.45);
     }
   }
 
@@ -440,38 +486,40 @@ $ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
   &:focus-within .art-overlay { opacity: 1; }
 }
 
-// The visual layer that tilts (clips the image + fx + controls)
+// The visual layer that clips the image + fx + controls
 .art-stage {
   position: absolute;
   inset: 0;
   border-radius: 12px;
   overflow: hidden;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(white, black);
+  transform: translateZ(0);
   isolation: isolate; // keep blend modes inside the cover (no flicker with the glass backdrop)
   backface-visibility: hidden;
-  transition: transform 0.6s $ease-out-expo;
   user-select: none;
   -webkit-user-select: none;
+  transition: box-shadow 0.3s ease;
 }
 
 .track-art {
+  width: 100%;
+  height: 100%;
   user-select: none;
   -webkit-user-select: none;
   -webkit-user-drag: none;
   pointer-events: none;
-  will-change: scale, translate;
-  scale: 1;
-  translate: 0 0;
+  transform: scale(1);
   transition:
-    scale 0.75s $ease-smooth,
-    translate 0.6s $ease-smooth,
-    filter 0.6s ease,
-    box-shadow 0.3s ease !important;
+    transform 0.5s $ease-smooth,
+    filter 0.5s ease;
 
   :deep(img) {
     user-select: none;
     -webkit-user-select: none;
     -webkit-user-drag: none;
     pointer-events: none;
+    border-radius: inherit;
   }
 }
 
@@ -489,6 +537,11 @@ $ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
   );
   color: rgba(255, 255, 255, 0.5);
   transition: box-shadow 0.3s ease;
+
+  .v-theme--light & {
+    background: linear-gradient(135deg, #F1F5F9, #E2E8F0);
+    color: #64748B;
+  }
 }
 
 /* Decorative hover layers (between the image and the controls) */
@@ -498,7 +551,7 @@ $ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
   z-index: 1;
   opacity: 0;
-  border-radius: 12px;
+  border-radius: inherit;
   transition: opacity 0.35s ease, transform 0.35s $ease-out-expo;
 }
 
@@ -510,9 +563,8 @@ $ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
   background-blend-mode: multiply;
   mix-blend-mode: screen;
   // Same scale as the hovered cover so only the offset animates
-  scale: 1;
-  translate: 0 0;
-  transition: opacity 0.35s ease, scale 0.75s $ease-smooth, translate 0.6s $ease-smooth;
+  transform: scale(1);
+  transition: opacity 0.35s ease, transform 0.5s $ease-smooth;
 
   &--a { background-color: rgb(var(--bp-accent)); }
   &--b { background-color: rgb(var(--bp-accent2)); }
@@ -532,6 +584,10 @@ $ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
       transparent 60%
     );
   mix-blend-mode: soft-light;
+
+  .v-theme--light & {
+    display: none !important;
+  }
 }
 
 // Fine CRT scanlines for the "signal" feel
@@ -542,19 +598,23 @@ $ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
     transparent 1px 3px
   );
   mix-blend-mode: overlay;
+
+  .v-theme--light & {
+    display: none !important;
+  }
 }
 
 .art-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(8, 8, 12, 0.4);
+  background: rgba(8, 8, 12, 0.38);
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
-  transition: opacity 0.45s $ease-smooth, background 0.45s $ease-smooth;
+  transition: opacity 0.35s $ease-smooth, background 0.35s $ease-smooth;
   z-index: 2;
-  border-radius: 12px; 
+  border-radius: inherit; 
 }
 
 .overlay-top-left {
@@ -624,9 +684,26 @@ $ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
       0 16px 32px rgba(0, 0, 0, 0.6),
       0 0 24px rgba(var(--bp-accent), 0.18);
 
-    .bp-border { opacity: 0.4; }
+    .v-theme--light & {
+      background:
+        linear-gradient(
+          160deg,
+          rgba(var(--bp-accent), 0.16) 0%,
+          rgba(255, 255, 255, 0.92) 42%,
+          rgba(255, 255, 255, 0.95) 68%,
+          rgba(var(--bp-deep), 0.12) 100%
+        ) !important;
+      box-shadow:
+        0 14px 32px -4px rgba(15, 23, 42, 0.10),
+        0 0 20px color-mix(in srgb, rgb(var(--bp-accent)) 25%, transparent),
+        inset 0 1px 0 #FFFFFF !important;
+    }
+
+    .bp-border:not(.bp-border--spin) {
+      opacity: 0.2;
+    }
     .bp-border--spin {
-      opacity: 1;
+      opacity: 1 !important;
       animation-play-state: running;
     }
 
@@ -657,42 +734,23 @@ $ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 // Motion-heavy parts only when the user hasn't asked for reduced motion
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .art-section:hover {
-    // Subtle 3D tilt towards the cursor (inner stage only). Slight scale-down keeps the
-    // tilted edges inside the card instead of looking sunk into / clipped by it.
-    .art-stage {
-      transform:
-        perspective(1100px)
-        rotateX(calc((0.5 - var(--my)) * 4deg))
-        rotateY(calc((var(--mx) - 0.5) * 5deg))
-        scale(0.98);
-      transition: transform 0.15s ease-out;
-    }
-
-    // Depth parallax: the cover drifts gently against the tilt with subtle, smooth zoom
+    // Silky smooth zoom on the track art without 3D tilt clipping glitches or border gaps
     .track-art {
-      scale: 1.035;
-      translate: calc((0.5 - var(--mx)) * 8px) calc((0.5 - var(--my)) * 8px);
-      filter: saturate(1.12) contrast(1.03);
-      transition:
-        scale 0.65s $ease-smooth,
-        translate 0.15s ease-out,
-        filter 0.6s ease,
-        box-shadow 0.3s ease !important;
+      transform: scale(1.05);
+      filter: saturate(1.1) contrast(1.03);
     }
 
     // Chromatic split: ghosts ease apart (no flashing) and trail the cursor
-    .art-chroma { opacity: 0.35; }
+    .art-chroma { opacity: 0.3; }
 
     .art-chroma--a {
-      scale: 1.035;
-      translate: calc((0.5 - var(--mx)) * 8px - 3px) calc((0.5 - var(--my)) * 8px);
-      transition: scale 0.65s $ease-smooth, translate 0.15s ease-out;
+      transform: scale(1.05) translate(calc((0.5 - var(--mx)) * 6px - 2px), calc((0.5 - var(--my)) * 6px));
+      transition: opacity 0.35s ease, transform 0.2s ease-out;
     }
 
     .art-chroma--b {
-      scale: 1.035;
-      translate: calc((0.5 - var(--mx)) * 8px + 3px) calc((0.5 - var(--my)) * 8px);
-      transition: scale 0.65s $ease-smooth, translate 0.15s ease-out;
+      transform: scale(1.05) translate(calc((0.5 - var(--mx)) * 6px + 2px), calc((0.5 - var(--my)) * 6px));
+      transition: opacity 0.35s ease, transform 0.2s ease-out;
     }
   }
 }

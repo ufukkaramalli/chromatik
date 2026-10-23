@@ -4,9 +4,13 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { useAppTheme } from '@/composables/useAppTheme'
 
-// Theme colors (Vuetify theme): primary shades only
-const COLORS = ['211,47,47', '255,82,82', '154,0,7']
+const { isDark } = useAppTheme()
+
+// Theme colors: Dark mode uses neon primary shades, light mode uses deep crimson shades for high contrast
+const DARK_COLORS = ['211,47,47', '255,82,82', '154,0,7']
+const LIGHT_COLORS = ['211,47,47', '180,20,30', '154,0,7']
 const LINE_COUNT = 50
 const STEP = 8
 
@@ -43,9 +47,12 @@ const onMove = (e) => {
 const draw = (ms) => {
   if (!running) return
   const time = ms * 0.001
+  const dark = isDark.value
+  const colors = dark ? DARK_COLORS : LIGHT_COLORS
+
   ctx.clearRect(0, 0, width, height)
-  ctx.globalCompositeOperation = 'lighter'
-  ctx.lineWidth = 1
+  ctx.globalCompositeOperation = dark ? 'lighter' : 'source-over'
+  ctx.lineWidth = dark ? 1 : 1.2
 
   // Eased mouse follow
   mouse.sx += (mouse.x - mouse.sx) * 0.08
@@ -76,8 +83,10 @@ const draw = (ms) => {
       if (x === -STEP) ctx.moveTo(x, y)
       else ctx.lineTo(x, y)
     }
-    const alpha = 0.18 + 0.3 * Math.abs(Math.sin(t * Math.PI * 3 + time * 0.5))
-    ctx.strokeStyle = `rgba(${COLORS[i % COLORS.length]},${alpha.toFixed(3)})`
+    const baseAlpha = dark ? 0.18 : 0.28
+    const varAlpha = dark ? 0.3 : 0.4
+    const alpha = baseAlpha + varAlpha * Math.abs(Math.sin(t * Math.PI * 3 + time * 0.5))
+    ctx.strokeStyle = `rgba(${colors[i % colors.length]},${alpha.toFixed(3)})`
     ctx.stroke()
   }
 

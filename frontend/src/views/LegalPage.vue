@@ -1,11 +1,11 @@
 <template>
-  <v-main class="bg-black legal-page">
+  <v-main class="legal-page">
     <v-container class="py-10 py-md-14 px-3 px-sm-6" style="max-width: 1240px;">
       <v-row>
         <!-- Sidebar: document navigation -->
         <v-col cols="12" md="4" lg="3" class="order-2 order-md-1">
           <div class="position-sticky" style="top: 96px;">
-            <v-card rounded="xl" border color="#121018" class="pa-2 mb-4" elevation="0">
+            <v-card rounded="xl" border color="surface" class="pa-2 mb-4" elevation="0">
               <div class="font-mono text-caption text-primary font-weight-bold text-uppercase px-3 pt-2 pb-1">
                 {{ $t('Legal.OtherDocs') }}
               </div>
@@ -27,14 +27,14 @@
               </v-list>
             </v-card>
 
-            <v-card rounded="xl" border color="#121018" class="pa-5" elevation="0">
+            <v-card rounded="xl" border color="surface" class="pa-5" elevation="0">
               <v-avatar color="primary" variant="tonal" size="40" class="mb-3">
                 <v-icon>mdi-lifebuoy</v-icon>
               </v-avatar>
-              <div class="text-subtitle-1 font-weight-bold text-white mb-1">
+              <div class="text-subtitle-1 font-weight-bold text-high-emphasis mb-1">
                 {{ $t('Legal.QuestionsTitle') }}
               </div>
-              <p class="text-body-2 text-grey-lighten-1 mb-4">
+              <p class="text-body-2 text-medium-emphasis mb-4">
                 {{ $t('Legal.QuestionsDesc') }}
               </p>
               <v-btn
@@ -65,34 +65,34 @@
             {{ $t('Legal.Badge') }}
           </v-chip>
 
-          <h1 class="text-h4 text-md-h3 font-weight-black text-white mb-3">
+          <h1 class="text-h4 text-md-h3 font-weight-black text-high-emphasis mb-3">
             {{ $t(`Legal.Docs.${doc.key}.Title`) }}
           </h1>
-          <p class="text-body-1 text-grey-lighten-1 mb-4" style="max-width: 720px;">
+          <p class="text-body-1 text-medium-emphasis mb-4" style="max-width: 720px;">
             {{ $t(`Legal.Docs.${doc.key}.Summary`) }}
           </p>
           <v-chip
             size="small"
             variant="outlined"
-            class="font-mono text-caption text-grey-lighten-1 mb-8"
+            class="font-mono text-caption text-medium-emphasis mb-8"
             prepend-icon="mdi-calendar-check-outline"
           >
             {{ $t('Legal.LastUpdated', { date: formattedDate }) }}
           </v-chip>
 
-          <v-card rounded="xl" border color="#121018" class="pa-6 pa-md-10" elevation="0">
+          <v-card rounded="xl" border color="surface" class="pa-6 pa-md-10" elevation="0">
             <section
               v-for="(section, i) in sections"
               :id="`section-${i + 1}`"
               :key="`${doc.key}-${i}`"
             >
-              <h2 class="text-h6 font-weight-bold text-white mb-2 d-flex align-center ga-3">
+              <h2 class="text-h6 font-weight-bold text-high-emphasis mb-2 d-flex align-center ga-3">
                 <v-chip size="x-small" color="primary" variant="flat" class="font-mono font-weight-bold">
                   {{ String(i + 1).padStart(2, '0') }}
                 </v-chip>
                 {{ rt(section.Title) }}
               </h2>
-              <p class="text-body-2 text-grey-lighten-1 mb-0" style="line-height: 1.8;">
+              <p class="text-body-2 text-medium-emphasis mb-0" style="line-height: 1.8;">
                 {{ rt(section.Body) }}
               </p>
               <v-divider v-if="i < sections.length - 1" class="my-6 border-opacity-25" />

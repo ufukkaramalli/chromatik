@@ -355,6 +355,24 @@
     },
     "Rights": "Tüm hakları saklıdır.",
     "Status": "Tüm sistemler aktif",
+    "StatusOperational": "Tüm sistemler aktif",
+    "StatusDegraded": "Kısmi performans kaybı",
+    "StatusOutage": "Sistem kesintisi",
+    "StatusChecking": "Kontrol ediliyor...",
+    "SystemHealth": "Sistem Sağlığı & Durum",
+    "SystemHealthDesc": "Platform servislerinin anlık çalışma ve gecikme metrikleri",
+    "ServiceApi": "API Sunucusu",
+    "ServiceDb": "Veritabanı (MongoDB)",
+    "ServiceStorage": "Medya Depolama",
+    "StorageUsed": "Kullanılan",
+    "StorageFree": "boş",
+    "StorageTotal": "toplam disk",
+    "ServiceMemory": "Bellek Kullanımı",
+    "ServiceUptime": "Çalışma Süresi",
+    "RefreshCheck": "Yeniden Kontrol Et",
+    "Latency": "Gecikme",
+    "ClickForDetails": "Canlı sistem metrikleri için tıklayın",
+    "Close": "Kapat",
     "Help": {
       "Support": "Destek ve SSS",
       "Contact": "İletişim",
@@ -696,5 +714,10 @@
       "LICENSE_NOT_FOR_SALE": "Bu lisans türü şu an satışa açık değil.",
       "ADD_TO_CART_FAILED": "Ürün sepete eklenirken bir hata oluştu."
     }
+  },
+  "Theme": {
+    "Toggle": "Temayı Değiştir",
+    "DarkMode": "Karanlık Mod",
+    "LightMode": "Aydınlık Mod"
   }
 }

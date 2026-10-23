@@ -9,10 +9,10 @@
   >
     <div class="d-flex flex-column h-100">
       <!-- Header -->
-      <div class="drawer-header pa-4 d-flex align-center justify-space-between border-b border-white-10">
+      <div class="drawer-header pa-4 d-flex align-center justify-space-between border-b ck-border-subtle">
         <div class="d-flex align-center">
           <v-icon color="primary" class="mr-2">mdi-cart-outline</v-icon>
-          <span class="text-h6 font-weight-bold text-white">{{ $t('Cart.Title') }}</span>
+          <span class="text-h6 font-weight-bold text-high-emphasis">{{ $t('Cart.Title') }}</span>
           <v-chip
             v-if="!cartStore.isEmpty"
             size="small"
@@ -27,7 +27,7 @@
           icon="mdi-close"
           variant="text"
           size="small"
-          color="grey"
+          color="medium-emphasis"
           @click="cartStore.closeDrawer"
         />
       </div>
@@ -52,10 +52,10 @@
           <div class="empty-icon-circle mx-auto mb-4 d-flex align-center justify-center">
             <v-icon size="40" color="primary">mdi-cart-off</v-icon>
           </div>
-          <div class="text-h6 font-weight-bold text-white mb-2">
+          <div class="text-h6 font-weight-bold text-high-emphasis mb-2">
             {{ $t('Cart.Empty') }}
           </div>
-          <div class="text-caption text-grey mb-6">
+          <div class="text-caption text-medium-emphasis mb-6">
             {{ $t('Cart.EmptySubtitle') }}
           </div>
           <v-btn
@@ -103,13 +103,10 @@ function getLocalizedError(errCode: string): string {
 
 <style scoped>
 .cart-drawer-panel {
-  background: rgba(18, 18, 18, 0.96) !important;
+  background: rgba(var(--v-glass-bg, var(--v-theme-surface)), var(--v-glass-opacity, 0.95)) !important;
   backdrop-filter: blur(20px);
-  border-left: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.border-white-10 {
-  border-color: rgba(255, 255, 255, 0.08) !important;
+  -webkit-backdrop-filter: blur(20px);
+  border-left: 1px solid rgba(var(--v-border-color), var(--v-border-opacity, 0.08)) !important;
 }
 
 .empty-icon-circle {

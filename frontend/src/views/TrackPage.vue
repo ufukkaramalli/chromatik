@@ -1,12 +1,12 @@
 <template>
-  <v-main class="bg-black track-page" v-cloak>
+  <v-main class="track-page">
     <div v-if="loading" class="d-flex align-center justify-center fill-height">
       <v-progress-circular size="64" width="6" color="primary" indeterminate></v-progress-circular>
     </div>
     
     <div v-else-if="!success" class="d-flex flex-column align-center justify-center fill-height opacity-50">
       <v-icon size="80" color="grey" class="mb-4">mdi-music-off</v-icon>
-      <h2 class="text-h4 font-weight-black text-white">{{ $t('Track.NotFound') }}</h2>
+      <h2 class="text-h4 font-weight-black text-high-emphasis">{{ $t('Track.NotFound') }}</h2>
     </div>
     
     <div v-else>
@@ -30,7 +30,7 @@
         <v-container class="position-relative hero-container px-6 px-md-12 pt-6">
           <v-row align="stretch" class="hero-main-row">
             <v-col cols="12" md="auto" class="d-flex justify-center justify-md-start">
-              <div class="cover-art-wrap rounded-xl overflow-hidden position-relative">
+              <div class="cover-art-wrap ck-art-backing rounded-xl overflow-hidden position-relative">
                  <v-img :src="track.art || '/no-photo.jpg'" aspect-ratio="1" cover draggable="false">
                     <!-- Always visible Play/Pause button centered on the artwork -->
                     <div class="cover-play-center d-flex align-center justify-center h-100 w-100">
@@ -53,7 +53,7 @@
                   <GlitchTitle 
                     :text="track.name" 
                     tag="h1" 
-                    className="text-h2 font-weight-black text-white track-title mb-1" 
+                    className="text-h2 font-weight-black text-high-emphasis track-title mb-1" 
                     :theme="artistTheme"
                   />
                   
@@ -91,7 +91,6 @@
                     <v-btn 
                       variant="tonal" 
                       rounded="pill" 
-                      color="white" 
                       size="large"
                       class="px-5 font-weight-bold glass-action-btn"
                       @click="handleShare"
@@ -143,7 +142,7 @@
 
                   <!-- Tags -->
                   <div class="d-flex flex-wrap justify-center justify-md-start gap-2 mt-2" v-if="track.tags && track.tags.length">
-                     <v-chip v-for="tag in track.tags" :key="tag" color="white" variant="outlined" size="small" class="glass-chip font-weight-bold">
+                     <v-chip v-for="tag in track.tags" :key="tag" variant="outlined" size="small" class="glass-chip font-weight-bold">
                        #{{ tag }}
                      </v-chip>
                   </div>
@@ -158,18 +157,18 @@
         <v-row>
           <v-col cols="12" md="8">
              <div class="mb-8">
-               <h3 class="text-h5 font-weight-black text-white mb-6 d-flex align-center">
+               <h3 class="text-h5 font-weight-black text-high-emphasis mb-6 d-flex align-center">
                  <v-icon color="primary" class="mr-2">mdi-text-box-outline</v-icon>
                  {{ $t('Track.Description') }}
                </h3>
-               <div class="glass-card rounded-xl pa-8 text-body-1 text-grey-lighten-1 description-box">
+               <div class="glass-card rounded-xl pa-8 text-body-1 text-medium-emphasis description-box">
                   {{ track.description || $t('Track.NoDescription') }}
                </div>
              </div>
              
              <v-row class="mb-8" v-if="(track.genres && track.genres.length) || (track.moods && track.moods.length)">
                <v-col cols="12" sm="6" v-if="track.genres && track.genres.length">
-                 <h3 class="text-h5 font-weight-black text-white mb-4 d-flex align-center">
+                 <h3 class="text-h5 font-weight-black text-high-emphasis mb-4 d-flex align-center">
                    <v-icon color="primary" class="mr-2">mdi-music-box-multiple</v-icon>
                    {{ $t('Track.Genres') }}
                  </h3>
@@ -181,7 +180,7 @@
                </v-col>
 
                <v-col cols="12" sm="6" v-if="track.moods && track.moods.length">
-                 <h3 class="text-h5 font-weight-black text-white mb-4 d-flex align-center">
+                 <h3 class="text-h5 font-weight-black text-high-emphasis mb-4 d-flex align-center">
                    <v-icon color="primary" class="mr-2">mdi-emoticon</v-icon>
                    {{ $t('Track.Moods') }}
                  </h3>
@@ -208,7 +207,7 @@
           </v-col>
           
           <v-col cols="12" md="4">
-             <h3 class="text-h5 font-weight-black text-white mb-6 d-flex align-center">
+             <h3 class="text-h5 font-weight-black text-high-emphasis mb-6 d-flex align-center">
                <v-icon color="primary" class="mr-2">mdi-tag-multiple</v-icon>
                {{ $t('Track.Licenses') }}
              </h3>
@@ -218,8 +217,8 @@
                 <v-card class="glass-card hover-card rounded-xl overflow-hidden border-left-primary" v-if="track.priceBasic !== null && track.priceBasic !== undefined">
                   <v-card-text class="d-flex align-center justify-space-between pa-5">
                     <div>
-                      <div class="text-subtitle-1 font-weight-black text-white mb-1">{{ $t('Track.BasicLease') }}</div>
-                      <div class="text-caption text-grey-lighten-1">{{ $t('Track.BasicLeaseDesc') }}</div>
+                      <div class="text-subtitle-1 font-weight-black text-high-emphasis mb-1">{{ $t('Track.BasicLease') }}</div>
+                      <div class="text-caption text-medium-emphasis">{{ $t('Track.BasicLeaseDesc') }}</div>
                     </div>
                     <v-btn
                       color="primary"
@@ -238,8 +237,8 @@
                 <v-card class="glass-card hover-card rounded-xl overflow-hidden" v-if="track.pricePremium !== null && track.pricePremium !== undefined">
                   <v-card-text class="d-flex align-center justify-space-between pa-5">
                     <div>
-                      <div class="text-subtitle-1 font-weight-black text-white mb-1">{{ $t('Track.PremiumLease') }}</div>
-                      <div class="text-caption text-grey-lighten-1">{{ $t('Track.PremiumLeaseDesc') }}</div>
+                      <div class="text-subtitle-1 font-weight-black text-high-emphasis mb-1">{{ $t('Track.PremiumLease') }}</div>
+                      <div class="text-caption text-medium-emphasis">{{ $t('Track.PremiumLeaseDesc') }}</div>
                     </div>
                     <v-btn
                       color="cyan"
@@ -258,8 +257,8 @@
                 <v-card class="glass-card hover-card rounded-xl overflow-hidden" v-if="track.priceUnlimited !== null && track.priceUnlimited !== undefined">
                   <v-card-text class="d-flex align-center justify-space-between pa-5">
                     <div>
-                      <div class="text-subtitle-1 font-weight-black text-white mb-1">{{ $t('Track.UnlimitedLease') }}</div>
-                      <div class="text-caption text-grey-lighten-1">{{ $t('Track.UnlimitedLeaseDesc') }}</div>
+                      <div class="text-subtitle-1 font-weight-black text-high-emphasis mb-1">{{ $t('Track.UnlimitedLease') }}</div>
+                      <div class="text-caption text-medium-emphasis">{{ $t('Track.UnlimitedLeaseDesc') }}</div>
                     </div>
                     <v-btn
                       color="purple"
@@ -327,6 +326,7 @@ import { useI18n } from 'vue-i18n'
 import { useAppStore } from '@/stores/app'
 import { usePlayer } from '@/composables/usePlayer'
 import { useTrackLike } from '@/composables/useTrackLike'
+import { useAppTheme } from '@/composables/useAppTheme'
 import { getThemePalette } from '@/utils/themePalette'
 import GlitchTitle from '@/components/GlitchTitle.vue'
 import TrackWaveform from '@/components/Audio/TrackWaveform.vue'
@@ -405,9 +405,11 @@ const isThisTrackActive = computed(() => {
   return Boolean(activeId && thisId && activeId === thisId)
 })
 
+const { isDark } = useAppTheme()
+
 // Artist palette as CSS vars (see .agents/rules/theme_colors.md)
 const themeVars = computed(() => {
-  const palette = getThemePalette(artistTheme.value)
+  const palette = getThemePalette(artistTheme.value, isDark.value)
   return { '--tp-accent': palette.accent, '--tp-deep': palette.deep }
 })
 
@@ -525,6 +527,11 @@ const handlePlay = () => {
   min-height: 400px;
   background: #050508;
   border-bottom: 1px solid rgba(255,255,255,0.05);
+
+  .v-theme--light & {
+    background: #f8fafc;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
 }
 /* Generative Artist Background across Hero */
 .track-hero-waves {
@@ -558,6 +565,10 @@ const handlePlay = () => {
   background: radial-gradient(circle at 75% 35%, rgba(5,5,8,0.15) 0%, rgba(5,5,8,0.85) 75%, #050508 100%), linear-gradient(to bottom, rgba(5,5,8,0.15) 0%, #050508 100%);
   z-index: 2;
   pointer-events: none;
+
+  .v-theme--light & {
+    background: radial-gradient(circle at 75% 35%, rgba(248,250,252,0.15) 0%, rgba(248,250,252,0.85) 75%, #f8fafc 100%), linear-gradient(to bottom, rgba(248,250,252,0.15) 0%, #f8fafc 100%);
+  }
 }
 .hero-container {
   position: relative;
@@ -569,7 +580,7 @@ const handlePlay = () => {
 }
 .track-title {
   letter-spacing: -1px;
-  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
   line-height: 1.1;
   margin-top: -6px;
 }
@@ -578,6 +589,12 @@ const handlePlay = () => {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
+
+  .v-theme--light & {
+    background: rgba(255, 255, 255, 0.9) !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  }
 }
 .hover-card {
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -587,6 +604,10 @@ const handlePlay = () => {
   transform: translateY(-4px);
   box-shadow: 0 12px 30px rgba(0,0,0,0.4), 0 0 12px rgba(var(--v-theme-primary), 0.15) !important;
   border-color: rgba(var(--v-theme-primary), 0.4) !important;
+
+  .v-theme--light & {
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08), 0 0 12px rgba(var(--v-theme-primary), 0.15) !important;
+  }
 }
 .border-left-primary {
   border-left: 4px solid rgb(var(--v-theme-primary)) !important;
@@ -609,13 +630,28 @@ const handlePlay = () => {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(8px);
+
+  .v-theme--light & {
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
 }
 .glass-chip {
   background: rgba(255, 255, 255, 0.03) !important;
   border-color: rgba(255, 255, 255, 0.15) !important;
+
+  .v-theme--light & {
+    background: rgba(0, 0, 0, 0.04) !important;
+    border-color: rgba(0, 0, 0, 0.1) !important;
+    color: rgb(var(--v-theme-on-surface)) !important;
+  }
 }
 .glass-chip:hover {
   background: rgba(255, 255, 255, 0.1) !important;
+
+  .v-theme--light & {
+    background: rgba(0, 0, 0, 0.08) !important;
+  }
 }
 .description-box {
   line-height: 1.8;
@@ -764,6 +800,12 @@ const handlePlay = () => {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
   gap: 12px;
   transition: border-color 0.2s ease;
+
+  .v-theme--light & {
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  }
 }
 
 .hero-specs-hud:hover {
@@ -782,17 +824,29 @@ const handlePlay = () => {
   font-weight: 700;
   margin-right: 5px;
   font-size: 0.68rem;
+
+  .v-theme--light & {
+    color: rgba(0, 0, 0, 0.45);
+  }
 }
 
 .hud-val {
   color: #ffffff;
   font-weight: 800;
+
+  .v-theme--light & {
+    color: rgb(var(--v-theme-on-surface));
+  }
 }
 
 .hud-divider {
   width: 1px;
   height: 14px;
   background: rgba(255, 255, 255, 0.14);
+
+  .v-theme--light & {
+    background: rgba(0, 0, 0, 0.1);
+  }
 }
 
 /* Hero Desktop Alignments */
@@ -809,6 +863,10 @@ const handlePlay = () => {
   user-select: none;
   -webkit-user-select: none;
   -webkit-user-drag: none;
+
+  .v-theme--light & {
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12);
+  }
 
   :deep(img) {
     user-select: none;

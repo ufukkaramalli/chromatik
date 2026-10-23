@@ -1,10 +1,10 @@
 <template>
   <v-sheet
     color="transparent"
-    class="d-flex align-center font-mono text-caption text-grey-lighten-2 position-relative cursor-pointer ga-1 flex-shrink-0"
+    class="d-flex align-center font-mono text-caption text-medium-emphasis position-relative cursor-pointer ga-1 flex-shrink-0"
   >
     <v-icon size="14" color="primary" class="flex-shrink-0">mdi-timer-sand</v-icon>
-    <span class="countdown-display font-weight-bold text-white text-center">
+    <span class="countdown-display font-weight-bold text-high-emphasis text-center">
       {{ timeRemaining.formatted }}
     </span>
 

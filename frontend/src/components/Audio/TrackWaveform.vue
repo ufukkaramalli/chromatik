@@ -63,22 +63,17 @@
         :style="{ left: getPinPercent(comment.audioTimestamp) + '%' }"
         @click.stop="handlePinClick(comment)"
       >
-        <v-tooltip 
-          activator="parent" 
-          location="top" 
-          offset="14"
-          content-class="waveform-comment-tooltip"
-        >
-          <div class="pin-tooltip text-left">
-            <div class="d-flex align-center justify-space-between mb-1">
-              <span class="pin-user-name mr-2">{{ comment.userId?.name }}</span>
-              <span class="pin-timestamp-badge">{{ formatTime(comment.audioTimestamp) }}</span>
+        <GlassTooltip location="top" :offset="14">
+          <div class="pin-tooltip text-left pa-1">
+            <div class="d-flex align-center justify-space-between mb-1 ga-2">
+              <span class="font-weight-bold text-high-emphasis text-caption">{{ comment.userId?.name }}</span>
+              <span class="font-mono text-caption text-primary font-weight-bold">{{ formatTime(comment.audioTimestamp) }}</span>
             </div>
-            <div class="pin-comment-text">
+            <div class="text-caption text-medium-emphasis">
               {{ comment.content }}
             </div>
           </div>
-        </v-tooltip>
+        </GlassTooltip>
 
         <v-avatar size="24" class="pin-avatar elevation-4">
           <v-img :src="comment.userId?.photoUrl || '/no-photo-user.jpg'" cover />
@@ -328,11 +323,11 @@ const handlePinClick = (comment: any) => {
 }
 
 .track-waveform-card {
-  background: rgba(12, 12, 16, 0.7) !important;
+  background: rgba(var(--v-glass-bg, var(--v-theme-surface)), var(--v-glass-opacity, 0.75)) !important;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity, 0.08)) !important;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, var(--v-shadow-strength, 0.2)), inset 0 1px 0 rgba(var(--v-theme-on-surface), 0.04);
 }
 
 .waveform-interactive-area {
@@ -344,14 +339,14 @@ const handlePinClick = (comment: any) => {
 
 .waveform-bars-flex {
   gap: 2px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(var(--v-theme-on-surface), 0.1);
   padding-bottom: 0;
 }
 
 .waveform-bar {
   flex: 1;
   max-width: 3.5px;
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(var(--v-theme-on-surface), 0.18);
   border-radius: 2px 2px 0 0;
   transition: background 0.12s ease, opacity 0.12s ease, transform 0.22s ease, box-shadow 0.2s ease;
   min-width: 2px;
@@ -366,7 +361,7 @@ const handlePinClick = (comment: any) => {
 .waveform-interactive-area:hover .waveform-bar {
   opacity: 0.95;
   &:not(.is-played) {
-    background: rgba(255, 255, 255, 0.32);
+    background: rgba(var(--v-theme-on-surface), 0.32);
   }
 }
 
@@ -397,13 +392,13 @@ const handlePinClick = (comment: any) => {
   0% {
     transform: scaleY(1);
     opacity: 0.6;
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(var(--v-theme-on-surface), 0.25);
   }
   100% {
     transform: scaleY(var(--eq-scale, 1.15)); /* Upward only */
     opacity: 1;
-    background: rgba(255, 255, 255, 0.6);
-    box-shadow: 0 -5px 12px rgba(255, 255, 255, 0.45);
+    background: rgba(var(--v-theme-on-surface), 0.55);
+    box-shadow: 0 -5px 12px rgba(var(--v-theme-on-surface), 0.25);
   }
 }
 
@@ -413,8 +408,8 @@ const handlePinClick = (comment: any) => {
   top: 14px;
   bottom: 0;
   width: 2px;
-  background: #ffffff;
-  box-shadow: 0 0 12px rgba(var(--v-theme-primary), 1), 0 0 4px #ffffff;
+  background: rgb(var(--v-theme-primary));
+  box-shadow: 0 0 12px rgba(var(--v-theme-primary), 0.9), 0 0 4px rgb(var(--v-theme-primary));
   pointer-events: none;
   z-index: 4;
 
@@ -425,7 +420,7 @@ const handlePinClick = (comment: any) => {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: #ffffff;
+    background: rgb(var(--v-theme-primary));
     box-shadow: 0 0 8px rgb(var(--v-theme-primary));
   }
 
@@ -436,11 +431,11 @@ const handlePinClick = (comment: any) => {
 
 @keyframes needleActivePulse {
   0% {
-    box-shadow: 0 0 6px rgb(var(--v-theme-primary)), 0 0 2px #fff;
+    box-shadow: 0 0 6px rgb(var(--v-theme-primary)), 0 0 2px rgb(var(--v-theme-primary));
     transform: scale(1);
   }
   100% {
-    box-shadow: 0 0 16px rgb(var(--v-theme-primary)), 0 0 6px #fff;
+    box-shadow: 0 0 16px rgb(var(--v-theme-primary)), 0 0 6px rgb(var(--v-theme-primary));
     transform: scale(1.28);
   }
 }
@@ -451,7 +446,7 @@ const handlePinClick = (comment: any) => {
   top: 14px;
   bottom: 0;
   width: 1px;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(var(--v-theme-on-surface), 0.7);
   pointer-events: none;
   z-index: 5;
 
@@ -460,13 +455,13 @@ const handlePinClick = (comment: any) => {
     top: 2px;
     transform: translateX(-50%);
     font-size: 11px;
-    background: rgba(10, 10, 14, 0.92);
+    background: rgba(var(--v-glass-bg, var(--v-theme-surface)), 0.92);
     backdrop-filter: blur(8px);
     padding: 2px 7px;
     border-radius: 4px;
-    color: #ffffff;
+    color: rgb(var(--v-theme-on-surface));
     border: 1px solid rgba(var(--v-theme-primary), 0.6);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, var(--v-shadow-strength, 0.3));
     pointer-events: none;
     white-space: nowrap;
     font-family: monospace;
@@ -491,81 +486,6 @@ const handlePinClick = (comment: any) => {
 .pin-avatar {
   border: 2px solid rgb(var(--v-theme-primary));
   box-shadow: 0 0 12px rgba(var(--v-theme-primary), 0.85);
-  background: #000000;
-}
-</style>
-
-<style lang="scss">
-/* Ultra-Classy Dark Glassmorphic Waveform Comment Tooltip */
-.v-overlay__content.waveform-comment-tooltip {
-  background: rgba(14, 15, 20, 0.94) !important;
-  backdrop-filter: blur(20px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.22) !important;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.75), 0 0 20px rgba(var(--v-theme-primary), 0.15) !important;
-  border-radius: 12px !important;
-  padding: 10px 14px !important;
-  color: #ffffff !important;
-  width: max-content !important;
-  max-width: 280px !important;
-  height: auto !important;
-  min-height: unset !important;
-  max-height: none !important;
-  align-self: flex-start !important;
-  flex: 0 0 auto !important;
-  overflow: visible !important;
-
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 50%;
-    transform: translateX(-50%) rotate(45deg);
-    width: 10px;
-    height: 10px;
-    background: rgba(14, 15, 20, 0.96);
-    border-right: 1px solid rgba(255, 255, 255, 0.12);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-    pointer-events: none;
-  }
-
-  .pin-tooltip {
-    display: block;
-    height: auto;
-    position: relative;
-    z-index: 1;
-  }
-
-  .pin-user-name {
-    font-size: 13px;
-    font-weight: 700;
-    color: #ffffff;
-    letter-spacing: -0.2px;
-  }
-
-  .pin-timestamp-badge {
-    display: inline-flex;
-    align-items: center;
-    background: rgba(var(--v-theme-primary), 0.18);
-    color: #ff5c7a;
-    border: 1px solid rgba(var(--v-theme-primary), 0.35);
-    border-radius: 6px;
-    font-size: 10.5px;
-    font-weight: 700;
-    font-family: monospace;
-    padding: 1px 7px;
-    line-height: 1.4;
-    letter-spacing: 0.5px;
-  }
-
-  .pin-comment-text {
-    font-size: 12px;
-    line-height: 1.45;
-    color: rgba(255, 255, 255, 0.85);
-    margin-top: 4px;
-    word-break: break-word;
-    white-space: normal;
-  }
+  background: rgb(var(--v-theme-surface));
 }
 </style>

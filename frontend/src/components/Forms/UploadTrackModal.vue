@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" max-width="800" persistent>
-    <v-card class="bg-grey-darken-4 text-white">
-      <v-card-title class="d-flex justify-space-between align-center pa-4 border-b border-white-10">
+    <v-card class="bg-surface text-high-emphasis rounded-xl">
+      <v-card-title class="d-flex justify-space-between align-center pa-4 border-b ck-border-subtle">
         <span class="text-h5 font-weight-bold">{{ $t('UploadTrack.Title') }}</span>
         <v-btn icon="mdi-close" variant="text" @click="close" :disabled="uploading"></v-btn>
       </v-card-title>
@@ -30,51 +30,40 @@
                 :placeholder="isDetectingBpm ? $t('UploadTrack.DetectingBpm') : ''"
               >
                 <template #prepend-inner v-if="getAudioFile() && !isDetectingBpm">
-                  <v-tooltip :text="$t('UploadTrack.DetectBpm')" location="top">
-                    <template #activator="{ props: tooltipProps }">
-                      <v-btn
-                        v-bind="tooltipProps"
-                        icon="mdi-metronome"
-                        variant="text"
-                        size="x-small"
-                        density="compact"
-                        class="text-grey-lighten-1"
-                        @click.stop="detectBpm(true)"
-                      ></v-btn>
-                    </template>
-                  </v-tooltip>
+                  <v-btn
+                    icon="mdi-metronome"
+                    variant="text"
+                    size="x-small"
+                    density="compact"
+                    class="text-medium-emphasis"
+                    @click.stop="detectBpm(true)"
+                  >
+                    <GlassTooltip :text="$t('UploadTrack.DetectBpm')" location="top" />
+                  </v-btn>
                 </template>
 
                 <template #append-inner v-if="formData.bpm && !isDetectingBpm">
                   <div class="d-flex align-center ga-1">
-                    <v-tooltip :text="$t('UploadTrack.HalveBpm')" location="top">
-                      <template #activator="{ props: tooltipProps }">
-                        <v-btn
-                          v-bind="tooltipProps"
-                          variant="tonal"
-                          size="x-small"
-                          density="compact"
-                          class="bpm-step-btn font-weight-bold"
-                          @click.stop="halveBpm"
-                        >
-                          ½
-                        </v-btn>
-                      </template>
-                    </v-tooltip>
-                    <v-tooltip :text="$t('UploadTrack.DoubleBpm')" location="top">
-                      <template #activator="{ props: tooltipProps }">
-                        <v-btn
-                          v-bind="tooltipProps"
-                          variant="tonal"
-                          size="x-small"
-                          density="compact"
-                          class="bpm-step-btn font-weight-bold"
-                          @click.stop="doubleBpm"
-                        >
-                          2x
-                        </v-btn>
-                      </template>
-                    </v-tooltip>
+                    <v-btn
+                      variant="tonal"
+                      size="x-small"
+                      density="compact"
+                      class="bpm-step-btn font-weight-bold"
+                      @click.stop="halveBpm"
+                    >
+                      ½
+                      <GlassTooltip :text="$t('UploadTrack.HalveBpm')" location="top" />
+                    </v-btn>
+                    <v-btn
+                      variant="tonal"
+                      size="x-small"
+                      density="compact"
+                      class="bpm-step-btn font-weight-bold"
+                      @click.stop="doubleBpm"
+                    >
+                      2x
+                      <GlassTooltip :text="$t('UploadTrack.DoubleBpm')" location="top" />
+                    </v-btn>
                   </div>
                 </template>
               </v-text-field>
@@ -191,9 +180,9 @@
         </v-form>
       </v-card-text>
 
-      <v-card-actions class="pa-4 border-t border-white-10">
+      <v-card-actions class="pa-4 border-t ck-border-subtle">
         <v-spacer></v-spacer>
-        <v-btn variant="text" color="grey" @click="close" :disabled="uploading">{{ $t('UploadTrack.Cancel') }}</v-btn>
+        <v-btn variant="text" color="medium-emphasis" @click="close" :disabled="uploading">{{ $t('UploadTrack.Cancel') }}</v-btn>
         <v-btn color="primary" variant="elevated" @click="submit" :loading="uploading" :disabled="!isValid">{{ $t('UploadTrack.UploadBtn') }}</v-btn>
       </v-card-actions>
     </v-card>
@@ -356,10 +345,6 @@ const submit = async () => {
 </script>
 
 <style scoped>
-.border-white-10 {
-  border-color: rgba(255, 255, 255, 0.1) !important;
-}
-
 .bpm-step-btn {
   min-width: 22px !important;
   height: 22px !important;

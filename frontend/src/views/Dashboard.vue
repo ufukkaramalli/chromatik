@@ -1,22 +1,22 @@
 <template>
-  <v-main class="bg-black" v-cloak>
+  <v-main class="bg-background">
     
     <!-- Hero Banner with Gradient -->
     <div class="hero-banner d-flex align-center px-6 px-md-12 pt-12 pb-16">
       <div class="hero-content w-100 d-flex flex-column flex-md-row justify-space-between align-md-center">
         <div>
-          <h1 class="text-h3 font-weight-black text-white mb-2 hero-title">
+          <h1 class="text-h3 font-weight-black text-high-emphasis mb-2 hero-title">
             {{ $t('Dashboard.Welcome', { name: auth.user?.name || 'Producer' }) }}
           </h1>
-          <p class="text-grey-lighten-1 text-subtitle-1">{{ $t('Dashboard.Subtitle') }}</p>
+          <p class="text-medium-emphasis text-subtitle-1">{{ $t('Dashboard.Subtitle') }}</p>
         </div>
         <div class="d-flex gap-3 mt-6 mt-md-0">
           <v-btn 
-            color="white" 
+            color="primary" 
             variant="outlined" 
             prepend-icon="mdi-folder-music" 
             size="x-large" 
-            class="text-none font-weight-bold rounded-lg border-white-20 glass-btn"
+            class="text-none font-weight-bold rounded-lg border-2"
           >
             {{ $t('Dashboard.UploadSoundkit') }}
           </v-btn>
@@ -42,8 +42,8 @@
           <v-card class="glass-card rounded-xl pa-5 elevation-12">
             <div class="d-flex align-start justify-space-between">
               <div>
-                <div class="text-overline text-grey-lighten-1 mb-1 font-weight-bold">{{ $t('Dashboard.TotalTracks') }}</div>
-                <div class="text-h3 font-weight-black text-white">{{ tracks.length }}</div>
+                <div class="text-overline text-medium-emphasis mb-1 font-weight-bold">{{ $t('Dashboard.TotalTracks') }}</div>
+                <div class="text-h3 font-weight-black text-high-emphasis">{{ tracks.length }}</div>
               </div>
               <div class="stat-icon-wrapper bg-primary-subtle">
                 <v-icon color="primary" size="32">mdi-music</v-icon>
@@ -59,8 +59,8 @@
           <v-card class="glass-card rounded-xl pa-5 elevation-12">
             <div class="d-flex align-start justify-space-between">
               <div>
-                <div class="text-overline text-grey-lighten-1 mb-1 font-weight-bold">{{ $t('Dashboard.TotalSoundkits') }}</div>
-                <div class="text-h3 font-weight-black text-white">{{ soundkits.length }}</div>
+                <div class="text-overline text-medium-emphasis mb-1 font-weight-bold">{{ $t('Dashboard.TotalSoundkits') }}</div>
+                <div class="text-h3 font-weight-black text-high-emphasis">{{ soundkits.length }}</div>
               </div>
               <div class="stat-icon-wrapper bg-info-subtle">
                 <v-icon color="info" size="32">mdi-drum</v-icon>
@@ -76,8 +76,8 @@
           <v-card class="glass-card rounded-xl pa-5 elevation-12">
             <div class="d-flex align-start justify-space-between">
               <div>
-                <div class="text-overline text-grey-lighten-1 mb-1 font-weight-bold">{{ $t('Dashboard.TotalPlays') }}</div>
-                <div class="text-h3 font-weight-black text-white">{{ totalViews }}</div>
+                <div class="text-overline text-medium-emphasis mb-1 font-weight-bold">{{ $t('Dashboard.TotalPlays') }}</div>
+                <div class="text-h3 font-weight-black text-high-emphasis">{{ totalViews }}</div>
               </div>
               <div class="stat-icon-wrapper bg-warning-subtle">
                 <v-icon color="warning" size="32">mdi-play-circle</v-icon>
@@ -93,8 +93,8 @@
           <v-card class="glass-card rounded-xl pa-5 elevation-12">
             <div class="d-flex align-start justify-space-between">
               <div>
-                <div class="text-overline text-grey-lighten-1 mb-1 font-weight-bold">{{ $t('Dashboard.TotalRevenue') }}</div>
-                <div class="text-h3 font-weight-black text-white">{{ formatCurrency(0) }}</div>
+                <div class="text-overline text-medium-emphasis mb-1 font-weight-bold">{{ $t('Dashboard.TotalRevenue') }}</div>
+                <div class="text-h3 font-weight-black text-high-emphasis">{{ formatCurrency(0) }}</div>
               </div>
               <div class="stat-icon-wrapper bg-success-subtle">
                 <v-icon color="success" size="32">mdi-currency-usd</v-icon>
@@ -114,22 +114,22 @@
             <div class="gradient-overlay pa-6 pa-md-8 d-flex flex-column justify-space-between h-100">
               <div class="d-flex justify-space-between align-start">
                 <div>
-                  <div class="text-overline font-weight-bold text-white-50 mb-1 letter-spacing-1">{{ $t('Dashboard.Overview') }}</div>
-                  <div class="text-h2 font-weight-black text-white tracking-tight mb-1">{{ formatCurrency(0) }}</div>
-                  <div class="text-subtitle-1 font-weight-regular text-grey-lighten-1">{{ $t('Dashboard.RevenueThisMonth') }}</div>
+                  <div class="text-overline font-weight-bold text-medium-emphasis mb-1 letter-spacing-1">{{ $t('Dashboard.Overview') }}</div>
+                  <div class="text-h2 font-weight-black text-high-emphasis tracking-tight mb-1">{{ formatCurrency(0) }}</div>
+                  <div class="text-subtitle-1 font-weight-regular text-medium-emphasis">{{ $t('Dashboard.RevenueThisMonth') }}</div>
                 </div>
-                <v-btn icon="mdi-arrow-top-right" variant="tonal" color="white" size="large" class="glass-btn"></v-btn>
+                <v-btn icon="mdi-arrow-top-right" variant="tonal" size="large" class="glass-btn"></v-btn>
               </div>
               
-              <v-divider class="my-6 border-white-10"></v-divider>
+              <v-divider class="my-6 ck-border-subtle"></v-divider>
 
               <div class="d-flex align-center">
                 <v-avatar color="primary" variant="flat" rounded="lg" size="48" class="elevation-6 mr-4">
                   <v-icon size="28" color="white">mdi-trending-up</v-icon>
                 </v-avatar>
                 <div>
-                  <div class="text-h6 font-weight-bold text-white mb-1">{{ $t('Dashboard.TipsTitle') }}</div>
-                  <div class="text-body-2 text-grey-lighten-1" style="max-width: 600px; line-height: 1.5;">
+                  <div class="text-h6 font-weight-bold text-high-emphasis mb-1">{{ $t('Dashboard.TipsTitle') }}</div>
+                  <div class="text-body-2 text-medium-emphasis" style="max-width: 600px; line-height: 1.5;">
                     {{ $t('Dashboard.TipsDesc') }}
                   </div>
                 </div>
@@ -145,7 +145,7 @@
             
             <template v-if="tracks.length > 0">
               <div class="text-center mb-4 mt-2">
-                <v-avatar rounded="lg" size="110" class="elevation-12 border-white-10 top-track-art">
+                <v-avatar rounded="lg" size="110" class="elevation-12 border-white-10 top-track-art ck-art-backing">
                   <v-img :src="getApiUrl(tracks[0].art)" cover></v-img>
                   <div class="top-track-overlay d-flex align-center justify-center">
                     <v-icon color="white" size="40">mdi-play-circle</v-icon>
@@ -153,15 +153,15 @@
                 </v-avatar>
               </div>
               <div class="text-center mt-auto">
-                <div class="text-h5 font-weight-black text-white text-truncate">{{ tracks[0].name }}</div>
+                <div class="text-h5 font-weight-black text-high-emphasis text-truncate">{{ tracks[0].name }}</div>
                 <div class="d-flex align-center justify-center mt-2 gap-3">
                   <div class="stat-pill bg-white-5">
                     <v-icon size="16" class="text-info mr-1">mdi-play</v-icon>
-                    <span class="font-weight-bold text-white">{{ tracks[0].views || 0 }}</span>
+                    <span class="font-weight-bold text-high-emphasis">{{ tracks[0].views || 0 }}</span>
                   </div>
                   <div class="stat-pill bg-white-5">
                     <v-icon size="16" class="text-error mr-1">mdi-heart</v-icon>
-                    <span class="font-weight-bold text-white">{{ tracks[0].likes || 0 }}</span>
+                    <span class="font-weight-bold text-high-emphasis">{{ tracks[0].likes || 0 }}</span>
                   </div>
                 </div>
               </div>
@@ -188,8 +188,8 @@
             <div class="d-flex flex-column gap-4">
               <div v-for="stat in audienceData" :key="stat.label">
                 <div class="d-flex justify-space-between align-end mb-2">
-                  <span class="text-subtitle-2 text-grey-lighten-1">{{ $t(stat.label) }}</span>
-                  <span class="font-weight-black text-white">{{ stat.percentage }}%</span>
+                  <span class="text-subtitle-2 text-medium-emphasis">{{ $t(stat.label) }}</span>
+                  <span class="font-weight-black text-high-emphasis">{{ stat.percentage }}%</span>
                 </div>
                 <v-progress-linear :model-value="stat.percentage" color="info" height="6" rounded></v-progress-linear>
               </div>
@@ -202,8 +202,8 @@
           <v-card class="glass-card rounded-xl elevation-12 overflow-hidden h-100 border-white-10 pa-6 pa-md-8 d-flex flex-column">
             <div class="d-flex justify-space-between align-start mb-2">
               <div>
-                <div class="text-overline font-weight-bold text-white-50 mb-1 letter-spacing-1">{{ $t('Dashboard.PlaysOverview') }}</div>
-                <div class="text-h5 font-weight-black text-white tracking-tight">{{ $t('Dashboard.Last7Days') }}</div>
+                <div class="text-overline font-weight-bold text-medium-emphasis mb-1 letter-spacing-1">{{ $t('Dashboard.PlaysOverview') }}</div>
+                <div class="text-h5 font-weight-black text-high-emphasis tracking-tight">{{ $t('Dashboard.Last7Days') }}</div>
               </div>
               <v-chip color="success" variant="flat" size="small" class="font-weight-bold"><v-icon start size="14">mdi-arrow-up-bold</v-icon> 24%</v-chip>
             </div>
@@ -250,7 +250,7 @@
               <v-card class="glass-table-card rounded-xl elevation-12 overflow-hidden">
                 <v-progress-linear v-if="loading" indeterminate color="primary"></v-progress-linear>
 
-                <v-table v-else class="bg-transparent custom-table" theme="dark">
+                <v-table v-else class="bg-transparent custom-table">
                   <thead>
                     <tr>
                       <th class="text-left text-overline text-grey-lighten-1 py-4 px-6">Track Info</th>
@@ -264,17 +264,17 @@
                     <tr v-for="track in tracks" :key="track._id" class="table-row-hover">
                       <td class="py-5 px-6">
                         <div class="d-flex align-center">
-                          <div class="art-wrapper mr-5">
+                          <div class="art-wrapper ck-art-backing mr-5">
                             <v-img :src="getApiUrl(track.art)" cover class="rounded-lg shadow-img"></v-img>
                             <div class="play-overlay d-flex align-center justify-center">
                               <v-icon color="white" size="32">mdi-play</v-icon>
                             </div>
                           </div>
                           <div>
-                            <div class="text-h6 font-weight-black text-white mb-1 tracking-tight">{{ track.name }}</div>
+                            <div class="text-h6 font-weight-black text-high-emphasis mb-1 tracking-tight">{{ track.name }}</div>
                             <div class="d-flex align-center gap-2">
-                              <v-chip size="small" variant="flat" color="rgba(255,255,255,0.05)" class="font-weight-medium text-grey-lighten-1 border-white-10">{{ track.bpm ? `${track.bpm} BPM` : 'No BPM' }}</v-chip>
-                              <v-chip size="small" variant="flat" color="rgba(255,255,255,0.05)" class="font-weight-medium text-grey-lighten-1 border-white-10">{{ track.key || 'No Key' }}</v-chip>
+                              <v-chip size="small" variant="flat" color="rgba(255,255,255,0.05)" class="font-weight-medium text-medium-emphasis border-white-10">{{ track.bpm ? `${track.bpm} BPM` : 'No BPM' }}</v-chip>
+                              <v-chip size="small" variant="flat" color="rgba(255,255,255,0.05)" class="font-weight-medium text-medium-emphasis border-white-10">{{ track.key || 'No Key' }}</v-chip>
                             </div>
                           </div>
                         </div>
@@ -283,11 +283,11 @@
                         <div class="d-flex align-center">
                           <div class="stat-pill bg-white-5 mr-3">
                             <v-icon size="16" class="text-info mr-2">mdi-play</v-icon>
-                            <span class="font-weight-bold text-white">{{ track.views || 0 }}</span>
+                            <span class="font-weight-bold text-high-emphasis">{{ track.views || 0 }}</span>
                           </div>
                           <div class="stat-pill bg-white-5">
                             <v-icon size="16" class="text-error mr-2">mdi-heart</v-icon>
-                            <span class="font-weight-bold text-white">{{ track.likes || 0 }}</span>
+                            <span class="font-weight-bold text-high-emphasis">{{ track.likes || 0 }}</span>
                           </div>
                         </div>
                       </td>
@@ -321,7 +321,7 @@
                     <tr v-if="tracks.length === 0">
                       <td colspan="5" class="text-center py-16">
                         <v-icon size="64" color="rgba(255,255,255,0.1)" class="mb-4">mdi-music-note-off</v-icon>
-                        <div class="text-h5 font-weight-bold text-white mb-2">{{ $t('Dashboard.NoTracksUploaded') }}</div>
+                        <div class="text-h5 font-weight-bold text-high-emphasis mb-2">{{ $t('Dashboard.NoTracksUploaded') }}</div>
                         <p class="text-grey mb-6">Start building your catalog and share your beats with the world.</p>
                         <v-btn color="primary" @click="showUploadModal = true" class="rounded-pill font-weight-bold px-8">Upload First Beat</v-btn>
                       </td>
@@ -339,7 +339,7 @@
                   <v-card class="glass-card rounded-xl elevation-10 overflow-hidden kit-card">
                     <v-img :src="getApiUrl(kit.thumbnailUrl)" height="200" cover class="kit-img"></v-img>
                     <v-card-text class="pa-4">
-                      <div class="text-h6 font-weight-bold text-white mb-1">{{ kit.title }}</div>
+                      <div class="text-h6 font-weight-bold text-high-emphasis mb-1">{{ kit.title }}</div>
                       <div class="text-caption text-grey mb-4 text-truncate">{{ kit.description }}</div>
                       <div class="d-flex align-center justify-space-between">
                         <v-chip size="small" color="info" variant="tonal" class="font-weight-bold">Kit</v-chip>
@@ -353,9 +353,9 @@
               <!-- Empty State for Soundkits -->
               <v-card v-else class="glass-table-card rounded-xl elevation-12 text-center py-16">
                 <v-icon size="80" color="rgba(255,255,255,0.05)" class="mb-4">mdi-package-variant-closed</v-icon>
-                <div class="text-h4 font-weight-black text-white mb-2">{{ $t('Dashboard.NoSoundkitsUploaded') }}</div>
+                <div class="text-h4 font-weight-black text-high-emphasis mb-2">{{ $t('Dashboard.NoSoundkitsUploaded') }}</div>
                 <p class="text-grey mb-8 text-body-1">Create and sell your own drum kits, loop packs, and presets.</p>
-                <v-btn color="white" variant="outlined" size="x-large" class="rounded-pill font-weight-bold px-8 border-white-20 glass-btn">
+                <v-btn variant="outlined" size="x-large" class="rounded-pill font-weight-bold px-8 border-white-20 glass-btn">
                   <v-icon start>mdi-plus</v-icon> Create Soundkit
                 </v-btn>
               </v-card>
@@ -369,11 +369,11 @@
 
       <!-- Delete Dialog & Snackbar omitted for brevity (kept same logic) -->
       <v-dialog v-model="showDeleteConfirm" max-width="400" persistent>
-        <v-card theme="dark" class="bg-grey-darken-4 rounded-xl border-white-10 elevation-24">
-          <v-card-title class="text-h6 pt-6 px-6 font-weight-bold text-white">
+        <v-card class="bg-surface rounded-xl border elevation-24">
+          <v-card-title class="text-h6 pt-6 px-6 font-weight-bold text-high-emphasis">
             <v-icon color="error" class="mr-2">mdi-alert</v-icon> {{ $t('Dashboard.DeleteTrack') }}
           </v-card-title>
-          <v-card-text class="text-body-1 text-grey-lighten-1 px-6 pt-2 pb-6">
+          <v-card-text class="text-body-1 text-medium-emphasis px-6 pt-2 pb-6">
             {{ $t('Dashboard.DeleteConfirmMsg') }}
           </v-card-text>
           <v-card-actions class="pa-6 pt-0">
@@ -506,6 +506,11 @@ onMounted(() => {
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   min-height: 280px;
   position: relative;
+
+  .v-theme--light & {
+    background: linear-gradient(135deg, rgba(211, 47, 47, 0.08) 0%, rgba(248, 250, 252, 1) 100%);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
 }
 
 .hero-title {
@@ -520,23 +525,23 @@ onMounted(() => {
 
 /* Glassmorphism Cards */
 .glass-card {
-  background: rgba(30, 30, 30, 0.6) !important;
+  background: rgba(var(--v-theme-surface), 0.75) !important;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity)) !important;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .gradient-card {
-  background: linear-gradient(135deg, rgba(211,47,47,0.4) 0%, rgba(0,0,0,1) 100%) !important;
+  background: linear-gradient(135deg, rgba(211,47,47,0.3) 0%, rgba(var(--v-theme-surface), 1) 100%) !important;
   position: relative;
 }
 .gradient-overlay {
-  background: radial-gradient(circle at top right, rgba(211,47,47,0.15) 0%, transparent 60%);
+  background: radial-gradient(circle at top right, rgba(211,47,47,0.12) 0%, transparent 60%);
   position: relative;
   z-index: 1;
 }
-.text-white-70 { color: rgba(255, 255, 255, 0.7) !important; }
+.text-white-70 { color: rgba(var(--v-theme-on-surface), 0.7) !important; }
 
 .top-track-art {
   position: relative;
@@ -557,14 +562,14 @@ onMounted(() => {
 
 .glass-card:hover {
   transform: translateY(-5px);
-  border-color: rgba(255, 255, 255, 0.2) !important;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(211, 47, 47, 0.1) !important;
+  border-color: rgba(var(--v-theme-primary), 0.35) !important;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15), 0 0 20px rgba(211, 47, 47, 0.1) !important;
 }
 
 .glass-table-card {
-  background: rgba(18, 18, 18, 0.8) !important;
+  background: rgba(var(--v-theme-surface), 0.85) !important;
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity)) !important;
 }
 
 /* Stat Icons */
@@ -583,10 +588,10 @@ onMounted(() => {
 
 /* Buttons & Chips */
 .border-white-20 {
-  border-color: rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(var(--v-border-color), 0.2) !important;
 }
 .border-white-10 {
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity)) !important;
 }
 .border-2 {
   border-width: 2px !important;
@@ -654,14 +659,14 @@ onMounted(() => {
 
 /* Stat Pills */
 .bg-white-5 {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(var(--v-theme-on-surface), 0.05);
   padding: 4px 12px;
   border-radius: 20px;
 }
 
 /* Pricing Boxes */
 .price-box {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(var(--v-theme-on-surface), 0.04);
   padding: 4px 8px;
   border-radius: 6px;
   font-family: monospace;
