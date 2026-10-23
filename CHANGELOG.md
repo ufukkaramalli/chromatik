@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://www.conventionalcommits.org/) for commit guidelines.
 
+## [0.4.1](https://github.com/ufukkaramalli/chromatik/compare/v0.4.0...v0.4.1) (2026-10-23)
+
+### 🐛 Bug Fixes
+
+* **security:** upgrade node to 22 to mitigate cve-2026-111497 ([d64e099](https://github.com/ufukkaramalli/chromatik/commit/d64e0992ab5d87f7aa03a52d3e6565af0f8ea908))
+
 ## [0.4.0](https://github.com/ufukkaramalli/chromatik/compare/v0.3.0...v0.4.0) (2026-10-22)
 
 ### ✨ Features
