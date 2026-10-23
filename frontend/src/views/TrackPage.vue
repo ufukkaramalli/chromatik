@@ -337,6 +337,7 @@ import WaveField from '@/components/WaveField.vue'
 import { getTrackId } from '@/utils/track'
 import { useCartStore } from '@/stores/cartStore'
 import { useCurrencyStore } from '@/stores/currencyStore'
+import { useSeo } from '@/composables/useSeo'
 
 const route = useRoute()
 const router = useRouter()
@@ -351,6 +352,48 @@ const success = ref(false)
 const loading = ref(true)
 const comments = ref([])
 const commentSectionRef = ref(null)
+
+// ---------------------------------------------------------------------------
+// SEO & Social Media Metadata (Open Graph / Twitter Card)
+// ---------------------------------------------------------------------------
+const seoTitle = computed(() => {
+  if (loading.value) return `Loading Track... | ${appStore.appName}`
+  if (!success.value) return `${t('Track.NotFound')} | ${appStore.appName}`
+  const artist = track.value.user?.name || t('Track.UnknownArtist')
+  return `${track.value.name} by ${artist} | ${appStore.appName}`
+})
+
+const seoDescription = computed(() => {
+  if (!success.value || !track.value?.name) {
+    return 'Listen to music tracks and beats on Chromatik.'
+  }
+  const artist = track.value.user?.name || 'an artist'
+  const bpmStr = track.value.bpm ? `${track.value.bpm} BPM` : ''
+  const keyStr = track.value.key ? `Key: ${track.value.key}` : ''
+  const tagsStr = track.value.tags?.length ? `(${track.value.tags.slice(0, 3).join(', ')})` : ''
+  const details = [bpmStr, keyStr, tagsStr].filter(Boolean).join(' • ')
+  return `Listen to "${track.value.name}" by ${artist} on Chromatik. ${details ? `${details}. ` : ''}Stream, license, and download royalty-free.`
+})
+
+const seoImage = computed(() => {
+  return track.value?.art || ''
+})
+
+const canonicalUrl = computed(() => {
+  const origin = typeof window !== 'undefined' ? window.location.origin : ''
+  const userSlug = track.value?.user?.slug || route.params.userSlug || ''
+  const trackSlug = track.value?.slug || route.params.trackSlug || ''
+  if (!userSlug || !trackSlug) return ''
+  return `${origin}/${userSlug}/${trackSlug}`
+})
+
+useSeo({
+  title: seoTitle,
+  description: seoDescription,
+  canonical: canonicalUrl,
+  image: seoImage,
+  type: ref('music.song')
+})
 
 const artistTheme = computed(() => {
   return track.value?.user?.profileTheme || 'ribbons'
@@ -445,13 +488,9 @@ const FIND_TRACK = async () => {
   try {
     const response = await appStore.GET_TRACK_PAGE(route.params)
     track.value = response.data
-
-    document.title = `${response.data.name} by ${response.data.user?.name || t('Track.UnknownArtist')} | ${appStore.appName}`
-    
     success.value = true
   } catch (error) {
     console.error(error)
-    document.title = `${t('Track.NotFound')} | ${appStore.appName}`
     success.value = false
   } finally {
     loading.value = false

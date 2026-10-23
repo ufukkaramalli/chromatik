@@ -40,8 +40,11 @@ onMounted(() => {
 // sayfa başlığı ve geçiş animasyonu
 watch(
   () => route.fullPath,
-  (to, from) => {
-    document.title = route.meta?.title || 'CHROMATIK'
+  () => {
+    if (!route.meta?.dynamicTitle) {
+      const title = typeof route.meta?.title === 'function' ? route.meta.title(route) : route.meta?.title
+      document.title = title || 'CHROMATIK'
+    }
     transitionName.value =
       transitionName.value === 'slide-left' ? 'slide-right' : 'slide-left'
   }
