@@ -19,6 +19,7 @@ export interface TrackUser {
   name: string
   slug: string
   _id?: string
+  photoUrl?: string
   /** Artist's profile theme: 'ribbons' | 'flowfield' | 'pillars' */
   profileTheme?: string
 }
@@ -37,6 +38,7 @@ export interface Track {
   _id?: string
   name: string
   slug?: string
+  description?: string
   art: string
   url: string
   duration: number
@@ -46,6 +48,10 @@ export interface Track {
   likedBy?: string[]
   /** Server-measured loudness, absent until the track is analysed */
   loudness?: TrackLoudness | null
+  genres?: string[]
+  tags?: string[]
+  moods?: string[]
+  views?: number
   user: TrackUser
   userId?: string
   priceBasic?: number

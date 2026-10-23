@@ -1,5 +1,5 @@
 export const Navigation = () => import('@/components/Navigation.vue')
 export const TopNav = () => import('@/components/TopNav.vue')
 export const SystemBar = () => import('@/components/SystemBar.vue')
-export const BottomPlayer = () => import('@/components/BottomPlayer.vue')
+export const BottomPlayer = () => import('@/components/Audio/BottomPlayer.vue')
 export const Footer = () => import('@/components/AppFooter.vue')

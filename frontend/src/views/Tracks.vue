@@ -25,7 +25,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useAuthStore } from '@/stores/auth'
-import Playlist from '@/components/Playlist.vue'
+import Playlist from '@/components/Audio/Playlist.vue'
 
 const auth = useAuthStore()
 const myTracks = computed(() => auth.user?.tracks || [])

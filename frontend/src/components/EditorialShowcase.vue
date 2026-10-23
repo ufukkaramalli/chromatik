@@ -319,7 +319,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useAppTheme } from '@/composables/useAppTheme'
-import Playlist from '@/components/Playlist.vue'
+import Playlist from '@/components/Audio/Playlist.vue'
 
 const { isDark } = useAppTheme()
 
