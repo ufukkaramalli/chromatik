@@ -1,0 +1,17 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+Allow: /explore/
+Allow: /legal/
+Allow: /support
+
+# Disallow private user portals and dashboards to protect crawl budget
+Disallow: /Dashboard
+Disallow: /Settings
+Disallow: /Tracks
+Disallow: /Soundkits
+Disallow: /Login
+Disallow: /Register
+
+# Disallow internal search query results
+Disallow: /search

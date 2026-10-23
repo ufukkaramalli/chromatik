@@ -238,14 +238,10 @@ const navLink = (key, icon, to) => ({ id: key.toLowerCase(), label: t(`Navigatio
 const linkColumns = computed(() => {
   const explore = [
     navLink('Home', 'mdi-home-outline', { name: 'Home' }),
-    navLink('Explore', 'mdi-compass-outline', { name: 'Explore' })
+    { id: 'explore-tracks', label: t('Explore.Tabs.Tracks'), icon: 'mdi-music-note-outline', to: { name: 'Explore', params: { tab: 'tracks' } } },
+    { id: 'explore-producers', label: t('Explore.Tabs.Producers'), icon: 'mdi-account-music-outline', to: { name: 'Explore', params: { tab: 'producers' } } },
+    { id: 'explore-soundkits', label: t('Explore.Tabs.Soundkits'), icon: 'mdi-folder-music-outline', to: { name: 'Explore', params: { tab: 'soundkits' } } }
   ]
-  if (authenticated.value) {
-    explore.push(
-      navLink('Tracks', 'mdi-music-note-outline', { name: 'Tracks' }),
-      navLink('Soundkits', 'mdi-folder-music-outline', { name: 'Soundkits' })
-    )
-  }
 
   const studio = authenticated.value
     ? [

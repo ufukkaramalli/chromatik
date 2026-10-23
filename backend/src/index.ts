@@ -9,6 +9,7 @@ import CommentController from './controller/comment.controller';
 import CurrencyController from './controller/currency.controller';
 import CartController from './controller/cart.controller';
 import ExploreController from './controller/explore.controller';
+import SitemapController from './controller/sitemap.controller';
 import logger from './utils/logger';
 
 // NODE_ENV'e göre doğru .env dosyasını yükle
@@ -36,6 +37,7 @@ const app = new App(
     new CurrencyController(),
     new CartController(),
     new ExploreController(),
+    new SitemapController(),
   ],
   // Register server port number
   Number(process.env.PORT)

@@ -15,7 +15,8 @@ function validateEnv(): void {
         CURRENCY_API_KEY: str({ default: '' }),
         TCMB_API_URL: str({ default: 'https://www.tcmb.gov.tr/kurlar/today.xml' }),
         CURRENCY_CACHE_TTL_MINUTES: num({ default: 60 }),
-        CURRENCY_FALLBACK_TRY_RATE: num({ default: 45.0 })
+        CURRENCY_FALLBACK_TRY_RATE: num({ default: 45.0 }),
+        CLIENT_URL: str({ default: '' })
     })
 }
 

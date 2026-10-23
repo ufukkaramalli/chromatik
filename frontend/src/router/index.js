@@ -98,16 +98,36 @@ const routes = [
     }
   },
   {
-    path: '/explore',
+    path: '/explore/:tab(tracks|producers|soundkits)?',
     name: 'Explore',
     components: shellComponents(Explore),
-    meta: { title: `Explore | ${APP_NAME}` }
+    beforeEnter: (to) => {
+      if (!to.params.tab) {
+        const queryTab = to.query.tab
+        const targetTab = ['tracks', 'producers', 'soundkits'].includes(queryTab) ? queryTab : 'tracks'
+        const nextQuery = { ...to.query }
+        delete nextQuery.tab
+        return { name: 'Explore', params: { tab: targetTab }, query: nextQuery, replace: true }
+      }
+    },
+    meta: {
+      dynamicTitle: true,
+      title: (to) => {
+        const tab = to.params.tab || 'tracks'
+        const tabTitle = tab.charAt(0).toUpperCase() + tab.slice(1)
+        return `${tabTitle} | Explore | ${APP_NAME}`
+      }
+    }
   },
   {
     path: '/search',
     name: 'Search',
     components: shellComponents(Search),
-    meta: { title: `Search | ${APP_NAME}` }
+    meta: {
+      dynamicTitle: true,
+      title: `Search | ${APP_NAME}`,
+      robots: 'noindex, follow'
+    }
   },
   {
     path: '/support',
@@ -134,13 +154,19 @@ const routes = [
     path: '/:userSlug',
     name: 'Profile',
     components: shellComponents(Profile),
-    meta: { title: `Profile | ${APP_NAME}` }
+    meta: {
+      dynamicTitle: true,
+      title: `Profile | ${APP_NAME}`
+    }
   },
   {
     path: '/:userSlug/:trackSlug',
     name: 'TrackPage',
     components: shellComponents(TrackPage),
-    meta: { title: `Track | ${APP_NAME}` }
+    meta: {
+      dynamicTitle: true,
+      title: `Track | ${APP_NAME}`
+    }
   }
 ]
 
@@ -155,7 +181,23 @@ const router = createRouter({
 })
 
 router.afterEach((to) => {
-  if (to.meta?.title) document.title = to.meta.title
+  if (to.meta?.title) {
+    const title = typeof to.meta.title === 'function' ? to.meta.title(to) : to.meta.title
+    if (title) document.title = title
+  }
+
+  // Manage robots meta tag (e.g. for Search page)
+  let robotsMeta = document.querySelector('meta[name="robots"]')
+  if (to.meta?.robots) {
+    if (!robotsMeta) {
+      robotsMeta = document.createElement('meta')
+      robotsMeta.name = 'robots'
+      document.head.appendChild(robotsMeta)
+    }
+    robotsMeta.content = to.meta.robots
+  } else if (robotsMeta) {
+    robotsMeta.remove()
+  }
 })
 
 export default router

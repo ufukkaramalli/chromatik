@@ -209,10 +209,13 @@ import GlitchTitle from '@/components/GlitchTitle.vue'
 import PillarField from '@/components/PillarField.vue'
 import WaveField from '@/components/WaveField.vue'
 import axios from 'axios'
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import { getTrackId } from '@/utils/track'
+import { useSeo } from '@/composables/useSeo'
+
+const APP_NAME = import.meta.env.VITE_APPLICATION_NAME || 'CHROMATIK'
 
 const route = useRoute()
 const router = useRouter()
@@ -220,7 +223,50 @@ const { t } = useI18n()
 
 const loading = ref(true)
 const profile = ref(null)
-const activeTab = ref('tracks')
+const activeTab = ref(route.query.tab === 'soundkits' ? 'soundkits' : 'tracks')
+
+watch(activeTab, (tab) => {
+  const currentTab = route.query.tab
+  const targetTab = tab === 'soundkits' ? 'soundkits' : undefined
+  if (currentTab !== targetTab) {
+    const nextQuery = { ...route.query }
+    if (targetTab) nextQuery.tab = targetTab
+    else delete nextQuery.tab
+    router.replace({ query: nextQuery }).catch(() => {})
+  }
+})
+
+// ---------------------------------------------------------------------------
+// SEO & Social Media Metadata
+// ---------------------------------------------------------------------------
+const seoTitle = computed(() => {
+  if (!profile.value?.name) return `Profile | ${APP_NAME}`
+  return `${profile.value.name} (@${profile.value.slug || route.params.userSlug}) | ${APP_NAME}`
+})
+
+const seoDescription = computed(() => {
+  if (!profile.value) return 'Discover artist profile, beats, and soundkits on Chromatik.'
+  if (profile.value.bio) return profile.value.bio
+  return `Listen to tracks, beats, and soundkits by ${profile.value.name} on Chromatik.`
+})
+
+const seoImage = computed(() => {
+  return profile.value?.photoUrl || ''
+})
+
+const canonicalUrl = computed(() => {
+  const origin = typeof window !== 'undefined' ? window.location.origin : ''
+  const slug = profile.value?.slug || route.params.userSlug || ''
+  return `${origin}/${slug}`
+})
+
+useSeo({
+  title: seoTitle,
+  description: seoDescription,
+  canonical: canonicalUrl,
+  image: seoImage,
+  type: ref('profile')
+})
 
 const formattedTracks = computed(() => {
   if (!profile.value?.tracks) return []

@@ -506,7 +506,9 @@ import {
   fetchExploreSoundkits,
   fetchExploreTracks
 } from '@/services/exploreApi'
+import { useSeo } from '@/composables/useSeo'
 
+const APP_NAME = import.meta.env.VITE_APPLICATION_NAME || 'CHROMATIK'
 const PAGE_SIZE = 24
 const TABS = ['all', 'tracks', 'producers', 'soundkits']
 
@@ -520,6 +522,27 @@ const activeTab = ref(TABS.includes(route.query.tab) ? route.query.tab : 'all')
 const trackSort = ref((route.query.sort || 'popular').toString())
 const producerSort = ref((route.query.psort || 'popular').toString())
 const soundkitSort = ref((route.query.ksort || 'popular').toString())
+
+// ---------------------------------------------------------------------------
+// SEO Metadata (Internal Search should not be indexed by Googlebot)
+// ---------------------------------------------------------------------------
+const seoTitle = computed(() => {
+  return cleanQuery.value
+    ? `“${cleanQuery.value}” - Search | ${APP_NAME}`
+    : `Search | ${APP_NAME}`
+})
+
+const seoDescription = computed(() => {
+  return cleanQuery.value
+    ? `Search results for "${cleanQuery.value}" on Chromatik. Find matching tracks, producers, and soundkits.`
+    : 'Search across tracks, beats, producers, and soundkits on Chromatik.'
+})
+
+useSeo({
+  title: seoTitle,
+  description: seoDescription,
+  robots: ref('noindex, follow')
+})
 
 const trendingTags = ['Trap', 'Drill', 'Lo-Fi', 'Hip-Hop', 'Synthwave', 'Dark', 'R&B']
 

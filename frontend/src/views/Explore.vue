@@ -37,6 +37,7 @@
           :id="`explore-tab-${tab.value}`"
           :key="tab.value"
           :value="tab.value"
+          :to="{ name: 'Explore', params: { tab: tab.value } }"
           :prepend-icon="tab.icon"
           class="text-none font-weight-bold"
         >
@@ -408,7 +409,9 @@ import {
   fetchExploreSoundkits,
   fetchExploreTracks
 } from '@/services/exploreApi'
+import { useSeo } from '@/composables/useSeo'
 
+const APP_NAME = import.meta.env.VITE_APPLICATION_NAME || 'CHROMATIK'
 const PAGE_SIZE = 24
 const TABS = ['tracks', 'producers', 'soundkits']
 const TRACK_SORTS = ['newest', 'popular', 'liked', 'price_asc', 'price_desc']
@@ -444,9 +447,11 @@ const parseRange = (v) => {
 const pick = (v, allowed, fallback) => (allowed.includes(v) ? v : fallback)
 const text = (v) => (typeof v === 'string' && v.trim() ? v.trim() : null)
 
-function readQuery(q) {
+function readRoute(r) {
+  const q = r.query || {}
+  const tabParam = r.params?.tab
   return {
-    tab: pick(q.tab, TABS, 'tracks'),
+    tab: pick(tabParam || q.tab, TABS, 'tracks'),
     filters: {
       q: text(q.q),
       genres: parseList(q.genre),
@@ -464,7 +469,6 @@ function readQuery(q) {
 function buildQuery(s) {
   const f = s.filters
   const q = {}
-  if (s.tab !== 'tracks') q.tab = s.tab
   if (f.q) q.q = f.q
   if (f.genres.length) q.genre = f.genres.join(',')
   if (f.moods.length) q.mood = f.moods.join(',')
@@ -477,7 +481,7 @@ function buildQuery(s) {
   return q
 }
 
-const state = reactive(readQuery(route.query))
+const state = reactive(readRoute(route))
 
 const debounce = (fn, ms) => {
   let id
@@ -492,21 +496,81 @@ const debounce = (fn, ms) => {
 const serializedState = computed(() => JSON.stringify(buildQuery(state)))
 
 const syncUrl = debounce(() => {
-  if (JSON.stringify(buildQuery(readQuery(route.query))) === serializedState.value) return
-  router.replace({ query: buildQuery(state) }).catch(() => {})
+  const currentTab = route.params.tab || 'tracks'
+  const currentQueryStr = JSON.stringify(buildQuery(readRoute(route)))
+  const nextQuery = buildQuery(state)
+  const nextQueryStr = JSON.stringify(nextQuery)
+
+  if (currentTab === state.tab && currentQueryStr === nextQueryStr) return
+
+  router.replace({
+    name: 'Explore',
+    params: { tab: state.tab },
+    query: nextQuery
+  }).catch(() => {})
 }, 300)
 
 watch(serializedState, syncUrl)
 
-// Back / forward navigation or external links (e.g. Home genre cards) while on this page
+// Back / forward navigation or external links while on this page
 watch(
-  () => route.query,
-  (q) => {
+  () => [route.params.tab, route.query],
+  () => {
     if (route.name !== 'Explore') return
-    const next = readQuery(q)
-    if (JSON.stringify(buildQuery(next)) !== serializedState.value) Object.assign(state, next)
+    const next = readRoute(route)
+    if (state.tab !== next.tab) {
+      state.tab = next.tab
+    }
+    if (JSON.stringify(buildQuery(next)) !== serializedState.value) {
+      Object.assign(state.filters, next.filters)
+      state.sort = next.sort
+      state.psort = next.psort
+      state.ksort = next.ksort
+    }
   }
 )
+
+// ---------------------------------------------------------------------------
+// SEO Metadata
+// ---------------------------------------------------------------------------
+const seoTitle = computed(() => {
+  const genrePrefix = state.filters.genres.length ? `${state.filters.genres.join(', ')} ` : ''
+  if (state.tab === 'producers') {
+    return `${t('Explore.Tabs.Producers')} | Explore | ${APP_NAME}`
+  }
+  if (state.tab === 'soundkits') {
+    return `${t('Explore.Tabs.Soundkits')} | Explore | ${APP_NAME}`
+  }
+  if (genrePrefix) {
+    return `${genrePrefix}Tracks & Beats | Explore | ${APP_NAME}`
+  }
+  return `${t('Explore.Tabs.Tracks')} | Explore | ${APP_NAME}`
+})
+
+const seoDescription = computed(() => {
+  if (state.tab === 'producers') {
+    return 'Discover and connect with top music producers, beatmakers, and sound designers on Chromatik.'
+  }
+  if (state.tab === 'soundkits') {
+    return 'Browse royalty-free soundkits, sample packs, drum kits, and presets on Chromatik.'
+  }
+  const genres = state.filters.genres.join(', ')
+  if (genres) {
+    return `Explore top ${genres} beats and tracks. Stream, license, and download royalty-free music on Chromatik.`
+  }
+  return 'Explore tracks, beats, producers, and soundkits. Discover new sounds and independent music creators on Chromatik.'
+})
+
+const canonicalUrl = computed(() => {
+  const origin = typeof window !== 'undefined' ? window.location.origin : ''
+  return `${origin}/explore/${state.tab}`
+})
+
+useSeo({
+  title: seoTitle,
+  description: seoDescription,
+  canonical: canonicalUrl
+})
 
 // ---------------------------------------------------------------------------
 // Paged lists
