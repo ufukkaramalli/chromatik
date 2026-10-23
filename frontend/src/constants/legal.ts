@@ -1,6 +1,12 @@
 // Single source of truth for legal documents.
 // `slug` is the URL segment (/legal/:doc), `key` maps to Legal.Docs.<key> / Legal.Nav.<key> in locales.
-export const LEGAL_DOCS = [
+export interface LegalDoc {
+  slug: string
+  key: string
+  icon: string
+}
+
+export const LEGAL_DOCS: LegalDoc[] = [
   { slug: 'terms', key: 'terms', icon: 'mdi-file-document-outline' },
   { slug: 'privacy', key: 'privacy', icon: 'mdi-shield-account-outline' },
   { slug: 'license', key: 'license', icon: 'mdi-music-box-multiple-outline' },
@@ -12,6 +18,6 @@ export const LEGAL_DOCS = [
 // Bump when any legal text changes.
 export const LEGAL_LAST_UPDATED = '2026-10-22'
 
-export const SUPPORT_EMAIL = import.meta.env.VITE_SUPPORT_EMAIL || ''
+export const SUPPORT_EMAIL: string = (import.meta.env.VITE_SUPPORT_EMAIL as string) || ''
 
-export const findLegalDoc = (slug) => LEGAL_DOCS.find((d) => d.slug === slug)
+export const findLegalDoc = (slug?: string) => LEGAL_DOCS.find((d) => d.slug === slug)

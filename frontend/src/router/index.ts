@@ -1,5 +1,5 @@
-// src/router/index.js
-import { createRouter, createWebHistory } from 'vue-router'
+// src/router/index.ts
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import * as StaticComponents from './staticLazyLoad'
 import { LEGAL_DOCS, findLegalDoc } from '@/constants/legal'
@@ -21,7 +21,7 @@ const LegalPage = () => import('@/views/LegalPage.vue')
 const Explore = () => import('@/views/Explore.vue')
 const Search = () => import('@/views/Search.vue')
 
-const shellComponents = (view) => ({
+const shellComponents = (view: any) => ({
   default: view,
   Navigation: StaticComponents.Navigation,
   TopNav: StaticComponents.TopNav,
@@ -30,7 +30,7 @@ const shellComponents = (view) => ({
   Footer: StaticComponents.Footer
 })
 
-const routes = [
+const routes: RouteRecordRaw[] = [
   {
     path: '/',
     name: 'Home',
@@ -103,8 +103,8 @@ const routes = [
     components: shellComponents(Explore),
     beforeEnter: (to) => {
       if (!to.params.tab) {
-        const queryTab = to.query.tab
-        const targetTab = ['tracks', 'producers', 'soundkits'].includes(queryTab) ? queryTab : 'tracks'
+        const queryTab = to.query.tab as string | undefined
+        const targetTab = queryTab && ['tracks', 'producers', 'soundkits'].includes(queryTab) ? queryTab : 'tracks'
         const nextQuery = { ...to.query }
         delete nextQuery.tab
         return { name: 'Explore', params: { tab: targetTab }, query: nextQuery, replace: true }
@@ -112,8 +112,8 @@ const routes = [
     },
     meta: {
       dynamicTitle: true,
-      title: (to) => {
-        const tab = to.params.tab || 'tracks'
+      title: (to: any) => {
+        const tab = (to.params.tab as string) || 'tracks'
         const tabTitle = tab.charAt(0).toUpperCase() + tab.slice(1)
         return `${tabTitle} | Explore | ${APP_NAME}`
       }
@@ -145,7 +145,7 @@ const routes = [
     components: shellComponents(LegalPage),
     meta: { title: `Legal | ${APP_NAME}` },
     beforeEnter: (to) => {
-      if (!findLegalDoc(to.params.doc)) {
+      if (!findLegalDoc(to.params.doc as string)) {
         return { name: 'Legal', params: { doc: LEGAL_DOCS[0].slug } }
       }
     }
@@ -182,19 +182,19 @@ const router = createRouter({
 
 router.afterEach((to) => {
   if (to.meta?.title) {
-    const title = typeof to.meta.title === 'function' ? to.meta.title(to) : to.meta.title
+    const title = typeof to.meta.title === 'function' ? to.meta.title(to) : (to.meta.title as string)
     if (title) document.title = title
   }
 
   // Manage robots meta tag (e.g. for Search page)
-  let robotsMeta = document.querySelector('meta[name="robots"]')
+  let robotsMeta = document.querySelector<HTMLMetaElement>('meta[name="robots"]')
   if (to.meta?.robots) {
     if (!robotsMeta) {
       robotsMeta = document.createElement('meta')
       robotsMeta.name = 'robots'
       document.head.appendChild(robotsMeta)
     }
-    robotsMeta.content = to.meta.robots
+    robotsMeta.content = to.meta.robots as string
   } else if (robotsMeta) {
     robotsMeta.remove()
   }
